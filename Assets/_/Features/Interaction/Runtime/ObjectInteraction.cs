@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Interaction.Runtime
 {
-    public class InteractionVillager : MonoBehaviour
+    public class ObjectInteraction : ScriptableObject
     {
         #region Public Members
 
@@ -15,6 +15,10 @@ namespace Interaction.Runtime
         #endregion
 
         #region Main Methods
+
+        public virtual void PlayInteraction()
+        {
+        }
 
         #endregion
 

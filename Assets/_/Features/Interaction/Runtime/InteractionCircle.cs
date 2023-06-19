@@ -8,7 +8,7 @@ namespace Interaction.Runtime
 {
     public class OnCircleOpenedEventArgs : EventArgs
     {
-        public InteractionVillager[] m_interactions;
+        public ObjectInteraction[] m_interactions;
     }
 
     public class InteractionCircle : MonoBehaviour
@@ -44,7 +44,7 @@ namespace Interaction.Runtime
 
         #region Private and Protected Members
 
-        private InteractionVillager[] _interactions;
+        private ObjectInteraction[] _interactions;
 
         #endregion
     }

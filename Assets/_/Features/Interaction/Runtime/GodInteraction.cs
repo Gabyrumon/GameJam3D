@@ -1,6 +1,5 @@
 using Inputs.Runtime;
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -17,10 +16,12 @@ namespace Interaction.Runtime
         private void Awake()
         {
             _camera = Camera.main;
+            _availableInteractions = new();
         }
 
         private void OnEnable()
         {
+            Debug.Log("enable");
             InputManager.m_instance.m_onInteraction += OnInteractionEventHandler;
             InputManager.m_instance.m_onMouseMove += OnMouseMoveEventHandler;
         }
@@ -33,11 +34,13 @@ namespace Interaction.Runtime
 
         private void OnMouseMoveEventHandler(object sender, OnMouseMoveEventArgs e)
         {
+            Debug.Log("Mouse move");
             _mousePosition = e.m_mousePosition;
         }
 
         private void OnInteractionEventHandler(object sender, EventArgs e)
         {
+            Debug.Log("interaction");
             if (Physics.Raycast(_camera.ScreenPointToRay((Vector3)_mousePosition), out RaycastHit hit))
             {
                 if (hit.collider.TryGetComponent(out InteractionCircle interactionCircle))
@@ -80,6 +83,8 @@ namespace Interaction.Runtime
         private Vector2 _mousePosition;
 
         private InteractionCircle _currentInteractionCircle;
+
+        private List<ObjectInteraction> _availableInteractions;
 
         #endregion
     }
