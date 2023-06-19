@@ -1,0 +1,16 @@
+{
+    "name": "CameraController.Runtime",
+    "rootNamespace": "CameraController.Runtime",
+    "references": [
+        "GUID:4ab28d207eabddd458e6cccf0df8edb5"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

@@ -1,0 +1,16 @@
+{
+    "name": "Villager.Runtime",
+    "rootNamespace": "Villager.Runtime",
+    "references": [
+        "GUID:6bbe1e336ebc4044d99269ddcdb27fbf"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
