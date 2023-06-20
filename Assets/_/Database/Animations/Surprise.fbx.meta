@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 6b1b34a781c6c2c43a74e1c5fa78f335
+guid: 397e9416ea9016a439b071c6a78b1c98
 ModelImporter:
   serializedVersion: 21300
   internalIDToNameTable: []
@@ -33,18 +33,18 @@ ModelImporter:
     extraUserProperties: []
     clipAnimations:
     - serializedVersion: 16
-      name: mixamo.com
+      name: Surprise
       takeName: mixamo.com
       internalID: -203655887218126122
       firstFrame: 0
-      lastFrame: 22
+      lastFrame: 110
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
       cycleOffset: 0
       loop: 0
       hasAdditiveReferencePose: 0
-      loopTime: 1
+      loopTime: 0
       loopBlend: 0
       loopBlendOrientation: 0
       loopBlendPositionY: 0

@@ -7,7 +7,11 @@ namespace Locator.Runtime
     {
         Land,
         Mine,
-        Bell,
+
+        Church,
+        Market,
+        Enclosure,
+        Ritual,
     }
     
     public class LocatorSystem
