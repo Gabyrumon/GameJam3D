@@ -17,7 +17,14 @@ namespace Villager.Runtime
 
         private void Awake()
         {
-            m_instance = this;
+            if (m_instance == null)
+            {
+                m_instance = this;
+            }
+            else
+            {
+                Destroy(gameObject);
+            }
         }
 
         private void Start()
@@ -53,9 +60,16 @@ namespace Villager.Runtime
             if (m_notPossessedVillagerList.Count > 0)
             {
                 int randomIndex = Random.Range(0, m_notPossessedVillagerList.Count);
+                DarkSideAI current = m_notPossessedVillagerList[randomIndex];
 
-                m_villagerList[randomIndex].StartPossession();
-                m_notPossessedVillagerList.RemoveAt(randomIndex);
+                for (int i = 0; i < m_notPossessedVillagerList.Count; i++)
+                {
+                    if (m_notPossessedVillagerList[(randomIndex + i) % m_notPossessedVillagerList.Count].GetComponent<VillagerAI>().CurrentState != VillagerAI.VillagerState.Pray)
+                    {
+                        current.StartPossession();
+                        m_notPossessedVillagerList.RemoveAt(randomIndex);
+                    }
+                }
             }
 
             SetRandomTimeBeforePossession();
