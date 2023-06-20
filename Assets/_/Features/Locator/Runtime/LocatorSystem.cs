@@ -7,7 +7,11 @@ namespace Locator.Runtime
     {
         Land,
         Mine,
-        Bell,
+
+        Church,
+        Market,
+        Enclosure,
+        Ritual,
     }
     
     public class LocatorSystem
@@ -26,7 +30,7 @@ namespace Locator.Runtime
         {
             LocatorIdentity currentLocation = m_locatorDict[currentRoom][0];
 
-            for (int i = 1; i < m_locatorDict[currentRoom].Count; i++)
+            for (int i = 0; i < m_locatorDict[currentRoom].Count; i++)
             {
                 if (m_locatorDict[currentRoom][i].m_priority < currentLocation.m_priority)
                 {
