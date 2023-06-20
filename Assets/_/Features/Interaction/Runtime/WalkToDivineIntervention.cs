@@ -40,7 +40,6 @@ namespace Interaction.Runtime
         public override void PlayInteraction()
         {
             m_isActive = true;
-            _agent.SetDestination(m_divineIntervention.transform.position);
         }
 
         #endregion

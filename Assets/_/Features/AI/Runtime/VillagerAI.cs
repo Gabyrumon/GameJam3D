@@ -10,7 +10,6 @@ namespace Villager.Runtime
     {
         #region Public Members
 
-        [HideInInspector]
         public bool m_isConverted;
 
         public VillagerState CurrentState { get => _currentState; set { _currentState = value; } }
@@ -22,7 +21,7 @@ namespace Villager.Runtime
         private void Awake()
         {
             _agent = GetComponent<NavMeshAgent>();
-            _anim = GetComponentInChildren<Animator>();            
+            _anim = GetComponentInChildren<Animator>();
         }
 
         private void Start()
@@ -54,6 +53,10 @@ namespace Villager.Runtime
 
                 case VillagerState.Pray:
                     GoTo(Room.Church, "Pray");
+                    break;
+
+                case VillagerState.BarrelAction:
+                    GoTo(Room.Church, "BarrelAction");
                     break;
 
                 case VillagerState.Steal:
@@ -130,8 +133,9 @@ namespace Villager.Runtime
                 _actionPlayed = true;
             }
 
-            if (_agent.remainingDistance < 1.5f)
+            if (_agent.remainingDistance < 1.5f && !_animPlayed)
             {
+                _animPlayed = true;
                 StartAnim(animName);
             }
         }
@@ -151,6 +155,13 @@ namespace Villager.Runtime
             _timeBeforePray = Random.Range(_randomTimeBeforePraying.x, _randomTimeBeforePraying.y);
         }
 
+        public void StopPraying()
+        {
+            SetTimeBeforeNextPray();
+
+            _anim.SetBool("Pray", false);
+        }
+
         public void ReturnToRoutine()
         {
             if (_currentState == VillagerState.Dead) return;
@@ -160,10 +171,9 @@ namespace Villager.Runtime
 
         public void ChangeState(VillagerState state)
         {
-            if (_currentState == VillagerState.Dead) return;
-
             _agent.isStopped = true;
             _actionPlayed = false;
+            _animPlayed = false;
             _agent.isStopped = false;
             _currentState = state;
         }
@@ -188,6 +198,16 @@ namespace Villager.Runtime
 
         private void StartAnim(string animName)
         {
+
+            if (animName.Equals("Pray"))
+            {
+                _prayerInteraction.SetActive(true);
+            }
+            else if (animName.Equals("BarrelAction"))
+            {
+                _prayerInteraction.SetActive(true);
+            }
+
             _anim.SetBool("Walk", false);
             _anim.SetBool(animName, true);
             _agent.isStopped = true;
@@ -204,6 +224,8 @@ namespace Villager.Runtime
             Pray,
             Surprise,
 
+            BarrelAction,
+
             Steal,
             Kill,
             Ritual,
@@ -219,13 +241,17 @@ namespace Villager.Runtime
         [Tooltip("In seconds")]
         [SerializeField] private Vector2 _randomTimeBeforePraying = new Vector2(15,45);
 
+        [Space]
+        [SerializeField] private GameObject _prayerInteraction;
+
         private VillagerState _currentState;
         private LocatorIdentity _currentLocator;
         private NavMeshAgent _agent;
         private Animator _anim;
         private float _timeBeforePray;
         private bool _actionPlayed;
-        bool _rePath;
+        private bool _animPlayed;
+        private bool _rePath;
 
         #endregion
     }

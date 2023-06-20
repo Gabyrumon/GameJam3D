@@ -15,9 +15,12 @@ namespace Villager.Runtime
 
         private void Awake()
         {
-            _villagerAI = GetComponent<VillagerAI>();
-            _church = Church.m_instance;
             gameObject.SetActive(false);
+        }
+
+        private void Start()
+        {
+            _church = Church.m_instance;
         }
 
         private void OnEnable()
@@ -48,9 +51,9 @@ namespace Villager.Runtime
 
         public void ValidatePrayer()
         {
-            Debug.Log("Prayer Validated");
-            gameObject.SetActive(false);
             _church.m_faithOrbCount += _orbGained;
+            gameObject.SetActive(false);
+            _villagerAI.StopPraying();
         }
 
         private void FailPrayer()
