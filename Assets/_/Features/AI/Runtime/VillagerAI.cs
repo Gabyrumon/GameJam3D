@@ -4,7 +4,6 @@ using UnityEngine.AI;
 
 namespace Villager.Runtime
 {
-
     [RequireComponent(typeof(NavMeshAgent))]
     public class VillagerAI : MonoBehaviour
     {
@@ -13,7 +12,6 @@ namespace Villager.Runtime
         public bool m_isConverted;
 
         #endregion
-
 
         #region Unity API
 
@@ -93,7 +91,6 @@ namespace Villager.Runtime
 
         #endregion
 
-
         #region Main Methods
 
         private void DoRoutine()
@@ -106,7 +103,6 @@ namespace Villager.Runtime
 
             if (_agent.remainingDistance < 0.5f)
             {
-
                 if (_currentLocator == LocatorSystem.m_locatorDict[_currentRoom][LocatorSystem.m_locatorDict[_currentRoom].Count - 1])
                 {
                     _rePath = true;
@@ -158,7 +154,7 @@ namespace Villager.Runtime
                 StartStealing();
             }
         }
-        
+
         private void GoToKill()
         {
             if (!_actionPlayed)
@@ -191,7 +187,6 @@ namespace Villager.Runtime
 
         #endregion
 
-
         #region Utils
 
         public void SetConvert(bool isConverted = true)
@@ -205,6 +200,7 @@ namespace Villager.Runtime
             _anim.SetBool("Pray", true);
             _agent.isStopped = true;
         }
+
         public void StoptPraying()
         {
             _anim.SetBool("Pray", false);
@@ -213,14 +209,13 @@ namespace Villager.Runtime
             _timeBeforePray = Random.Range(_randomTimeToPray.x, _randomTimeToPray.y);
         }
 
-
-
         private void StartStealing()
         {
             _anim.SetBool("Walk", false);
             _anim.SetBool("Steal", true);
             _agent.isStopped = true;
         }
+
         public void StopStealing()
         {
             _anim.SetBool("Steal", false);
@@ -235,6 +230,7 @@ namespace Villager.Runtime
             _anim.SetBool("Kill", true);
             _agent.isStopped = true;
         }
+
         public void StopKilling()
         {
             _anim.SetBool("Kill", false);
@@ -249,6 +245,7 @@ namespace Villager.Runtime
             _anim.SetBool("Ritual", true);
             _agent.isStopped = true;
         }
+
         public void StopRitual()
         {
             _anim.SetBool("Ritual", false);
@@ -256,8 +253,6 @@ namespace Villager.Runtime
 
             ChangeState(VillagerState.Routine);
         }
-
-
 
         public void ChangeState(VillagerState state)
         {
@@ -291,7 +286,6 @@ namespace Villager.Runtime
 
         #endregion
 
-
         #region Private And Protected Members
 
         public enum VillagerState
@@ -316,21 +310,20 @@ namespace Villager.Runtime
             Resurection,
         }
 
-
-
         [SerializeField] private Room _currentRoom;
         [SerializeField] private VillagerState _currentState;
-        [Space]
 
+        [Space]
         [SerializeField] private float _speed;
-        [Space]
 
+        [Space]
         [Tooltip("In seconds")]
-        [SerializeField] private Vector2 _randomTimeToPray = new Vector2(15,45);
+        [SerializeField] private Vector2 _randomTimeToPray = new Vector2(15, 45);
+
         private float _timeBeforePray;
 
         private LocatorIdentity _currentLocator;
-        bool _rePath;
+        private bool _rePath;
         private NavMeshAgent _agent;
         private Animator _anim;
         private bool _actionPlayed;

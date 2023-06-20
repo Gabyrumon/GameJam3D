@@ -2325,10 +2325,10 @@ RectTransform:
   m_Father: {fileID: 2072215425}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 3, y: 3}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1004885648
 MonoBehaviour:
@@ -2412,10 +2412,10 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 2072215424}
-        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-        m_MethodName: SetActive
-        m_Mode: 6
+      - m_Target: {fileID: 2072215430}
+        m_TargetAssemblyTypeName: HUD.Runtime.PrayerHUD, HUD.Runtime
+        m_MethodName: ValidatePrayer
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -4299,7 +4299,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 4.3}
-  m_SizeDelta: {x: 5, y: 5}
+  m_SizeDelta: {x: 3.5, y: 3.5}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2072215426
 MonoBehaviour:
@@ -4386,6 +4386,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a6c1656c2be194c49aa50282977b783e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _villagerAI: {fileID: 0}
+  _frontImage: {fileID: 0}
+  _circleCooldown: {fileID: 0}
+  _maxCooldown: 0
 --- !u!1 &2078242654
 GameObject:
   m_ObjectHideFlags: 0
@@ -4624,8 +4628,9 @@ GameObject:
   - component: {fileID: 2309828122849615807}
   - component: {fileID: 2309828122849615808}
   - component: {fileID: 2309828122849615809}
+  - component: {fileID: 2309828122849615810}
   m_Layer: 0
-  m_Name: Women
+  m_Name: Woman
   m_TagString: Villager
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4698,6 +4703,23 @@ CapsuleCollider:
   m_Height: 3
   m_Direction: 1
   m_Center: {x: 0, y: 1, z: 0}
+--- !u!114 &2309828122849615810
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2309828122849615801}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4d05ff638dc526541972ea07933e70c1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_isConverted: 0
+  _currentRoom: 0
+  _currentState: 0
+  _speed: 0
+  _randomTimeToPray: {x: 15, y: 45}
 --- !u!1001 &4058837360477982174
 PrefabInstance:
   m_ObjectHideFlags: 0

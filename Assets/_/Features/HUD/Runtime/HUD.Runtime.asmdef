@@ -1,8 +1,8 @@
 {
     "name": "HUD.Runtime",
-    "rootNamespace": "",
+    "rootNamespace": "HUD.Runtime",
     "references": [
-        "GUID:e8732de2983e6fa4bb2410374b272e39"
+        "GUID:d343718d6b6feb34abc231a29699a346"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

@@ -2,37 +2,40 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class HUDLookAtCamera : MonoBehaviour
+namespace HUD.Runtime
 {
-    #region Public Members
-
-    #endregion
-
-    #region Unity API
-
-    private void Awake()
+    public class HUDLookAtCamera : MonoBehaviour
     {
-        _camera = Camera.main;
+        #region Public Members
+
+        #endregion
+
+        #region Unity API
+
+        private void Awake()
+        {
+            _camera = Camera.main;
+        }
+
+        private void LateUpdate()
+        {
+            transform.LookAt(transform.position + _camera.transform.rotation * Vector3.forward, _camera.transform.rotation * Vector3.up);
+        }
+
+        #endregion
+
+        #region Main Methods
+
+        #endregion
+
+        #region Utils
+
+        #endregion
+
+        #region Private and Protected Members
+
+        private Camera _camera;
+
+        #endregion
     }
-
-    private void LateUpdate()
-    {
-        transform.LookAt(transform.position + _camera.transform.rotation * Vector3.forward, _camera.transform.rotation * Vector3.up);
-    }
-
-    #endregion
-
-    #region Main Methods
-
-    #endregion
-
-    #region Utils
-
-    #endregion
-
-    #region Private and Protected Members
-
-    private Camera _camera;
-
-    #endregion
 }
