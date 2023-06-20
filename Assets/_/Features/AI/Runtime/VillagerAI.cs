@@ -9,7 +9,7 @@ namespace Villager.Runtime
     {
         #region Public Members
 
-        public bool m_isConverted;
+        [HideInInspector] public bool m_isConverted;
 
         #endregion
 
@@ -199,9 +199,11 @@ namespace Villager.Runtime
             _anim.SetBool("Walk", false);
             _anim.SetBool("Pray", true);
             _agent.isStopped = true;
+
+            _prayer.StartPrayer();
         }
 
-        public void StoptPraying()
+        public void StopPraying()
         {
             _anim.SetBool("Pray", false);
             _agent.isStopped = false;
@@ -319,6 +321,9 @@ namespace Villager.Runtime
         [Space]
         [Tooltip("In seconds")]
         [SerializeField] private Vector2 _randomTimeToPray = new Vector2(15, 45);
+
+        [Space]
+        [SerializeField] private Prayer _prayer;
 
         private float _timeBeforePray;
 

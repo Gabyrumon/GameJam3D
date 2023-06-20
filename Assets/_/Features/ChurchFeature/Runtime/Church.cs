@@ -4,7 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace GodRessources.Runtime
+namespace ChurchFeature.Runtime
 {
     public class Church : MonoBehaviour
     {
@@ -13,6 +13,8 @@ namespace GodRessources.Runtime
         [HideInInspector] public int m_level;
 
         public static Church m_instance;
+
+        public int m_faithOrbCount;
 
         #endregion
 
@@ -39,7 +41,7 @@ namespace GodRessources.Runtime
 
         public void Upgrade()
         {
-            if (_godInventory.m_faithOrbCount < _upgradeCostPerLevel[m_level] || m_level >= _upgradeCostPerLevel.Length - 1) return;
+            if (m_faithOrbCount < _upgradeCostPerLevel[m_level] || m_level >= _upgradeCostPerLevel.Length - 1) return;
 
             Sequence sequence = DOTween.Sequence();
             sequence.Append(transform.GetChild(m_level)
@@ -65,8 +67,6 @@ namespace GodRessources.Runtime
         #endregion
 
         #region Private and Protected Members
-
-        [SerializeField] private GodInventory _godInventory;
 
         [Space]
         [SerializeField] private int[] _upgradeCostPerLevel;

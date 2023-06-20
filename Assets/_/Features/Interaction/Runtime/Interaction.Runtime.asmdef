@@ -3,7 +3,7 @@
     "rootNamespace": "Interaction.Runtime",
     "references": [
         "GUID:4ab28d207eabddd458e6cccf0df8edb5",
-        "GUID:5543cdb3806b46f499bc8912e1435d4d"
+        "GUID:4f6bf7812b70c2f4badf1ff607669913"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

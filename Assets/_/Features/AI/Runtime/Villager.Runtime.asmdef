@@ -2,7 +2,8 @@
     "name": "Villager.Runtime",
     "rootNamespace": "Villager.Runtime",
     "references": [
-        "GUID:6bbe1e336ebc4044d99269ddcdb27fbf"
+        "GUID:6bbe1e336ebc4044d99269ddcdb27fbf",
+        "GUID:4f6bf7812b70c2f4badf1ff607669913"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

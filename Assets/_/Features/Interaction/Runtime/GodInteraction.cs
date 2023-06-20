@@ -1,7 +1,6 @@
-using GodRessources.Runtime;
+using ChurchFeature.Runtime;
 using Inputs.Runtime;
 using System;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace Interaction.Runtime
@@ -17,7 +16,6 @@ namespace Interaction.Runtime
         private void Awake()
         {
             _camera = Camera.main;
-            _godInventory = GetComponent<GodInventory>();
         }
 
         private void OnEnable()
@@ -70,8 +68,9 @@ namespace Interaction.Runtime
 
         private void ManageWalkToDivineIntervention(DivineIntervention divineIntervention)
         {
-            if (divineIntervention.m_faithOrbCost > _godInventory.m_faithOrbCount)
+            if (divineIntervention.m_faithOrbCost > _church.m_faithOrbCount)
             {
+
             }
             else
             {
@@ -89,7 +88,7 @@ namespace Interaction.Runtime
 
         #region Private and Protected Members
 
-        private GodInventory _godInventory;
+        private Church _church;
 
         private Camera _camera;
 
