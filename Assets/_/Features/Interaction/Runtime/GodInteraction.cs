@@ -68,7 +68,7 @@ namespace Interaction.Runtime
 
         private void ManageWalkToDivineIntervention(DivineIntervention divineIntervention)
         {
-            if (divineIntervention.m_faithOrbCost > _church.m_faithOrbCount)
+            if (divineIntervention.m_faithOrbCost > _church.FaithOrbCount)
             {
 
             }
