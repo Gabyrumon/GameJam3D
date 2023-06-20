@@ -1,0 +1,17 @@
+{
+    "name": "Interaction.Runtime",
+    "rootNamespace": "Interaction.Runtime",
+    "references": [
+        "GUID:4ab28d207eabddd458e6cccf0df8edb5",
+        "GUID:4f6bf7812b70c2f4badf1ff607669913"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

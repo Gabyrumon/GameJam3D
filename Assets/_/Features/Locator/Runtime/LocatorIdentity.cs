@@ -24,6 +24,7 @@ namespace Locator.Runtime
             LocatorSystem.m_locatorDict[m_currentRoom].Remove(this);
             LocatorSystem.m_locatorDict[m_currentRoom].Sort((p1, p2) => p1.m_priority.CompareTo(p2.m_priority));
         }
+
         private void OnValidate()
         {
             gameObject.name = $"[{m_priority}] [{m_currentRoom}] Locator";

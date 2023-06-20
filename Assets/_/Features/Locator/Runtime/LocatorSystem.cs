@@ -12,12 +12,13 @@ namespace Locator.Runtime
         Market,
         Enclosure,
         Ritual,
+
+        Barrel
     }
     
     public class LocatorSystem
     {
-
-        #region Public Memebers
+        #region Public Members
 
         public static Dictionary<Room, List<LocatorIdentity>> m_locatorDict = new Dictionary<Room, List<LocatorIdentity>>();
 

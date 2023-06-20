@@ -1,0 +1,16 @@
+{
+    "name": "ChurchFeature.Runtime",
+    "rootNamespace": "ChurchFeature.Runtime",
+    "references": [
+        "GUID:5543cdb3806b46f499bc8912e1435d4d"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
