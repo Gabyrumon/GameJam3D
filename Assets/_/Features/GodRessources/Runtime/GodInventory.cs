@@ -1,12 +1,14 @@
-﻿using UnityEngine;
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
 
-namespace Interaction.Runtime
+namespace GodRessources.Runtime
 {
-    public class ObjectInteraction : MonoBehaviour
+    public class GodInventory : MonoBehaviour
     {
         #region Public Members
 
-        public bool m_isAvailable;
+        public int m_faithOrbCount;
 
         #endregion
 
@@ -15,8 +17,6 @@ namespace Interaction.Runtime
         #endregion
 
         #region Main Methods
-
-        public virtual void PlayInteraction() {}
 
         #endregion
 

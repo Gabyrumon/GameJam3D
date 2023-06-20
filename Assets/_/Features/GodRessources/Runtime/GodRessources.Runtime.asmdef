@@ -1,10 +1,7 @@
 {
-    "name": "Interaction.Runtime",
-    "rootNamespace": "Interaction.Runtime",
-    "references": [
-        "GUID:4ab28d207eabddd458e6cccf0df8edb5",
-        "GUID:5543cdb3806b46f499bc8912e1435d4d"
-    ],
+    "name": "GodRessources.Runtime",
+    "rootNamespace": "GodRessources.Runtime",
+    "references": [],
     "includePlatforms": [],
     "excludePlatforms": [],
     "allowUnsafeCode": false,

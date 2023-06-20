@@ -1,17 +1,14 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.AI;
 
-namespace Interaction.Runtime
+namespace GodRessources.Runtime
 {
-    public class WalkToTarget : ObjectInteraction
+    public class Church : MonoBehaviour
     {
         #region Public Members
 
-        public NavMeshAgent m_agent;
-        public Vector3 m_target;
+        public int m_level;
 
         #endregion
 
@@ -20,11 +17,6 @@ namespace Interaction.Runtime
         #endregion
 
         #region Main Methods
-
-        public override void PlayInteraction()
-        {
-            m_agent.SetDestination(m_target);
-        }
 
         #endregion
 

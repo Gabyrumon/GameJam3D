@@ -1,3 +1,4 @@
+using GodRessources.Runtime;
 using Inputs.Runtime;
 using System;
 using System.Collections.Generic;
@@ -16,12 +17,10 @@ namespace Interaction.Runtime
         private void Awake()
         {
             _camera = Camera.main;
-            _availableInteractions = new();
         }
 
         private void OnEnable()
         {
-            Debug.Log("enable");
             InputManager.m_instance.m_onInteraction += OnInteractionEventHandler;
             InputManager.m_instance.m_onMouseMove += OnMouseMoveEventHandler;
         }
@@ -34,23 +33,33 @@ namespace Interaction.Runtime
 
         private void OnMouseMoveEventHandler(object sender, OnMouseMoveEventArgs e)
         {
-            Debug.Log("Mouse move");
             _mousePosition = e.m_mousePosition;
         }
 
         private void OnInteractionEventHandler(object sender, EventArgs e)
         {
-            Debug.Log("interaction");
-            if (Physics.Raycast(_camera.ScreenPointToRay((Vector3)_mousePosition), out RaycastHit hit))
+            if (Physics.Raycast(_camera.ScreenPointToRay(_mousePosition), out RaycastHit hit))
             {
-                if (hit.collider.TryGetComponent(out InteractionCircle interactionCircle))
+                if (hit.collider.TryGetComponent(out ObjectInteraction objectInteraction))
                 {
-                    OpenInteractionCircle(interactionCircle);
+                    if (objectInteraction is WalkToDivineIntervention && (objectInteraction as WalkToDivineIntervention).m_isActive)
+                    {
+                        _currentInteraction = objectInteraction;
+                    }
+                }
+                // When a WalkToDivineIntervention is currently selected.
+                else if (_currentInteraction is WalkToDivineIntervention && hit.collider.TryGetComponent(out DivineIntervention divineIntervention))
+                {
+                    ManageWalkToDivineIntervention(divineIntervention);
+                }
+                else
+                {
+                    _currentInteraction = null;
                 }
             }
             else
             {
-                CloseInteractionCircle();
+                _currentInteraction = null;
             }
         }
 
@@ -58,16 +67,15 @@ namespace Interaction.Runtime
 
         #region Main Methods
 
-        private void OpenInteractionCircle(InteractionCircle interactionCircle)
+        private void ManageWalkToDivineIntervention(DivineIntervention divineIntervention)
         {
-            _currentInteractionCircle = interactionCircle;
-            _currentInteractionCircle.Open();
-        }
-
-        private void CloseInteractionCircle()
-        {
-            _currentInteractionCircle.Close();
-            _currentInteractionCircle = null;
+            _currentInteraction = null;
+            if (divineIntervention.m_faithOrbCost > _godInventory.m_faithOrbCount)
+            {
+                return;
+            }
+            (_currentInteraction as WalkToDivineIntervention).m_pointOfInterest = divineIntervention;
+            _currentInteraction.PlayInteraction();
         }
 
         #endregion
@@ -78,13 +86,13 @@ namespace Interaction.Runtime
 
         #region Private and Protected Members
 
+        private GodInventory _godInventory;
+
         private Camera _camera;
 
         private Vector2 _mousePosition;
 
-        private InteractionCircle _currentInteractionCircle;
-
-        private List<ObjectInteraction> _availableInteractions;
+        private ObjectInteraction _currentInteraction;
 
         #endregion
     }
