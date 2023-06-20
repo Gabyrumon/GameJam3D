@@ -6,9 +6,7 @@ namespace Villager.Runtime
     [RequireComponent(typeof(VillagerAI))]
     public class DarkSideAI : MonoBehaviour
     {
-        #region Public Memebers
-
-        public bool m_isPossessed;
+        #region Public Members
 
         #endregion
 
@@ -43,6 +41,11 @@ namespace Villager.Runtime
             }
         }
 
+        private void OnGUI()
+        {
+            if (GUILayout.Button("Hit")) GetHit();
+        }
+
         #endregion
 
 
@@ -50,7 +53,7 @@ namespace Villager.Runtime
 
         public void StartPossession()
         {
-            m_isPossessed = true;
+            _isPossessed = true;
 
             SetRandomTimeBeforePossession();
             Possess();
@@ -58,12 +61,29 @@ namespace Villager.Runtime
 
         public void ResetPossession()
         {
-            m_isPossessed = false;
+            _isPossessed = false;
             _levelOfPossession = 0;
+        }
+
+        public void GetHit()
+        {
+            if (_isPossessed)
+            {
+                _isPossessed = false;
+                SatanManager.m_instance.m_notPossessedVillagerList.Add(this);
+            }
+            else
+            {
+                _villagerAI.SetConvert(false);
+            }
+
+            _villagerAI.HitAnim();
         }
 
         private void Possess()
         {
+            if (_villagerAI.GetState() == VillagerState.Pray) return;
+
             if (_levelOfPossession == 0)
             {
                 _villagerAI.ChangeState(VillagerState.Steal);
@@ -92,9 +112,10 @@ namespace Villager.Runtime
 
         [SerializeField] private Vector2 _randomTimeBetweenPosssessions;
 
+        private VillagerAI _villagerAI;
         private float _timeBeforeNextPossession;
         private int _levelOfPossession = 0;
-        private VillagerAI _villagerAI;
+        private bool _isPossessed;
 
         #endregion
     }

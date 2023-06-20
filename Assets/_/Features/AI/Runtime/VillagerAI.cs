@@ -4,28 +4,34 @@ using UnityEngine.AI;
 
 namespace Villager.Runtime
 {
+
     [RequireComponent(typeof(NavMeshAgent))]
     public class VillagerAI : MonoBehaviour
     {
         #region Public Members
 
-        [HideInInspector] public bool m_isConverted;
+        [HideInInspector]
+        public bool m_isConverted;
+
+        public VillagerState CurrentState { get => _currentState; set { _currentState = value; } }
 
         #endregion
 
+
         #region Unity API
+        private void Awake()
+        {
+            _agent = GetComponent<NavMeshAgent>();
+            _anim = GetComponentInChildren<Animator>();            
+        }
 
         private void Start()
         {
-            _currentState = VillagerState.Routine;
-            _agent = GetComponent<NavMeshAgent>();
-            _anim = GetComponentInChildren<Animator>();
-
-            _currentLocator = LocatorSystem.GetNearestLocation(_currentRoom, transform.position);
-            _agent.SetDestination(_currentLocator.transform.position);
-
-            _timeBeforePray = Random.Range(_randomTimeToPray.x, _randomTimeToPray.y);
             _agent.speed = _speed;
+            _timeBeforePray = Random.Range(_randomTimeBeforePraying.x, _randomTimeBeforePraying.y);
+            _currentLocator = LocatorSystem.GetNearestLocation(_currentRoom, transform.position);
+
+            _agent.SetDestination(_currentLocator.transform.position);
         }
 
         private void Update()
@@ -41,28 +47,25 @@ namespace Villager.Runtime
 
             switch (_currentState)
             {
-                case VillagerState.Surprise:
-                    DoSurprise();
-                    break;
 
                 case VillagerState.Routine:
                     DoRoutine();
                     break;
 
                 case VillagerState.Pray:
-                    GoToChurch();
+                    GoTo(Room.Church, "Pray");
                     break;
 
                 case VillagerState.Steal:
-                    GoToMarket();
+                    GoTo(Room.Market, "Steal");
                     break;
 
                 case VillagerState.Kill:
-                    GoToKill();
+                    GoTo(Room.Enclosure, "Kill");
                     break;
 
                 case VillagerState.Ritual:
-                    GoToRitual();
+                    GoTo(Room.Ritual, "Ritual");
                     break;
 
                 case VillagerState.Dead:
@@ -74,22 +77,8 @@ namespace Villager.Runtime
             }
         }
 
-        //private void OnGUI()
-        //{
-        //    //if (GUILayout.Button("Pray")) { _currentState = VillagerState.Pray; _actionPlayed = false; }
-
-        //    if (GUILayout.Button("Steal")) ChangeState(VillagerState.Steal);
-
-        //    if (GUILayout.Button("Kill")) ChangeState(VillagerState.Kill);
-
-        //    if (GUILayout.Button("Ritual")) ChangeState(VillagerState.Ritual);
-
-        //    if (GUILayout.Button("Surprise")) { _currentState = VillagerState.Surprise; _actionPlayed = false; }
-
-        //    if (GUILayout.Button("Death")) { _currentState = VillagerState.Dead; _actionPlayed = false; }
-        //}
-
         #endregion
+
 
         #region Main Methods
 
@@ -97,12 +86,19 @@ namespace Villager.Runtime
         {
             if (!_actionPlayed)
             {
+                _anim.SetBool("Pray", false);
+
+                _anim.SetBool("Steal", false);
+                _anim.SetBool("Kill", false);
+                _anim.SetBool("Ritual", false);
+
                 _anim.SetBool("Walk", true);
                 _actionPlayed = true;
             }
 
-            if (_agent.remainingDistance < 0.5f)
+            if (_agent.remainingDistance < 1.5f)
             {
+
                 if (_currentLocator == LocatorSystem.m_locatorDict[_currentRoom][LocatorSystem.m_locatorDict[_currentRoom].Count - 1])
                 {
                     _rePath = true;
@@ -125,67 +121,23 @@ namespace Villager.Runtime
             }
         }
 
-        private void GoToChurch()
+        private void GoTo(Room roomToGo, string animName)
         {
             if (!_actionPlayed)
             {
-                _agent.SetDestination(LocatorSystem.GetNearestLocation(Room.Church, transform.position).transform.position);
+                _agent.SetDestination(LocatorSystem.GetNearestLocation(roomToGo, transform.position).transform.position);
                 _anim.SetBool("Walk", true);
                 _actionPlayed = true;
             }
 
             if (_agent.remainingDistance < 1.5f)
             {
-                StartPraying();
-            }
-        }
-
-        private void GoToMarket()
-        {
-            if (!_actionPlayed)
-            {
-                _agent.SetDestination(LocatorSystem.GetNearestLocation(Room.Market, transform.position).transform.position);
-                _anim.SetBool("Walk", true);
-                _actionPlayed = true;
-            }
-
-            if (_agent.remainingDistance < 1.5f)
-            {
-                StartStealing();
-            }
-        }
-
-        private void GoToKill()
-        {
-            if (!_actionPlayed)
-            {
-                _agent.SetDestination(LocatorSystem.GetNearestLocation(Room.Enclosure, transform.position).transform.position);
-                _anim.SetBool("Walk", true);
-                _actionPlayed = true;
-            }
-
-            if (_agent.remainingDistance < 1.5f)
-            {
-                StartKilling();
-            }
-        }
-
-        private void GoToRitual()
-        {
-            if (!_actionPlayed)
-            {
-                _agent.SetDestination(LocatorSystem.GetNearestLocation(Room.Ritual, transform.position).transform.position);
-                _anim.SetBool("Walk", true);
-                _actionPlayed = true;
-            }
-
-            if (_agent.remainingDistance < 1.5f)
-            {
-                StartRitual();
+                StartAnim(animName);
             }
         }
 
         #endregion
+
 
         #region Utils
 
@@ -194,99 +146,55 @@ namespace Villager.Runtime
             m_isConverted = isConverted;
         }
 
-        private void StartPraying()
+        public void SetTimeBeforeNextPray()
         {
-            _anim.SetBool("Walk", false);
-            _anim.SetBool("Pray", true);
-            _agent.isStopped = true;
-
-            _prayer.StartPrayer();
+            _timeBeforePray = Random.Range(_randomTimeBeforePraying.x, _randomTimeBeforePraying.y);
         }
 
-        public void StopPraying()
+        public void ReturnToRoutine()
         {
-            _anim.SetBool("Pray", false);
-            _agent.isStopped = false;
-
-            _timeBeforePray = Random.Range(_randomTimeToPray.x, _randomTimeToPray.y);
-        }
-
-        private void StartStealing()
-        {
-            _anim.SetBool("Walk", false);
-            _anim.SetBool("Steal", true);
-            _agent.isStopped = true;
-        }
-
-        public void StopStealing()
-        {
-            _anim.SetBool("Steal", false);
-            _agent.isStopped = false;
-
-            ChangeState(VillagerState.Routine);
-        }
-
-        private void StartKilling()
-        {
-            _anim.SetBool("Walk", false);
-            _anim.SetBool("Kill", true);
-            _agent.isStopped = true;
-        }
-
-        public void StopKilling()
-        {
-            _anim.SetBool("Kill", false);
-            _agent.isStopped = false;
-
-            ChangeState(VillagerState.Routine);
-        }
-
-        private void StartRitual()
-        {
-            _anim.SetBool("Walk", false);
-            _anim.SetBool("Ritual", true);
-            _agent.isStopped = true;
-        }
-
-        public void StopRitual()
-        {
-            _anim.SetBool("Ritual", false);
-            _agent.isStopped = false;
+            if (_currentState == VillagerState.Dead) return;
 
             ChangeState(VillagerState.Routine);
         }
 
         public void ChangeState(VillagerState state)
         {
+            if (_currentState == VillagerState.Dead) return;
+
             _agent.isStopped = true;
             _actionPlayed = false;
             _agent.isStopped = false;
             _currentState = state;
         }
 
-        private void DoSurprise()
+        public void HitAnim()
+        {
+            _anim.SetTrigger("Hit");
+        }
+
+        public void DoDeath()
         {
             if (!_actionPlayed)
             {
+                _anim.SetTrigger("Death");
+                _anim.SetLayerWeight(1, 0.1f);
                 _agent.isStopped = true;
-                _anim.SetTrigger("Surprise");
-
                 _actionPlayed = true;
             }
         }
 
-        private void DoDeath()
-        {
-            if (!_actionPlayed)
-            {
-                _agent.isStopped = true;
-                _anim.SetTrigger("Death");
+        public VillagerState GetState() => _currentState;
 
-                _actionPlayed = true;
-            }
+        private void StartAnim(string animName)
+        {
+            _anim.SetBool("Walk", false);
+            _anim.SetBool(animName, true);
+            _agent.isStopped = true;
         }
 
         #endregion
+
 
         #region Private And Protected Members
 
@@ -294,44 +202,30 @@ namespace Villager.Runtime
         {
             Routine,
             Pray,
+            Surprise,
 
             Steal,
             Kill,
             Ritual,
 
-            Surprise,
             Dead
         }
 
-        private enum OrderType
-        {
-            WalkTo,
-            PickUp,
-
-            Sacrifice,
-            Resurection,
-        }
-
         [SerializeField] private Room _currentRoom;
-        [SerializeField] private VillagerState _currentState;
-
         [Space]
+
+        [Tooltip("Meters per seconds")]
         [SerializeField] private float _speed;
-
-        [Space]
         [Tooltip("In seconds")]
-        [SerializeField] private Vector2 _randomTimeToPray = new Vector2(15, 45);
+        [SerializeField] private Vector2 _randomTimeBeforePraying = new Vector2(15,45);
 
-        [Space]
-        [SerializeField] private Prayer _prayer;
-
-        private float _timeBeforePray;
-
+        private VillagerState _currentState;
         private LocatorIdentity _currentLocator;
-        private bool _rePath;
         private NavMeshAgent _agent;
         private Animator _anim;
+        private float _timeBeforePray;
         private bool _actionPlayed;
+        bool _rePath;
 
         #endregion
     }
