@@ -10,7 +10,7 @@ namespace Interaction.Runtime
     {
         #region Public Members
 
-        public DivineIntervention m_pointOfInterest;
+        public DivineIntervention m_divineIntervention;
 
         public bool m_isActive;
 
@@ -28,8 +28,8 @@ namespace Interaction.Runtime
             if (!m_isActive) return;
             if (_agent.remainingDistance > 0.5f) return;
 
-            m_pointOfInterest.Interact();
-            m_pointOfInterest = null;
+            m_divineIntervention.Interact();
+            m_divineIntervention = null;
             m_isActive = false;
         }
 
@@ -40,7 +40,7 @@ namespace Interaction.Runtime
         public override void PlayInteraction()
         {
             m_isActive = true;
-            _agent.SetDestination(m_pointOfInterest.transform.position);
+            _agent.SetDestination(m_divineIntervention.transform.position);
         }
 
         #endregion

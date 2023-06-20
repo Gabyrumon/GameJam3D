@@ -17,6 +17,7 @@ namespace Interaction.Runtime
         private void Awake()
         {
             _camera = Camera.main;
+            _godInventory = GetComponent<GodInventory>();
         }
 
         private void OnEnable()
@@ -42,7 +43,7 @@ namespace Interaction.Runtime
             {
                 if (hit.collider.TryGetComponent(out ObjectInteraction objectInteraction))
                 {
-                    if (objectInteraction is WalkToDivineIntervention && (objectInteraction as WalkToDivineIntervention).m_isActive)
+                    if (objectInteraction is WalkToDivineIntervention && !(objectInteraction as WalkToDivineIntervention).m_isActive)
                     {
                         _currentInteraction = objectInteraction;
                     }
@@ -69,13 +70,15 @@ namespace Interaction.Runtime
 
         private void ManageWalkToDivineIntervention(DivineIntervention divineIntervention)
         {
-            _currentInteraction = null;
             if (divineIntervention.m_faithOrbCost > _godInventory.m_faithOrbCount)
             {
-                return;
             }
-            (_currentInteraction as WalkToDivineIntervention).m_pointOfInterest = divineIntervention;
-            _currentInteraction.PlayInteraction();
+            else
+            {
+                (_currentInteraction as WalkToDivineIntervention).m_divineIntervention = divineIntervention;
+                _currentInteraction.PlayInteraction();
+            }
+            _currentInteraction = null;
         }
 
         #endregion
