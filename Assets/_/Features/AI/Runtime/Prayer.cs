@@ -51,7 +51,7 @@ namespace Villager.Runtime
 
         public void ValidatePrayer()
         {
-            _church.m_faithOrbCount += _orbGained;
+            _church.FaithOrbCount += _orbGained;
             gameObject.SetActive(false);
             _villagerAI.StopPraying();
         }
@@ -60,7 +60,7 @@ namespace Villager.Runtime
         {
             _villagerAI.m_isConverted = false;
 
-            Debug.Log("Prayer Failed");
+            _church.FaithOrbCount -= _orbLost;
             /*
             _frontImage.material.DOColor(Color.red, 0.5f)
                 .OnComplete(() => gameObject.SetActive(false));
@@ -79,11 +79,12 @@ namespace Villager.Runtime
 
         [SerializeField] private VillagerAI _villagerAI;
 
-        [SerializeField] private int _orbGained;
+        [SerializeField] private int _orbGained = 5;
+        [SerializeField] private int _orbLost = 3;
 
         [SerializeField] private Image _frontImage;
         [SerializeField] private Image _circleCooldown;
-        [SerializeField] private float _maxCooldown;
+        [SerializeField] private float _maxCooldown = 5;
 
         private float _currentCooldown;
 

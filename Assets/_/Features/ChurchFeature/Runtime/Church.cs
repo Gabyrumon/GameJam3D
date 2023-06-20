@@ -14,7 +14,19 @@ namespace ChurchFeature.Runtime
 
         public static Church m_instance;
 
-        public int m_faithOrbCount;
+        public int FaithOrbCount 
+        { 
+            get => _faithOrbCount;
+
+            set 
+            {
+                _faithOrbCount = value;
+                if (_faithOrbCount < 0)
+                {
+                    _faithOrbCount = 0;
+                }
+            } 
+        }
 
         #endregion
 
@@ -41,7 +53,7 @@ namespace ChurchFeature.Runtime
 
         public void Upgrade()
         {
-            if (m_faithOrbCount < _upgradeCostPerLevel[m_level] || m_level >= _upgradeCostPerLevel.Length - 1) return;
+            if (FaithOrbCount < _upgradeCostPerLevel[m_level] || m_level >= _upgradeCostPerLevel.Length - 1) return;
 
             Sequence sequence = DOTween.Sequence();
             sequence.Append(transform.GetChild(m_level)
@@ -85,6 +97,8 @@ namespace ChurchFeature.Runtime
 
         [Range(0f, 1f)]
         [SerializeField] private float _buildCompressionScale;
+
+        [SerializeField] private int _faithOrbCount;
 
         #endregion
     }

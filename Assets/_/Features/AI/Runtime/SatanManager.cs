@@ -68,6 +68,7 @@ namespace Villager.Runtime
                     {
                         current.StartPossession();
                         m_notPossessedVillagerList.RemoveAt(randomIndex);
+                        break;
                     }
                 }
             }

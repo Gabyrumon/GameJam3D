@@ -2416,6 +2416,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Peasant Girl
       objectReference: {fileID: 0}
+    - target: {fileID: 4064717482099841454, guid: 8f48a05bdfe476b4c8b818249c490930, type: 3}
+      propertyPath: _orbLost
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 5780403101321786033, guid: 8f48a05bdfe476b4c8b818249c490930, type: 3}
       propertyPath: m_RootOrder
       value: 0
