@@ -14,7 +14,7 @@ namespace Villager.Runtime
         public VillagerState CurrentState
         { get => _currentState; set { _currentState = value; } }
 
-        public bool IsConverted { get => _isConverted; set => _isConverted = value; }
+        public bool IsConverted { get => _isConverted; set { _isConverted = value; FaithVFX(); } }
 
         #endregion
 
@@ -26,6 +26,16 @@ namespace Villager.Runtime
             _anim = GetComponentInChildren<Animator>();
         }
 
+        private void OnEnable()
+        {
+            SatanManager.m_instance.m_villagerList.Add(this);
+        }
+
+        private void OnDisable()
+        {
+            SatanManager.m_instance.m_villagerList.Remove(this);
+        }
+
         private void Start()
         {
             _agent.speed = _speed;
@@ -33,6 +43,7 @@ namespace Villager.Runtime
             _currentLocator = LocatorSystem.GetNearestLocation(_currentRoom, transform.position);
 
             _agent.SetDestination(_currentLocator.transform.position);
+            FaithVFX();
         }
 
         private void Update()
@@ -87,6 +98,11 @@ namespace Villager.Runtime
                 default:
                     break;
             }
+        }
+
+        private void OnGUI()
+        {
+            if (GUILayout.Button("Faith")) IsConverted = true;
         }
 
         #endregion
@@ -193,6 +209,7 @@ namespace Villager.Runtime
             _agent.isStopped = true;
             _actionPlayed = false;
             _animPlayed = false;
+
             _agent.isStopped = false;
             _currentState = state;
         }
@@ -200,6 +217,7 @@ namespace Villager.Runtime
         public void HitAnim()
         {
             _anim.SetTrigger("Hit");
+
         }
 
         public void ActivateDivineIntervention()
@@ -238,6 +256,29 @@ namespace Villager.Runtime
                 _actionPlayed = true;
                 _agent.enabled = false;
             }
+        }
+
+        public void FaithVFX()
+        {
+            if (_isConverted)
+            {
+                _faithVFX.SetActive(true);
+            }
+            else
+            {
+                _faithVFX.SetActive(false);
+            }
+        }
+
+        public void LaunchInvocationVFX()
+        {
+            Instantiate(_invocationVFX, transform.position, Quaternion.Euler(Vector3.right * 90f));
+        }
+
+        public void InvokeDemon()
+        {
+            Instantiate(_demonPrefab, transform.position, Quaternion.identity);
+            Destroy(gameObject);
         }
 
         public VillagerState GetState() => _currentState;
@@ -289,6 +330,12 @@ namespace Villager.Runtime
 
         [Space]
         [SerializeField] private GameObject _prayerInteraction;
+        [SerializeField] private GameObject _demonPrefab;
+
+
+        [Header("VFX")]
+        [SerializeField] private GameObject _faithVFX;
+        [SerializeField] private GameObject _invocationVFX;
 
         private LocatorIdentity _currentLocator;
         private NavMeshAgent _agent;

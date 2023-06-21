@@ -70,7 +70,7 @@ namespace Villager.Runtime
 
             for (int i = 0; i < SatanManager.m_instance.m_villagerList.Count; i++)
             {
-                DarkSideAI targetToCheck = SatanManager.m_instance.m_villagerList[i];
+                VillagerAI targetToCheck = SatanManager.m_instance.m_villagerList[i];
 
                 if (SquaredDistanceToTarget(targetToCheck.transform.position) < SquaredDistanceToTarget(nearestTarget.transform.position))
                 {
@@ -93,7 +93,10 @@ namespace Villager.Runtime
         {
             _hasTarget = false;
             _attackPlayed = false;
-            _agent.isStopped = false;
+            if (_agent != null)
+            {
+                _agent.isStopped = false;
+            }
         }
 
         public void BecomeDead()
@@ -125,7 +128,7 @@ namespace Villager.Runtime
         private bool _attackPlayed;
         private bool _isDead;
 
-        private DarkSideAI nearestTarget;
+        private VillagerAI nearestTarget;
 
         private Animator _anim;
         private NavMeshAgent _agent;

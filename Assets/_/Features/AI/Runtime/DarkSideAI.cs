@@ -14,12 +14,12 @@ namespace Villager.Runtime
 
         private void OnEnable()
         {
-            SatanManager.m_instance.m_villagerList.Add(this);
+            SatanManager.m_instance.m_notPossessedVillagerList.Add(this);
         }
 
         private void OnDisable()
         {
-            SatanManager.m_instance.m_villagerList.Remove(this);
+            SatanManager.m_instance.m_notPossessedVillagerList.Remove(this);
         }
 
         private void Start()
@@ -42,7 +42,7 @@ namespace Villager.Runtime
 
         private void OnGUI()
         {
-            if (GUILayout.Button("Hit")) GetHit();
+            //if (GUILayout.Button("Hit")) GetHit();
         }
 
         #endregion
@@ -67,8 +67,10 @@ namespace Villager.Runtime
         {
             if (_isPossessed)
             {
-                _isPossessed = false;
+                ResetPossession();
+
                 SatanManager.m_instance.m_notPossessedVillagerList.Add(this);
+                _villagerAI.ReturnToRoutine();
             }
             else
             {

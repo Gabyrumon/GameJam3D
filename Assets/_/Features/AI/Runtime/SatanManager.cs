@@ -9,7 +9,7 @@ namespace Villager.Runtime
 
         public static SatanManager m_instance;
 
-        public List<DarkSideAI> m_villagerList = new List<DarkSideAI>();
+        public List<VillagerAI> m_villagerList = new List<VillagerAI>();
 
         public List<DarkSideAI> m_notPossessedVillagerList = new List<DarkSideAI>();
 
@@ -33,7 +33,6 @@ namespace Villager.Runtime
 
         private void Start()
         {
-            m_notPossessedVillagerList = m_villagerList;
             SetRandomTimeBeforePossession();
         }
 
@@ -67,7 +66,10 @@ namespace Villager.Runtime
 
                 for (int i = 0; i < m_notPossessedVillagerList.Count; i++)
                 {
-                    if (m_notPossessedVillagerList[(randomIndex + i) % m_notPossessedVillagerList.Count].GetComponent<VillagerAI>().CurrentState != VillagerAI.VillagerState.Pray)
+                    int index = (randomIndex + i) % m_notPossessedVillagerList.Count;
+                    VillagerAI currentVillager = m_notPossessedVillagerList[index].GetComponent<VillagerAI>();
+
+                    if (currentVillager.CurrentState != VillagerAI.VillagerState.Pray)
                     {
                         current.StartPossession();
                         m_notPossessedVillagerList.RemoveAt(randomIndex);
