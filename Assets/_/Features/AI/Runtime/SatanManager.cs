@@ -10,6 +10,10 @@ namespace Villager.Runtime
 
         public static SatanManager m_instance;
 
+        public List<DarkSideAI> m_villagerList = new List<DarkSideAI>();
+
+        public List<DarkSideAI> m_notPossessedVillagerList = new List<DarkSideAI>();
+
         #endregion
 
 
@@ -86,9 +90,6 @@ namespace Villager.Runtime
 
         #region Private and Protected Members
 
-        public List<DarkSideAI> m_villagerList = new List<DarkSideAI>();
-
-        public List<DarkSideAI> m_notPossessedVillagerList = new List<DarkSideAI>();
 
         [Tooltip("In seconds")]
         [SerializeField] private Vector2 _randomTimeBeforePossession = new Vector2(30,60);

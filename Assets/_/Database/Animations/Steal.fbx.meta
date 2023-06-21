@@ -58,7 +58,7 @@ ModelImporter:
       curves: []
       events:
       - time: 1
-        functionName: ReturnToRoutine()
+        functionName: ReturnToRoutine
         data: 
         objectReferenceParameter: {fileID: 11500000, guid: 4d05ff638dc526541972ea07933e70c1, type: 3}
         floatParameter: 0
