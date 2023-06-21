@@ -59,6 +59,10 @@ namespace Villager.Runtime
                 case VillagerState.Idle:
                     DoIdle(false);
                     break;
+                
+                case VillagerState.Afraid:
+                    DoIdle(true);
+                    break;
 
                 case VillagerState.BarrelAction:
                     GoTo(m_divineIntervention, "Barrel");
@@ -98,6 +102,8 @@ namespace Villager.Runtime
                 _anim.SetBool("Steal", false);
                 _anim.SetBool("Kill", false);
                 _anim.SetBool("Ritual", false);
+
+                _anim.SetBool("Surprise", false);
 
                 _anim.SetBool("Walk", true);
                 _actionPlayed = true;
@@ -230,6 +236,7 @@ namespace Villager.Runtime
                 _anim.SetLayerWeight(1, 0.1f);
                 _agent.isStopped = true;
                 _actionPlayed = true;
+                _agent.enabled = false;
             }
         }
 
@@ -259,6 +266,7 @@ namespace Villager.Runtime
 
             BarrelAction,
             Idle,
+            Afraid,
 
             Steal,
             Kill,

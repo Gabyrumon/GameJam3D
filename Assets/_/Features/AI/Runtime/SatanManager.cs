@@ -13,6 +13,8 @@ namespace Villager.Runtime
 
         public List<DarkSideAI> m_notPossessedVillagerList = new List<DarkSideAI>();
 
+        public List<DemonAI> m_demonList = new List<DemonAI>();
+
         #endregion
 
         #region Unity API
@@ -75,6 +77,29 @@ namespace Villager.Runtime
             }
 
             SetRandomTimeBeforePossession();
+        }
+
+        public void SpawnDemon(DemonAI demonAI)
+        {
+            m_demonList.Add(demonAI);
+
+            for (int i = 0; i < m_villagerList.Count; i++)
+            {
+                m_villagerList[i].GetComponent<VillagerAI>().ChangeState(VillagerAI.VillagerState.Afraid);
+            }
+        }
+
+        public void DemonIsKill(DemonAI demonAI)
+        {
+            m_demonList.Remove(demonAI);
+
+            if (m_demonList.Count == 0)
+            {
+                for (int i = 0; i < m_villagerList.Count; i++)
+                {
+                    m_villagerList[i].GetComponent<VillagerAI>().ReturnToRoutine();
+                }
+            }
         }
 
         #endregion

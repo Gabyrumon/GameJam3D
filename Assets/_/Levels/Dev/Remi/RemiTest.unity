@@ -4447,7 +4447,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d08e1dbaa87428243ab99a6ec2f39a70, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_faithOrbCost: 0
+  _orbCost: 0
+  _range: 0
+  _requiredChurchLevel: 0
+  _cooldDown: 0
 --- !u!114 &2054409692
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4992,7 +4995,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8618357811123367698, guid: a99c01f01d7ef9c45b6a8b11a83c4360, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -17.6
+      value: 37.4
       objectReference: {fileID: 0}
     - target: {fileID: 8618357811123367698, guid: a99c01f01d7ef9c45b6a8b11a83c4360, type: 3}
       propertyPath: m_LocalPosition.y
@@ -5000,7 +5003,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8618357811123367698, guid: a99c01f01d7ef9c45b6a8b11a83c4360, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 16.2
+      value: 44.100002
       objectReference: {fileID: 0}
     - target: {fileID: 8618357811123367698, guid: a99c01f01d7ef9c45b6a8b11a83c4360, type: 3}
       propertyPath: m_LocalRotation.w
@@ -5033,6 +5036,10 @@ PrefabInstance:
     - target: {fileID: 8994073735858812328, guid: a99c01f01d7ef9c45b6a8b11a83c4360, type: 3}
       propertyPath: m_Name
       value: Demon
+      objectReference: {fileID: 0}
+    - target: {fileID: 8994073735858812328, guid: a99c01f01d7ef9c45b6a8b11a83c4360, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a99c01f01d7ef9c45b6a8b11a83c4360, type: 3}

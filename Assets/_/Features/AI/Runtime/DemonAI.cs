@@ -8,13 +8,22 @@ namespace Villager.Runtime
     {
         #region Unity API
 
+        private void OnEnable()
+        {
+            SatanManager.m_instance.SpawnDemon(this);
+            HasNoTarget();
+        }
+
+        private void OnDisable()
+        {
+            SatanManager.m_instance.DemonIsKill(this);
+        }
+
         private void Start()
         {
             _agent = GetComponent<NavMeshAgent>();
             _anim = GetComponent<Animator>();
             _agent.speed = _speed;
-
-            HasNoTarget();
         }
 
         private void Update()
@@ -34,10 +43,10 @@ namespace Villager.Runtime
 
         private void Combat()
         {
-            if (_isDead || SatanManager.m_instance.m_villagerList.Count <= 0) return;
+            if (_isDead || SatanManager.m_instance.m_villagerList.Count <= 0) { _agent.isStopped = true; return; }
             //  GameOver
 
-            if (_agent.remainingDistance < 4f && !_attackPlayed && _hasTarget)
+            if (_agent.remainingDistance < 2.5f && !_attackPlayed && _hasTarget)
             {
                 _anim.SetBool("Run", false);
                 _anim.SetTrigger("Attack");
