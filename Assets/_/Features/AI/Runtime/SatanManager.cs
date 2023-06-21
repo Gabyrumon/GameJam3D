@@ -86,6 +86,8 @@ namespace Villager.Runtime
 
         #region Private And Protected Members
 
+        [Tooltip("In seconds")]
+        [SerializeField] private Vector2 _randomTimeBeforePossession = new Vector2(30, 60);
         private float _timeBeforePossession;
 
         #endregion
