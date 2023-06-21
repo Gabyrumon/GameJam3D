@@ -20,7 +20,7 @@ namespace Interaction.Runtime
 
         public void Interact()
         {
-            // Play Animation and Sound
+            Debug.Log("OKKK");
         }
 
         #endregion
@@ -31,7 +31,8 @@ namespace Interaction.Runtime
 
         #region Private and Protected Members
 
-        private AnimationClip _animationToPlay;
+        [SerializeField] public float _range;
+
         private AudioClip _audioToPlay;
 
         #endregion

@@ -12,25 +12,14 @@ namespace Interaction.Runtime
 
         public DivineIntervention m_divineIntervention;
 
-        public bool m_isActive;
-
         #endregion
 
         #region Unity API
 
-        private void Awake()
-        {
-            _agent = GetComponent<NavMeshAgent>();
-        }
-
         private void Update()
         {
-            if (!m_isActive) return;
-            if (_agent.remainingDistance > 0.5f) return;
-
             m_divineIntervention.Interact();
             m_divineIntervention = null;
-            m_isActive = false;
         }
 
         #endregion
@@ -39,7 +28,6 @@ namespace Interaction.Runtime
 
         public override void PlayInteraction()
         {
-            m_isActive = true;
         }
 
         #endregion
@@ -49,8 +37,6 @@ namespace Interaction.Runtime
         #endregion
 
         #region Private and Protected Members
-
-        private NavMeshAgent _agent;
 
         #endregion
     }

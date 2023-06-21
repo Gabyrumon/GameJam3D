@@ -1,10 +1,11 @@
 {
-    "name": "Villager.Runtime",
-    "rootNamespace": "Villager.Runtime",
+    "name": "God.Runtime",
+    "rootNamespace": "God.Runtime",
     "references": [
-        "GUID:6bbe1e336ebc4044d99269ddcdb27fbf",
+        "GUID:4ab28d207eabddd458e6cccf0df8edb5",
         "GUID:4f6bf7812b70c2f4badf1ff607669913",
-        "GUID:e8732de2983e6fa4bb2410374b272e39"
+        "GUID:e8732de2983e6fa4bb2410374b272e39",
+        "GUID:d343718d6b6feb34abc231a29699a346"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

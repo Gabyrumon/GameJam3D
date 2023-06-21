@@ -1,9 +1,11 @@
 using ChurchFeature.Runtime;
 using Inputs.Runtime;
+using Interaction.Runtime;
 using System;
 using UnityEngine;
+using Villager.Runtime;
 
-namespace Interaction.Runtime
+namespace God.Runtime
 {
     public class GodInteraction : MonoBehaviour
     {
@@ -39,26 +41,26 @@ namespace Interaction.Runtime
         {
             if (Physics.Raycast(_camera.ScreenPointToRay(_mousePosition), out RaycastHit hit))
             {
-                if (hit.collider.TryGetComponent(out ObjectInteraction objectInteraction))
+                if (hit.collider.TryGetComponent(out VillagerAI villagerAI))
                 {
-                    if (objectInteraction is WalkToDivineIntervention && !(objectInteraction as WalkToDivineIntervention).m_isActive)
+                    if (!villagerAI.m_isSelected)
                     {
-                        _currentInteraction = objectInteraction;
+                        SelectVillager(villagerAI);
                     }
                 }
                 // When a WalkToDivineIntervention is currently selected.
-                else if (_currentInteraction is WalkToDivineIntervention && hit.collider.TryGetComponent(out DivineIntervention divineIntervention))
+                else if (villagerAI is not null && hit.collider.TryGetComponent(out DivineIntervention divineIntervention))
                 {
                     ManageWalkToDivineIntervention(divineIntervention);
                 }
                 else
                 {
-                    _currentInteraction = null;
+                    UnselectVillager();
                 }
             }
             else
             {
-                _currentInteraction = null;
+                UnselectVillager();
             }
         }
 
@@ -68,16 +70,20 @@ namespace Interaction.Runtime
 
         private void ManageWalkToDivineIntervention(DivineIntervention divineIntervention)
         {
-            if (divineIntervention.m_faithOrbCost > _church.FaithOrbCount)
-            {
+            _currentVillager.m_divineIntervention = divineIntervention;
+            _currentVillager.ChangeState(VillagerAI.VillagerState.BarrelAction);
 
-            }
-            else
-            {
-                (_currentInteraction as WalkToDivineIntervention).m_divineIntervention = divineIntervention;
-                _currentInteraction.PlayInteraction();
-            }
-            _currentInteraction = null;
+            UnselectVillager();
+        }
+
+        private void SelectVillager(VillagerAI villagerAI)
+        {
+            _currentVillager = villagerAI;
+        }
+
+        private void UnselectVillager()
+        {
+            _currentVillager = null;
         }
 
         #endregion
@@ -94,7 +100,7 @@ namespace Interaction.Runtime
 
         private Vector2 _mousePosition;
 
-        private ObjectInteraction _currentInteraction;
+        private VillagerAI _currentVillager;
 
         #endregion
     }

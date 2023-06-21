@@ -1,10 +1,10 @@
+using Interaction.Runtime;
 using Locator.Runtime;
 using UnityEngine;
 using UnityEngine.AI;
 
 namespace Villager.Runtime
 {
-
     [RequireComponent(typeof(NavMeshAgent))]
     public class VillagerAI : MonoBehaviour
     {
@@ -12,12 +12,16 @@ namespace Villager.Runtime
 
         public bool m_isConverted;
 
-        public VillagerState CurrentState { get => _currentState; set { _currentState = value; } }
+        public bool m_isSelected;
+        public DivineIntervention m_divineIntervention;
+
+        public VillagerState CurrentState
+        { get => _currentState; set { _currentState = value; } }
 
         #endregion
 
-
         #region Unity API
+
         private void Awake()
         {
             _agent = GetComponent<NavMeshAgent>();
@@ -46,7 +50,6 @@ namespace Villager.Runtime
 
             switch (_currentState)
             {
-
                 case VillagerState.Routine:
                     DoRoutine();
                     break;
@@ -56,7 +59,7 @@ namespace Villager.Runtime
                     break;
 
                 case VillagerState.BarrelAction:
-                    GoTo(Room.Church, "BarrelAction");
+                    GoTo(Room.Barrel, "BarrelAction");
                     break;
 
                 case VillagerState.Steal:
@@ -82,7 +85,6 @@ namespace Villager.Runtime
 
         #endregion
 
-
         #region Main Methods
 
         private void DoRoutine()
@@ -101,7 +103,6 @@ namespace Villager.Runtime
 
             if (_agent.remainingDistance < 1.5f)
             {
-
                 if (_currentLocator == LocatorSystem.m_locatorDict[_currentRoom][LocatorSystem.m_locatorDict[_currentRoom].Count - 1])
                 {
                     _rePath = true;
@@ -141,7 +142,6 @@ namespace Villager.Runtime
         }
 
         #endregion
-
 
         #region Utils
 
@@ -183,6 +183,11 @@ namespace Villager.Runtime
             _anim.SetTrigger("Hit");
         }
 
+        public void ActivateDivineIntervention()
+        {
+            m_divineIntervention.Interact();
+        }
+
         public void DoDeath()
         {
             if (!_actionPlayed)
@@ -198,7 +203,6 @@ namespace Villager.Runtime
 
         private void StartAnim(string animName)
         {
-
             if (animName.Equals("Pray"))
             {
                 _prayerInteraction.SetActive(true);
@@ -214,7 +218,6 @@ namespace Villager.Runtime
         }
 
         #endregion
-
 
         #region Private And Protected Members
 
@@ -234,12 +237,13 @@ namespace Villager.Runtime
         }
 
         [SerializeField] private Room _currentRoom;
-        [Space]
 
+        [Space]
         [Tooltip("Meters per seconds")]
         [SerializeField] private float _speed;
+
         [Tooltip("In seconds")]
-        [SerializeField] private Vector2 _randomTimeBeforePraying = new Vector2(15,45);
+        [SerializeField] private Vector2 _randomTimeBeforePraying = new Vector2(15, 45);
 
         [Space]
         [SerializeField] private GameObject _prayerInteraction;
