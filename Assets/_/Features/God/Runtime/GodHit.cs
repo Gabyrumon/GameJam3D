@@ -3,6 +3,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 namespace God.Runtime
 {
@@ -17,6 +18,7 @@ namespace God.Runtime
         private void Awake()
         {
             _camera = Camera.main;
+            _inputManager = InputManager.m_instance;
         }
 
         private void OnEnable()
@@ -42,9 +44,14 @@ namespace God.Runtime
 
         private void OnHitEventHandler(object sender, EventArgs e)
         {
+            if (IsMouseOverUI()) return;
+
             if (Physics.Raycast(_camera.ScreenPointToRay(_mousePosition), out RaycastHit hit))
             {
-                Instantiate(_hitSphere, hit.point, Quaternion.identity);
+                if (hit.collider.gameObject.layer != _uiLayer)
+                {
+                    Instantiate(_hitSphere, hit.point, Quaternion.identity);
+                }
             }
         }
 
@@ -52,11 +59,22 @@ namespace God.Runtime
 
         #region Utils
 
+        private bool IsMouseOverUI()
+        {
+            var results = new List<RaycastResult>();
+            EventSystem.current.RaycastAll(ScreenPosToPointerData(_mousePosition), results);
+            return results.Count > 0;
+        }
+
+        private PointerEventData ScreenPosToPointerData(Vector2 screenPos)
+           => new(EventSystem.current) { position = screenPos };
+
         #endregion
 
         #region Private and Protected Members
 
         [SerializeField] private GameObject _hitSphere;
+        [SerializeField] private LayerMask _uiLayer;
 
         private InputManager _inputManager;
         private Camera _camera;

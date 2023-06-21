@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0, g: 0, b: 0, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028352, g: 0.22571376, b: 0.30692244, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -2633,65 +2633,6 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1140226577}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
---- !u!1 &1152229981
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1152229984}
-  - component: {fileID: 1152229983}
-  - component: {fileID: 1152229982}
-  m_Layer: 0
-  m_Name: HitSphere
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!135 &1152229982
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1152229981}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 0.5
-  m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &1152229983
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1152229981}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4da07a3b3bdfcaf44bc36f06fc0044f2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _timeToDie: 0
---- !u!4 &1152229984
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1152229981}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -10.162706, y: 0.26991653, z: -2.5114384}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 7
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1158023907
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3078,6 +3019,27 @@ PrefabInstance:
       objectReference: {fileID: 1198864951}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1b9698a3d89d1d342911cbd17beffeea, type: 3}
+--- !u!1 &1271543386 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1511012405740748408, guid: 1b9698a3d89d1d342911cbd17beffeea, type: 3}
+  m_PrefabInstance: {fileID: 1271543385}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1271543387
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1271543386}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3903360412453424e935a50d795e4fa4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _hitSphere: {fileID: 6755741244397799627, guid: 626cbf0ca5853e648989c6be61d22680, type: 3}
+  _uiLayer:
+    serializedVersion: 2
+    m_Bits: 32
 --- !u!1 &1293270036
 GameObject:
   m_ObjectHideFlags: 0

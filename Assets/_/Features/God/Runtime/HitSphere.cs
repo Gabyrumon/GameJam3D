@@ -25,13 +25,21 @@ namespace God.Runtime
             }
         }
 
+        private void OnDrawGizmos()
+        {
+            Gizmos.color = Color.red;
+            Gizmos.DrawWireSphere(transform.position, transform.localScale.x);
+        }
+
         #endregion
 
         #region Main Methods
 
         private IEnumerator DestroyItself()
         {
-            yield return new WaitForSeconds(_timeToDie);
+            yield return new WaitForSeconds(0.1f);
+            GetComponent<Collider>().enabled = false;
+            yield return new WaitForSeconds(_timeToDie - 0.1f);
             Destroy(gameObject);
         }
 
@@ -43,6 +51,7 @@ namespace God.Runtime
 
         #region Private and Protected Members
 
+        [Range(0.1f, 1f)]
         [SerializeField] private float _timeToDie;
 
         #endregion

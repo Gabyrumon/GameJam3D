@@ -639,7 +639,7 @@ MonoBehaviour:
   _levelsTransform: {fileID: 1993713657505607822}
   _upgradeButtonGameObject: {fileID: 8338671525514343905}
   _faithOrbCount: 0
-  _upgradeCostPerLevel: 3200000064000000c800000090010000
+  _upgradeCostPerLevel: 3200000064000000c8000000
   _deconstructAnimationDuration: 0.5
   _deconstructEase: 26
   _buildAnimationDuration: 0.3
