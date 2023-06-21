@@ -10,22 +10,22 @@ namespace ChurchFeature.Runtime
     {
         #region Public Members
 
-        [HideInInspector] public int m_level;
+        public int m_level;
 
         public static Church m_instance;
 
-        public int FaithOrbCount 
-        { 
+        public int FaithOrbCount
+        {
             get => _faithOrbCount;
 
-            set 
+            set
             {
                 _faithOrbCount = value;
                 if (_faithOrbCount < 0)
                 {
                     _faithOrbCount = 0;
                 }
-            } 
+            }
         }
 
         #endregion
@@ -37,6 +37,18 @@ namespace ChurchFeature.Runtime
             if (m_instance != null) return;
 
             m_instance = this;
+        }
+
+        private void Update()
+        {
+            if (CanUpgrade())
+            {
+                _upgradeButtonGameObject.SetActive(true);
+            }
+            else
+            {
+                _upgradeButtonGameObject.SetActive(false);
+            }
         }
 
         private void OnGUI()
@@ -53,23 +65,30 @@ namespace ChurchFeature.Runtime
 
         public void Upgrade()
         {
-            if (FaithOrbCount < _upgradeCostPerLevel[m_level] || m_level >= _upgradeCostPerLevel.Length - 1) return;
+            if (!CanUpgrade()) return;
 
             Sequence sequence = DOTween.Sequence();
-            sequence.Append(transform.GetChild(m_level)
+            sequence.Append(_levelsTransform.GetChild(m_level)
                 .DOMoveY(-30, _deconstructAnimationDuration)
                 .SetEase(_deconstructEase));
 
-            sequence.Append(transform.GetChild(m_level + 1)
+            sequence.Append(_levelsTransform.GetChild(m_level + 1)
                 .DOMoveY(0, _buildAnimationDuration)
                 .SetEase(_buildEase));
 
-            sequence.Append(transform.GetChild(m_level + 1)
+            sequence.Append(_levelsTransform.GetChild(m_level + 1)
                     .DOScaleY(_buildCompressionScale, _buildCompressionAnimationDuration)
                     .SetEase(_deconstructEase)
                     .SetLoops(2, LoopType.Yoyo));
 
+            FaithOrbCount -= _upgradeCostPerLevel[m_level];
             m_level++;
+        }
+
+        private bool CanUpgrade()
+        {
+            return FaithOrbCount >= _upgradeCostPerLevel[m_level]
+                && m_level < _upgradeCostPerLevel.Length - 1;
         }
 
         #endregion
@@ -80,9 +99,16 @@ namespace ChurchFeature.Runtime
 
         #region Private and Protected Members
 
+        [SerializeField] private Transform _levelsTransform;
+        [SerializeField] private GameObject _upgradeButtonGameObject;
+
         [Space]
+        [SerializeField] private int _faithOrbCount;
+
         [SerializeField] private int[] _upgradeCostPerLevel;
 
+        [Space]
+        [Header("Animations")]
         [Space]
         [SerializeField] private float _deconstructAnimationDuration;
 
@@ -97,8 +123,6 @@ namespace ChurchFeature.Runtime
 
         [Range(0f, 1f)]
         [SerializeField] private float _buildCompressionScale;
-
-        [SerializeField] private int _faithOrbCount;
 
         #endregion
     }

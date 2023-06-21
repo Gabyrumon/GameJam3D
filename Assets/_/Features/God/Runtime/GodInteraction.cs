@@ -1,9 +1,9 @@
 using ChurchFeature.Runtime;
 using Inputs.Runtime;
-using Interaction.Runtime;
 using System;
 using UnityEngine;
 using Villager.Runtime;
+using ExternalOutline;
 
 namespace God.Runtime
 {
@@ -15,9 +15,10 @@ namespace God.Runtime
 
         #region Unity API
 
-        private void Awake()
+        private void Start()
         {
             _camera = Camera.main;
+            _church = Church.m_instance;
         }
 
         private void OnEnable()
@@ -43,24 +44,21 @@ namespace God.Runtime
             {
                 if (hit.collider.TryGetComponent(out VillagerAI villagerAI))
                 {
-                    if (!villagerAI.m_isSelected)
-                    {
-                        SelectVillager(villagerAI);
-                    }
+                    SelectVillager(villagerAI);
                 }
-                // When a WalkToDivineIntervention is currently selected.
-                else if (villagerAI is not null && hit.collider.TryGetComponent(out DivineIntervention divineIntervention))
+                // When a villager is currently selected.
+                else if (_currentVillager is not null && hit.collider.TryGetComponent(out DivineIntervention divineIntervention))
                 {
-                    ManageWalkToDivineIntervention(divineIntervention);
+                    HandleDivineIntervention(divineIntervention);
                 }
                 else
                 {
-                    UnselectVillager();
+                    UnselectVillager(true);
                 }
             }
             else
             {
-                UnselectVillager();
+                UnselectVillager(true);
             }
         }
 
@@ -68,22 +66,67 @@ namespace God.Runtime
 
         #region Main Methods
 
-        private void ManageWalkToDivineIntervention(DivineIntervention divineIntervention)
+        private void SelectVillager(VillagerAI villagerAI)
         {
+            if (villagerAI.CurrentState != VillagerAI.VillagerState.Routine) return;
+
+            if (_currentVillager is not null)
+            {
+                UnselectVillager(true);
+            }
+
+            _currentVillager = villagerAI;
+            _currentVillager.ChangeState(VillagerAI.VillagerState.Idle);
+
+            _currentVillager.GetComponent<Outline>().enabled = true;
+            foreach (var divineIntervention in _divineInterventions)
+            {
+                if (!CanPlayDivineInteraction(divineIntervention)) break;
+
+                divineIntervention.GetComponent<Outline>().enabled = true;
+            }
+        }
+
+        private void UnselectVillager(bool returnToRoutine)
+        {
+            if (returnToRoutine)
+            {
+                _currentVillager?.ReturnToRoutine();
+            }
+
+            if (_currentVillager is null) return;
+
+            _currentVillager.GetComponent<Outline>().enabled = false;
+            _currentVillager = null;
+
+            foreach (var divineIntervention in _divineInterventions)
+            {
+                divineIntervention.GetComponent<Outline>().enabled = false;
+            }
+        }
+
+        private void HandleDivineIntervention(DivineIntervention divineIntervention)
+        {
+            if (!CanPlayDivineInteraction(divineIntervention))
+            {
+                UnselectVillager(true);
+                return;
+            }
+
             _currentVillager.m_divineIntervention = divineIntervention;
             _currentVillager.ChangeState(VillagerAI.VillagerState.BarrelAction);
 
-            UnselectVillager();
+            _church.FaithOrbCount -= divineIntervention.OrbCost;
+            divineIntervention.IsInteractable = false;
+
+            UnselectVillager(false);
         }
 
-        private void SelectVillager(VillagerAI villagerAI)
+        private bool CanPlayDivineInteraction(DivineIntervention divineIntervention)
         {
-            _currentVillager = villagerAI;
-        }
-
-        private void UnselectVillager()
-        {
-            _currentVillager = null;
+            return _church.FaithOrbCount >= divineIntervention.OrbCost
+                && _church.m_level >= divineIntervention.RequiredChurchLevel
+                && divineIntervention.IsInteractable;
         }
 
         #endregion
@@ -93,6 +136,8 @@ namespace God.Runtime
         #endregion
 
         #region Private and Protected Members
+
+        [SerializeField] private DivineIntervention[] _divineInterventions;
 
         private Church _church;
 

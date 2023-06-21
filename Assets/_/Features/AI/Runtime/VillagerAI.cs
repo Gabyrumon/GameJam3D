@@ -1,4 +1,3 @@
-using Interaction.Runtime;
 using Locator.Runtime;
 using UnityEngine;
 using UnityEngine.AI;
@@ -10,13 +9,12 @@ namespace Villager.Runtime
     {
         #region Public Members
 
-        public bool m_isConverted;
-
-        public bool m_isSelected;
         public DivineIntervention m_divineIntervention;
 
         public VillagerState CurrentState
         { get => _currentState; set { _currentState = value; } }
+
+        public bool IsConverted { get => _isConverted; set => _isConverted = value; }
 
         #endregion
 
@@ -39,7 +37,7 @@ namespace Villager.Runtime
 
         private void Update()
         {
-            if (_timeBeforePray > 0 && _currentState == VillagerState.Routine && m_isConverted)
+            if (_timeBeforePray > 0 && _currentState == VillagerState.Routine && IsConverted)
             {
                 _timeBeforePray -= Time.deltaTime;
                 if (_timeBeforePray <= 0)
@@ -58,8 +56,12 @@ namespace Villager.Runtime
                     GoTo(Room.Church, "Pray");
                     break;
 
+                case VillagerState.Idle:
+                    DoIdle(false);
+                    break;
+
                 case VillagerState.BarrelAction:
-                    GoTo(Room.Barrel, "BarrelAction");
+                    GoTo(m_divineIntervention, "Barrel");
                     break;
 
                 case VillagerState.Steal:
@@ -141,14 +143,25 @@ namespace Villager.Runtime
             }
         }
 
+        private void GoTo(DivineIntervention interventionToGo, string animName)
+        {
+            if (!_actionPlayed)
+            {
+                _agent.SetDestination(interventionToGo.transform.position);
+                _anim.SetBool("Walk", true);
+                _actionPlayed = true;
+            }
+
+            if (_agent.remainingDistance < 2f && !_animPlayed)
+            {
+                _animPlayed = true;
+                StartAnim("BarrelAction");
+            }
+        }
+
         #endregion
 
         #region Utils
-
-        public void SetConvert(bool isConverted = true)
-        {
-            m_isConverted = isConverted;
-        }
 
         public void SetTimeBeforeNextPray()
         {
@@ -188,6 +201,27 @@ namespace Villager.Runtime
             m_divineIntervention.Interact();
         }
 
+        public void DoIdle(bool isSurprised)
+        {
+            if (!_actionPlayed)
+            {
+                _anim.SetBool("Pray", false);
+                _anim.SetBool("Steal", false);
+                _anim.SetBool("Kill", false);
+                _anim.SetBool("Ritual", false);
+                _anim.SetBool("Walk", false);
+                _anim.SetBool("Surprise", false);
+                _actionPlayed = true;
+
+                _agent.isStopped = true;
+
+                if (isSurprised)
+                {
+                    _anim.SetBool("Surprise", true);
+                }
+            }
+        }
+
         public void DoDeath()
         {
             if (!_actionPlayed)
@@ -204,10 +238,6 @@ namespace Villager.Runtime
         private void StartAnim(string animName)
         {
             if (animName.Equals("Pray"))
-            {
-                _prayerInteraction.SetActive(true);
-            }
-            else if (animName.Equals("BarrelAction"))
             {
                 _prayerInteraction.SetActive(true);
             }
@@ -228,6 +258,7 @@ namespace Villager.Runtime
             Surprise,
 
             BarrelAction,
+            Idle,
 
             Steal,
             Kill,
@@ -237,6 +268,9 @@ namespace Villager.Runtime
         }
 
         [SerializeField] private Room _currentRoom;
+        [SerializeField] private VillagerState _currentState;
+
+        [SerializeField] private bool _isConverted;
 
         [Space]
         [Tooltip("Meters per seconds")]
@@ -248,7 +282,6 @@ namespace Villager.Runtime
         [Space]
         [SerializeField] private GameObject _prayerInteraction;
 
-        private VillagerState _currentState;
         private LocatorIdentity _currentLocator;
         private NavMeshAgent _agent;
         private Animator _anim;
