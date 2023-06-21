@@ -5,7 +5,6 @@ namespace Villager.Runtime
 {
     public class SatanManager : MonoBehaviour
     {
-
         #region Public Members
 
         public static SatanManager m_instance;
@@ -15,7 +14,6 @@ namespace Villager.Runtime
         public List<DarkSideAI> m_notPossessedVillagerList = new List<DarkSideAI>();
 
         #endregion
-
 
         #region Unity API
 
@@ -51,7 +49,6 @@ namespace Villager.Runtime
 
         #endregion
 
-
         #region Main Methods
 
         private void SetRandomTimeBeforePossession()
@@ -82,7 +79,6 @@ namespace Villager.Runtime
 
         #endregion
 
-
         #region Utils
 
         #endregion
@@ -90,8 +86,6 @@ namespace Villager.Runtime
 
         #region Private And Protected Members
 
-        [Tooltip("In seconds")]
-        [SerializeField] private Vector2 _randomTimeBeforePossession = new Vector2(30,60);
         private float _timeBeforePossession;
 
         #endregion

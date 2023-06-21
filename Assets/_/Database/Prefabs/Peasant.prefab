@@ -144,9 +144,11 @@ GameObject:
   - component: {fileID: 1361190289059485401}
   - component: {fileID: 1361190289059485405}
   - component: {fileID: 1361190289059485406}
+  - component: {fileID: 3854268295132758693}
   - component: {fileID: 1361190289059485407}
   - component: {fileID: 1361190289059485400}
   - component: {fileID: 1361190289059485404}
+  - component: {fileID: 3268912419550771627}
   m_Layer: 0
   m_Name: Peasant
   m_TagString: Untagged
@@ -183,6 +185,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_isConverted: 0
+  m_divineIntervention: {fileID: 0}
   _currentRoom: 0
   _speed: 2.25
   _randomTimeBeforePraying: {x: 1, y: 10}
@@ -200,6 +203,24 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _randomTimeBetweenPosssessions: {x: 30, y: 45}
+--- !u!114 &3854268295132758693
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1361190289059485402}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5fea29bb7c508c244a1f805a5fd3fc4d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  outlineMode: 0
+  outlineColor: {r: 0.99863666, g: 1, b: 0.4198113, a: 1}
+  outlineWidth: 4
+  precomputeOutline: 1
+  bakeKeys: []
+  bakeValues: []
 --- !u!95 &1361190289059485407
 Animator:
   serializedVersion: 5
@@ -259,6 +280,20 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!136 &3268912419550771627
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1361190289059485402}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  m_Radius: 1
+  m_Height: 3
+  m_Direction: 1
+  m_Center: {x: 0, y: 1, z: 0}
 --- !u!1 &6488481213559180659
 GameObject:
   m_ObjectHideFlags: 0

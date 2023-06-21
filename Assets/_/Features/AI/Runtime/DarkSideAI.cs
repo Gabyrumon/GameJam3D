@@ -10,7 +10,6 @@ namespace Villager.Runtime
 
         #endregion
 
-
         #region Unity API
 
         private void OnEnable()
@@ -30,7 +29,7 @@ namespace Villager.Runtime
 
         private void Update()
         {
-            if (_timeBeforeNextPossession > 0)
+            if (_timeBeforeNextPossession > 0 && _villagerAI.CurrentState == VillagerState.Routine)
             {
                 _timeBeforeNextPossession -= Time.deltaTime;
                 if (_timeBeforeNextPossession <= 0)
@@ -47,7 +46,6 @@ namespace Villager.Runtime
         }
 
         #endregion
-
 
         #region Main Methods
 
@@ -74,7 +72,7 @@ namespace Villager.Runtime
             }
             else
             {
-                _villagerAI.SetConvert(false);
+                _villagerAI.IsConverted = false;
             }
 
             _villagerAI.HitAnim();
@@ -106,7 +104,6 @@ namespace Villager.Runtime
         }
 
         #endregion
-
 
         #region Private And Protected Members
 

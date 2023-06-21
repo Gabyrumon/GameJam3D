@@ -58,7 +58,7 @@ namespace Villager.Runtime
 
         private void FailPrayer()
         {
-            _villagerAI.m_isConverted = false;
+            _villagerAI.IsConverted = false;
 
             _church.FaithOrbCount -= _orbLost;
             /*
