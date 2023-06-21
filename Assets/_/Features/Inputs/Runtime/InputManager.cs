@@ -14,7 +14,6 @@ namespace Inputs.Runtime
         public Vector2 m_direction;
     }
 
-
     public class InputManager : MonoBehaviour
     {
         public static InputManager m_instance;
@@ -23,15 +22,14 @@ namespace Inputs.Runtime
         public EventHandler<OnMouseMoveEventArgs> m_onMouseMove;
         public EventHandler<OnMoveEventArgs> m_onMove;
         public EventHandler m_onInteraction;
+        public EventHandler m_onHit;
         public EventHandler m_onZoom;
         public EventHandler m_onPauseMenu;
-
 
         private void Awake()
         {
             m_instance = this;
         }
-
 
         public void OnMouseMoveEventHandler(InputAction.CallbackContext context)
         {
@@ -50,6 +48,13 @@ namespace Inputs.Runtime
             if (!context.started) return;
 
             m_onInteraction?.Invoke(this, new EventArgs());
+        }
+
+        public void OnHitEventHandler(InputAction.CallbackContext context)
+        {
+            if (!context.started) return;
+
+            m_onHit?.Invoke(this, new EventArgs());
         }
 
         public void OnZoomEventHandler(InputAction.CallbackContext context)

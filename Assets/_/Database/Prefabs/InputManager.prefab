@@ -88,7 +88,19 @@ MonoBehaviour:
     m_ActionId: 078b0b21-b2bd-4aa2-a60a-7888bab7a6e3
     m_ActionName: Gameplay/MousePosition[/Mouse/position]
   - m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 6203203449295444243}
+        m_TargetAssemblyTypeName: Inputs.Runtime.InputManager, Inputs.Runtime
+        m_MethodName: OnInteractionEventHandler
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_ActionId: 07fcf460-4c03-4ba4-abe4-7877578e2b0f
     m_ActionName: Gameplay/Interaction[/Mouse/leftButton]
   - m_PersistentCalls:
@@ -127,6 +139,22 @@ MonoBehaviour:
       m_Calls: []
     m_ActionId: c01931a1-8a00-4c53-9a7b-2e8aaef8b91b
     m_ActionName: PauseMenu/Play[/Keyboard/escape]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 6203203449295444243}
+        m_TargetAssemblyTypeName: Inputs.Runtime.InputManager, Inputs.Runtime
+        m_MethodName: OnHitEventHandler
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: c6e2a8ef-4510-4574-9bbe-072403024364
+    m_ActionName: GodAbove/Hit[/Mouse/leftButton]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: GodAbove
