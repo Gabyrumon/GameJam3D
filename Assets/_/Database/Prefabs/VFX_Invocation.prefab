@@ -44314,7 +44314,7 @@ GameObject:
   - component: {fileID: 3203987729316796863}
   - component: {fileID: 3202844875937550635}
   m_Layer: 0
-  m_Name: InvocationVFX
+  m_Name: VFX_Invocation
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

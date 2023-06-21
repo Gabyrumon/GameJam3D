@@ -250,6 +250,8 @@ namespace Villager.Runtime
         {
             if (!_actionPlayed)
             {
+                SatanManager.m_instance.m_villagerList.Remove(this);
+                IsConverted = false;
                 _anim.SetTrigger("Death");
                 _anim.SetLayerWeight(1, 0.1f);
                 _agent.isStopped = true;
@@ -258,7 +260,7 @@ namespace Villager.Runtime
             }
         }
 
-        public void FaithVFX()
+        private void FaithVFX()
         {
             if (_isConverted)
             {

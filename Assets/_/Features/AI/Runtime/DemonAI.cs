@@ -85,7 +85,6 @@ namespace Villager.Runtime
             if (nearestTarget != null && SatanManager.m_instance.m_villagerList.Count > 0)
             {
                 nearestTarget.GetComponent<VillagerAI>().ChangeState(VillagerAI.VillagerState.Dead);
-                SatanManager.m_instance.m_villagerList.Remove(nearestTarget);
             }
         }
 
@@ -101,6 +100,7 @@ namespace Villager.Runtime
 
         public void BecomeDead()
         {
+
             _isDead = true;
             _agent.isStopped = true;
             _anim.SetTrigger("Death");

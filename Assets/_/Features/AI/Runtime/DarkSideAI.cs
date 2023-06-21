@@ -29,6 +29,8 @@ namespace Villager.Runtime
 
         private void Update()
         {
+            if (!_isPossessed) return;
+
             if (_timeBeforeNextPossession > 0 && _villagerAI.CurrentState == VillagerState.Routine)
             {
                 _timeBeforeNextPossession -= Time.deltaTime;
@@ -49,6 +51,20 @@ namespace Villager.Runtime
 
         #region Main Methods
 
+        private void ResetPossession()
+        {
+            _isPossessed = false;
+            _levelOfPossession = 0;
+            SatanManager.m_instance.m_notPossessedVillagerList.Add(this);
+        }
+
+        private void MinusPossession()
+        {
+            _isPossessed = false;
+            _levelOfPossession--;
+            SatanManager.m_instance.m_notPossessedVillagerList.Add(this);
+        }
+
         public void StartPossession()
         {
             _isPossessed = true;
@@ -57,19 +73,13 @@ namespace Villager.Runtime
             Possess();
         }
 
-        public void ResetPossession()
-        {
-            _isPossessed = false;
-            _levelOfPossession = 0;
-        }
-
         public void GetHit()
         {
             if (_isPossessed)
             {
                 ResetPossession();
+                //MinusPossession();
 
-                SatanManager.m_instance.m_notPossessedVillagerList.Add(this);
                 _villagerAI.ReturnToRoutine();
             }
             else
@@ -82,7 +92,11 @@ namespace Villager.Runtime
 
         private void Possess()
         {
-            if (_villagerAI.GetState() == VillagerState.Pray) return;
+            if (_villagerAI.GetState() == VillagerState.Pray)
+            {
+                ResetPossession();
+                return;
+            }
 
             if (_levelOfPossession == 0)
             {

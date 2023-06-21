@@ -19541,7 +19541,7 @@ GameObject:
   m_Component:
   - component: {fileID: 31391994231534971}
   m_Layer: 0
-  m_Name: FaithVillagerVFX
+  m_Name: VFX_FaithVillager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
