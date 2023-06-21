@@ -16,12 +16,12 @@ namespace Villager.Runtime
 
         private void OnEnable()
         {
-            SatanManager.m_instance.m_villagerList.Add(this);
+            SatanManager.m_instance.m_notPossessedVillagerList.Add(this);
         }
 
         private void OnDisable()
         {
-            SatanManager.m_instance.m_villagerList.Remove(this);
+            SatanManager.m_instance.m_notPossessedVillagerList.Remove(this);
         }
 
         private void Start()
@@ -31,6 +31,8 @@ namespace Villager.Runtime
 
         private void Update()
         {
+            if (!_isPossessed) return;
+
             if (_timeBeforeNextPossession > 0 && _villagerAI.CurrentState == VillagerState.Routine)
             {
                 _timeBeforeNextPossession -= Time.deltaTime;
@@ -44,12 +46,26 @@ namespace Villager.Runtime
 
         private void OnGUI()
         {
-            if (GUILayout.Button("Hit")) GetHit();
+            //if (GUILayout.Button("Hit")) GetHit();
         }
 
         #endregion
 
         #region Main Methods
+
+        private void ResetPossession()
+        {
+            _isPossessed = false;
+            _levelOfPossession = 0;
+            SatanManager.m_instance.m_notPossessedVillagerList.Add(this);
+        }
+
+        private void MinusPossession()
+        {
+            _isPossessed = false;
+            _levelOfPossession--;
+            SatanManager.m_instance.m_notPossessedVillagerList.Add(this);
+        }
 
         public void StartPossession()
         {
@@ -59,18 +75,14 @@ namespace Villager.Runtime
             Possess();
         }
 
-        public void ResetPossession()
-        {
-            IsPossessed = false;
-            _levelOfPossession = 0;
-        }
-
         public void GetHit()
         {
             if (IsPossessed)
             {
-                IsPossessed = false;
-                SatanManager.m_instance.m_notPossessedVillagerList.Add(this);
+                ResetPossession();
+                //MinusPossession();
+
+                _villagerAI.ReturnToRoutine();
             }
             else
             {
@@ -82,7 +94,11 @@ namespace Villager.Runtime
 
         private void Possess()
         {
-            if (_villagerAI.GetState() == VillagerState.Pray) return;
+            if (_villagerAI.GetState() == VillagerState.Pray)
+            {
+                ResetPossession();
+                return;
+            }
 
             if (_levelOfPossession == 0)
             {

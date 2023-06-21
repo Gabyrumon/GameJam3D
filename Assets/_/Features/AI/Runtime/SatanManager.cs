@@ -9,9 +9,11 @@ namespace Villager.Runtime
 
         public static SatanManager m_instance;
 
-        public List<DarkSideAI> m_villagerList = new List<DarkSideAI>();
+        public List<VillagerAI> m_villagerList = new List<VillagerAI>();
 
         public List<DarkSideAI> m_notPossessedVillagerList = new List<DarkSideAI>();
+
+        public List<DemonAI> m_demonList = new List<DemonAI>();
 
         #endregion
 
@@ -31,7 +33,6 @@ namespace Villager.Runtime
 
         private void Start()
         {
-            m_notPossessedVillagerList = m_villagerList;
             SetRandomTimeBeforePossession();
         }
 
@@ -65,7 +66,10 @@ namespace Villager.Runtime
 
                 for (int i = 0; i < m_notPossessedVillagerList.Count; i++)
                 {
-                    if (m_notPossessedVillagerList[(randomIndex + i) % m_notPossessedVillagerList.Count].GetComponent<VillagerAI>().CurrentState != VillagerAI.VillagerState.Pray)
+                    int index = (randomIndex + i) % m_notPossessedVillagerList.Count;
+                    VillagerAI currentVillager = m_notPossessedVillagerList[index].GetComponent<VillagerAI>();
+
+                    if (currentVillager.CurrentState != VillagerAI.VillagerState.Pray)
                     {
                         current.StartPossession();
                         m_notPossessedVillagerList.RemoveAt(randomIndex);
@@ -75,6 +79,29 @@ namespace Villager.Runtime
             }
 
             SetRandomTimeBeforePossession();
+        }
+
+        public void SpawnDemon(DemonAI demonAI)
+        {
+            m_demonList.Add(demonAI);
+
+            for (int i = 0; i < m_villagerList.Count; i++)
+            {
+                m_villagerList[i].GetComponent<VillagerAI>().ChangeState(VillagerAI.VillagerState.Afraid);
+            }
+        }
+
+        public void DemonIsKill(DemonAI demonAI)
+        {
+            m_demonList.Remove(demonAI);
+
+            if (m_demonList.Count == 0)
+            {
+                for (int i = 0; i < m_villagerList.Count; i++)
+                {
+                    m_villagerList[i].GetComponent<VillagerAI>().ReturnToRoutine();
+                }
+            }
         }
 
         #endregion

@@ -8,13 +8,22 @@ namespace Villager.Runtime
     {
         #region Unity API
 
+        private void OnEnable()
+        {
+            SatanManager.m_instance.SpawnDemon(this);
+            HasNoTarget();
+        }
+
+        private void OnDisable()
+        {
+            SatanManager.m_instance.DemonIsKill(this);
+        }
+
         private void Start()
         {
             _agent = GetComponent<NavMeshAgent>();
             _anim = GetComponent<Animator>();
             _agent.speed = _speed;
-
-            HasNoTarget();
         }
 
         private void Update()
@@ -33,10 +42,10 @@ namespace Villager.Runtime
 
         private void Combat()
         {
-            if (_isDead || SatanManager.m_instance.m_villagerList.Count <= 0) return;
+            if (_isDead || SatanManager.m_instance.m_villagerList.Count <= 0) { _agent.isStopped = true; return; }
             //  GameOver
 
-            if (_agent.remainingDistance < 4f && !_attackPlayed && _hasTarget)
+            if (_agent.remainingDistance < 2.5f && !_attackPlayed && _hasTarget)
             {
                 _anim.SetBool("Run", false);
                 _anim.SetTrigger("Attack");
@@ -60,7 +69,7 @@ namespace Villager.Runtime
 
             for (int i = 0; i < SatanManager.m_instance.m_villagerList.Count; i++)
             {
-                DarkSideAI targetToCheck = SatanManager.m_instance.m_villagerList[i];
+                VillagerAI targetToCheck = SatanManager.m_instance.m_villagerList[i];
 
                 if (SquaredDistanceToTarget(targetToCheck.transform.position) < SquaredDistanceToTarget(nearestTarget.transform.position))
                 {
@@ -75,7 +84,6 @@ namespace Villager.Runtime
             if (nearestTarget != null && SatanManager.m_instance.m_villagerList.Count > 0)
             {
                 nearestTarget.GetComponent<VillagerAI>().ChangeState(VillagerAI.VillagerState.Dead);
-                SatanManager.m_instance.m_villagerList.Remove(nearestTarget);
             }
         }
 
@@ -83,11 +91,15 @@ namespace Villager.Runtime
         {
             _hasTarget = false;
             _attackPlayed = false;
-            _agent.isStopped = false;
+            if (_agent != null)
+            {
+                _agent.isStopped = false;
+            }
         }
 
         public void Die()
         {
+
             _isDead = true;
             _agent.isStopped = true;
             _anim.SetTrigger("Death");
@@ -115,7 +127,7 @@ namespace Villager.Runtime
         private bool _attackPlayed;
         private bool _isDead;
 
-        private DarkSideAI nearestTarget;
+        private VillagerAI nearestTarget;
 
         private Animator _anim;
         private NavMeshAgent _agent;
