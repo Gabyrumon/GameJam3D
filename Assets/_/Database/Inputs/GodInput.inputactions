@@ -40,6 +40,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "Hit",
+                    "type": "Button",
+                    "id": "c6e2a8ef-4510-4574-9bbe-072403024364",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -57,7 +66,7 @@
                 {
                     "name": "",
                     "id": "c497a95d-056b-433a-9a78-e0794d43286d",
-                    "path": "<Mouse>/leftButton",
+                    "path": "<Mouse>/rightButton",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -95,6 +104,17 @@
                     "processors": "",
                     "groups": "",
                     "action": "Pause",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "e8d536a9-6655-41b5-b9cc-8fa5ab9d8e2b",
+                    "path": "<Mouse>/leftButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Hit",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
