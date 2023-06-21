@@ -3006,10 +3006,6 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1511012405740748415, guid: 1b9698a3d89d1d342911cbd17beffeea, type: 3}
-      propertyPath: _divineInterventions.Array.size
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 1511012405740748415, guid: 1b9698a3d89d1d342911cbd17beffeea, type: 3}
       propertyPath: _divineInterventions.Array.data[0]
       value: 
       objectReference: {fileID: 896644165}
@@ -3019,27 +3015,6 @@ PrefabInstance:
       objectReference: {fileID: 1198864951}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1b9698a3d89d1d342911cbd17beffeea, type: 3}
---- !u!1 &1271543386 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 1511012405740748408, guid: 1b9698a3d89d1d342911cbd17beffeea, type: 3}
-  m_PrefabInstance: {fileID: 1271543385}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &1271543387
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1271543386}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3903360412453424e935a50d795e4fa4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _hitSphere: {fileID: 6755741244397799627, guid: 626cbf0ca5853e648989c6be61d22680, type: 3}
-  _uiLayer:
-    serializedVersion: 2
-    m_Bits: 32
 --- !u!1 &1293270036
 GameObject:
   m_ObjectHideFlags: 0

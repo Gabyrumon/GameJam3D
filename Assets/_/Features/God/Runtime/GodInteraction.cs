@@ -68,7 +68,7 @@ namespace God.Runtime
 
         private void SelectVillager(VillagerAI villagerAI)
         {
-            if (villagerAI.CurrentState != VillagerAI.VillagerState.Routine) return;
+            if (villagerAI.CurrentState != VillagerAI.VillagerState.Routine || !villagerAI.IsConverted) return;
 
             if (_currentVillager is not null)
             {
@@ -81,7 +81,10 @@ namespace God.Runtime
             _currentVillager.GetComponent<Outline>().enabled = true;
             foreach (var divineIntervention in _divineInterventions)
             {
-                if (!CanPlayDivineInteraction(divineIntervention)) break;
+                if (!CanPlayDivineInteraction(divineIntervention, false)) break;
+
+                divineIntervention.GetComponent<Outline>().OutlineColor =
+                    _church.FaithOrbCount >= divineIntervention.OrbCost ? _unlockedOutlineColor : _lockedOutlineColor;
 
                 divineIntervention.GetComponent<Outline>().enabled = true;
             }
@@ -122,11 +125,16 @@ namespace God.Runtime
             UnselectVillager(false);
         }
 
-        private bool CanPlayDivineInteraction(DivineIntervention divineIntervention)
+        private bool CanPlayDivineInteraction(DivineIntervention divineIntervention, bool checkOrbs = true)
         {
-            return _church.FaithOrbCount >= divineIntervention.OrbCost
-                && _church.m_level >= divineIntervention.RequiredChurchLevel
+            bool result = _church.m_level >= divineIntervention.RequiredChurchLevel
                 && divineIntervention.IsInteractable;
+
+            if (checkOrbs)
+            {
+                result = result && _church.FaithOrbCount >= divineIntervention.OrbCost;
+            }
+            return result;
         }
 
         #endregion
@@ -138,6 +146,9 @@ namespace God.Runtime
         #region Private and Protected Members
 
         [SerializeField] private DivineIntervention[] _divineInterventions;
+
+        [SerializeField] private Color _unlockedOutlineColor;
+        [SerializeField] private Color _lockedOutlineColor;
 
         private Church _church;
 

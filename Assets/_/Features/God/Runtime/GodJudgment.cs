@@ -7,7 +7,7 @@ using UnityEngine.EventSystems;
 
 namespace God.Runtime
 {
-    public class GodHit : MonoBehaviour
+    public class GodJudgment : MonoBehaviour
     {
         #region Public Members
 
@@ -24,13 +24,13 @@ namespace God.Runtime
         private void OnEnable()
         {
             _inputManager.m_onMouseMove += OnMouseMoveEventHandler;
-            _inputManager.m_onHit += OnHitEventHandler;
+            _inputManager.m_onJudgment += OnJudgmentEventHandler;
         }
 
         private void OnDisable()
         {
             _inputManager.m_onMouseMove -= OnMouseMoveEventHandler;
-            _inputManager.m_onHit -= OnHitEventHandler;
+            _inputManager.m_onJudgment -= OnJudgmentEventHandler;
         }
 
         #endregion
@@ -42,7 +42,7 @@ namespace God.Runtime
             _mousePosition = e.m_mousePosition;
         }
 
-        private void OnHitEventHandler(object sender, EventArgs e)
+        private void OnJudgmentEventHandler(object sender, EventArgs e)
         {
             if (IsMouseOverUI()) return;
 
@@ -50,7 +50,7 @@ namespace God.Runtime
             {
                 if (hit.collider.gameObject.layer != _uiLayer)
                 {
-                    Instantiate(_hitPrefab, hit.point, Quaternion.identity);
+                    Instantiate(_judgmentPrefab, new Vector3(hit.point.x, 0, hit.point.z), Quaternion.identity);
                 }
             }
         }
@@ -73,7 +73,7 @@ namespace God.Runtime
 
         #region Private and Protected Members
 
-        [SerializeField] private GameObject _hitPrefab;
+        [SerializeField] private GameObject _judgmentPrefab;
         [SerializeField] private LayerMask _uiLayer;
 
         private InputManager _inputManager;

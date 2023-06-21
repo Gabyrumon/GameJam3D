@@ -23,6 +23,7 @@ namespace Inputs.Runtime
         public EventHandler<OnMoveEventArgs> m_onMove;
         public EventHandler m_onInteraction;
         public EventHandler m_onHit;
+        public EventHandler m_onJudgment;
         public EventHandler m_onZoom;
         public EventHandler m_onPauseMenu;
 
@@ -55,6 +56,13 @@ namespace Inputs.Runtime
             if (!context.started) return;
 
             m_onHit?.Invoke(this, new EventArgs());
+        }
+
+        public void OnJudgmentEventHandler(InputAction.CallbackContext context)
+        {
+            if (!context.started) return;
+
+            m_onJudgment?.Invoke(this, new EventArgs());
         }
 
         public void OnZoomEventHandler(InputAction.CallbackContext context)

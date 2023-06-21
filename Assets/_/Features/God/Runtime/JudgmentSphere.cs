@@ -4,7 +4,7 @@ using Villager.Runtime;
 
 namespace God.Runtime
 {
-    public class HitSphere : MonoBehaviour
+    public class JudgmentSphere : MonoBehaviour
     {
         #region Public Members
 
@@ -19,12 +19,16 @@ namespace God.Runtime
 
         private void OnTriggerEnter(Collider other)
         {
-            if (other.TryGetComponent(out DarkSideAI _darkSide))
+            if (other.TryGetComponent(out DarkSideAI darkSide))
             {
-                if (!_darkSide.GetComponentInChildren<Prayer>(true).gameObject.activeSelf)
+                if (darkSide.IsPossessed && !darkSide.GetComponentInChildren<Prayer>(true).gameObject.activeSelf)
                 {
-                    _darkSide.GetHit();
+                    darkSide.GetHit();
                 }
+            }
+            else if (other.TryGetComponent(out DemonAI demonAI))
+            {
+                demonAI.Die();
             }
         }
 
@@ -40,7 +44,7 @@ namespace God.Runtime
 
         private IEnumerator DisableCollider()
         {
-            yield return new WaitForSeconds(0.1f);
+            yield return new WaitForSeconds(_cleanseDuration);
             GetComponent<Collider>().enabled = false;
         }
 
@@ -51,6 +55,9 @@ namespace God.Runtime
         #endregion
 
         #region Private and Protected Members
+
+        [Range(0.1f, 1f)]
+        [SerializeField] private float _cleanseDuration = 0.1f;
 
         #endregion
     }

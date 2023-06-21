@@ -24,11 +24,10 @@ namespace Villager.Runtime
 
         private void OnGUI()
         {
-            if (GUILayout.Button("Kill Demon")) BecomeDead();
+            if (GUILayout.Button("Kill Demon")) Die();
         }
 
         #endregion
-
 
         #region Main Methods
 
@@ -87,7 +86,7 @@ namespace Villager.Runtime
             _agent.isStopped = false;
         }
 
-        public void BecomeDead()
+        public void Die()
         {
             _isDead = true;
             _agent.isStopped = true;

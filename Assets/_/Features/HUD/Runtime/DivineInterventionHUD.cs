@@ -16,11 +16,12 @@ namespace HUD.Runtime
 
         private void LateUpdate()
         {
-            if (_outline.enabled)
+            if (_outline.enabled && !_descriptionGameObject.activeSelf)
             {
                 _descriptionGameObject.SetActive(true);
+                _description.color = _outline.OutlineColor;
             }
-            else
+            else if (!_outline.enabled && _descriptionGameObject.activeSelf)
             {
                 _descriptionGameObject.SetActive(false);
             }
@@ -40,6 +41,7 @@ namespace HUD.Runtime
 
         [SerializeField] private Outline _outline;
         [SerializeField] private GameObject _descriptionGameObject;
+        [SerializeField] private TextMeshProUGUI _description;
 
         #endregion
     }

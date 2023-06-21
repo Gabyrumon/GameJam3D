@@ -264,6 +264,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _outline: {fileID: 7843346037033309415}
   _descriptionGameObject: {fileID: 4124325030871058985}
+  _description: {fileID: 2993947138870522289}
 --- !u!1 &7152584925147905282
 GameObject:
   m_ObjectHideFlags: 0

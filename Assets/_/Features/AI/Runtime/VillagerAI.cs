@@ -77,7 +77,7 @@ namespace Villager.Runtime
                     break;
 
                 case VillagerState.Dead:
-                    DoDeath();
+                    Die();
                     break;
 
                 default:
@@ -198,7 +198,7 @@ namespace Villager.Runtime
 
         public void ActivateDivineIntervention()
         {
-            m_divineIntervention.Interact();
+            m_divineIntervention.Interact(this);
         }
 
         public void DoIdle(bool isSurprised)
@@ -222,7 +222,7 @@ namespace Villager.Runtime
             }
         }
 
-        public void DoDeath()
+        public void Die()
         {
             if (!_actionPlayed)
             {

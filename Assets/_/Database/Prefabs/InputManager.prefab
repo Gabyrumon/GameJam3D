@@ -121,20 +121,8 @@ MonoBehaviour:
     m_ActionName: Gameplay/Zoom[/Keyboard/space,/Keyboard/leftShift]
   - m_PersistentCalls:
       m_Calls: []
-    m_ActionId: 6803ced3-4f97-4588-a0b8-874bd342176f
-    m_ActionName: GodAmongUs/Movement[/Keyboard/w,/Keyboard/s,/Keyboard/a,/Keyboard/d]
-  - m_PersistentCalls:
-      m_Calls: []
-    m_ActionId: cc1cba71-544e-40ff-b047-2f4389e223b3
-    m_ActionName: GodAmongUs/Interaction[/Mouse/leftButton]
-  - m_PersistentCalls:
-      m_Calls: []
     m_ActionId: 1caa10a0-02a1-47d6-8249-8944d2b30deb
     m_ActionName: GodAbove/Pause[/Keyboard/escape]
-  - m_PersistentCalls:
-      m_Calls: []
-    m_ActionId: fc6c4543-aab7-43fb-9d98-5be4368270a9
-    m_ActionName: GodAmongUs/Pause[/Keyboard/escape]
   - m_PersistentCalls:
       m_Calls: []
     m_ActionId: c01931a1-8a00-4c53-9a7b-2e8aaef8b91b
@@ -155,6 +143,22 @@ MonoBehaviour:
         m_CallState: 2
     m_ActionId: c6e2a8ef-4510-4574-9bbe-072403024364
     m_ActionName: GodAbove/Hit[/Mouse/leftButton]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 6203203449295444243}
+        m_TargetAssemblyTypeName: Inputs.Runtime.InputManager, Inputs.Runtime
+        m_MethodName: OnJudgmentEventHandler
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: e2daaaa9-a925-4102-8c2e-9b229cb67133
+    m_ActionName: GodAbove/Judgment[/Keyboard/q]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: GodAbove

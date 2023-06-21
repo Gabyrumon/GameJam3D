@@ -8,6 +8,8 @@ namespace Villager.Runtime
     {
         #region Public Members
 
+        public bool IsPossessed { get => _isPossessed; set => _isPossessed = value; }
+
         #endregion
 
         #region Unity API
@@ -51,7 +53,7 @@ namespace Villager.Runtime
 
         public void StartPossession()
         {
-            _isPossessed = true;
+            IsPossessed = true;
 
             SetRandomTimeBeforePossession();
             Possess();
@@ -59,15 +61,15 @@ namespace Villager.Runtime
 
         public void ResetPossession()
         {
-            _isPossessed = false;
+            IsPossessed = false;
             _levelOfPossession = 0;
         }
 
         public void GetHit()
         {
-            if (_isPossessed)
+            if (IsPossessed)
             {
-                _isPossessed = false;
+                IsPossessed = false;
                 SatanManager.m_instance.m_notPossessedVillagerList.Add(this);
             }
             else

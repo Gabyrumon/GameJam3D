@@ -18,7 +18,6 @@ namespace Villager.Runtime
 
         private void Start()
         {
-            _church = Church.m_instance;
             _satanManager = SatanManager.m_instance;
         }
 
@@ -32,13 +31,14 @@ namespace Villager.Runtime
 
         #region Main Methods
 
-        public void Interact()
+        public void Interact(VillagerAI source)
         {
             foreach (var villager in _satanManager.m_villagerList)
             {
-                if (Vector3.Distance(transform.position, villager.transform.position) <= _range)
+                VillagerAI currentVillagerAI = villager.GetComponent<VillagerAI>();
+                if (Vector3.Distance(transform.position, villager.transform.position) <= _range && currentVillagerAI != source)
                 {
-                    villager.GetComponent<VillagerAI>().IsConverted = true;
+                    currentVillagerAI.IsConverted = true;
                     Debug.Log($"Converted {villager.gameObject.name}");
                 }
             }
@@ -65,7 +65,6 @@ namespace Villager.Runtime
         [SerializeField] private int _requiredChurchLevel;
         [SerializeField] private int _cooldDown;
 
-        private Church _church;
         private SatanManager _satanManager;
 
         private bool _isInteractable = true;
