@@ -199,13 +199,12 @@ namespace Villager.Runtime
 
         public void ReturnToRoutine()
         {
-            if (_currentState == VillagerState.Dead) return;
-
             ChangeState(VillagerState.Routine);
         }
 
         public void ChangeState(VillagerState state)
         {
+            if (_currentState == VillagerState.Dead) return;
             _agent.isStopped = true;
             _actionPlayed = false;
             _animPlayed = false;
@@ -217,7 +216,6 @@ namespace Villager.Runtime
         public void HitAnim()
         {
             _anim.SetTrigger("Hit");
-
         }
 
         public void ActivateDivineIntervention()
@@ -250,11 +248,13 @@ namespace Villager.Runtime
         {
             if (!_actionPlayed)
             {
+                GetComponent<DarkSideAI>().ResetPossession(false);
+                ChangeState(VillagerState.Dead);
                 SatanManager.m_instance.m_villagerList.Remove(this);
+                SatanManager.m_instance.m_notPossessedVillagerList.Remove(GetComponent<DarkSideAI>());
                 IsConverted = false;
                 _anim.SetTrigger("Death");
                 _anim.SetLayerWeight(1, 0.1f);
-                _agent.isStopped = true;
                 _actionPlayed = true;
                 _agent.enabled = false;
             }

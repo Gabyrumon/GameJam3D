@@ -32,12 +32,6 @@ namespace God.Runtime
             }
         }
 
-        private void OnDrawGizmos()
-        {
-            Gizmos.color = Color.red;
-            Gizmos.DrawWireSphere(transform.position, transform.localScale.x);
-        }
-
         #endregion
 
         #region Main Methods

@@ -1,3 +1,4 @@
+using ChurchFeature.Runtime;
 using Inputs.Runtime;
 using System;
 using System.Collections;
@@ -19,6 +20,11 @@ namespace God.Runtime
         {
             _camera = Camera.main;
             _inputManager = InputManager.m_instance;
+        }
+
+        private void Start()
+        {
+            _church = Church.m_instance;
         }
 
         private void OnEnable()
@@ -44,7 +50,7 @@ namespace God.Runtime
 
         private void OnJudgmentEventHandler(object sender, EventArgs e)
         {
-            if (IsMouseOverUI()) return;
+            if (!_church.IsJudgmentReady() || IsMouseOverUI()) return;
 
             if (Physics.Raycast(_camera.ScreenPointToRay(_mousePosition), out RaycastHit hit))
             {
@@ -53,6 +59,7 @@ namespace God.Runtime
                     Instantiate(_judgmentPrefab, new Vector3(hit.point.x, 0, hit.point.z), Quaternion.identity);
                 }
             }
+            _church.FaithOrbCount -= _church.JudgmentCost;
         }
 
         #endregion
@@ -76,6 +83,7 @@ namespace God.Runtime
         [SerializeField] private GameObject _judgmentPrefab;
         [SerializeField] private LayerMask _uiLayer;
 
+        private Church _church;
         private InputManager _inputManager;
         private Camera _camera;
 

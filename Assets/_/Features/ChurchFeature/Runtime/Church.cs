@@ -1,8 +1,7 @@
 using DG.Tweening;
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace ChurchFeature.Runtime
 {
@@ -25,8 +24,16 @@ namespace ChurchFeature.Runtime
                 {
                     _faithOrbCount = 0;
                 }
+                else if (_faithOrbCount > _maxFaithPerLevel[m_level])
+                {
+                    _faithOrbCount = _maxFaithPerLevel[m_level];
+                }
+                UpdateFillAmount();
+                _judgmentHUD.SetActive(!IsJudgmentReady());
             }
         }
+
+        public int JudgmentCost { get => _judgmentCost; set => _judgmentCost = value; }
 
         #endregion
 
@@ -37,6 +44,12 @@ namespace ChurchFeature.Runtime
             if (m_instance != null) return;
 
             m_instance = this;
+        }
+
+        private void Start()
+        {
+            UpdateFillAmount();
+            _judgmentHUD.SetActive(!IsJudgmentReady());
         }
 
         private void Update()
@@ -63,6 +76,11 @@ namespace ChurchFeature.Runtime
 
         #region Main Methods
 
+        private void UpdateFillAmount()
+        {
+            _faithFillerBar.fillAmount = (float)_faithOrbCount / _upgradeCostPerLevel[m_level];
+        }
+
         public void Upgrade()
         {
             if (!CanUpgrade()) return;
@@ -83,12 +101,18 @@ namespace ChurchFeature.Runtime
 
             FaithOrbCount -= _upgradeCostPerLevel[m_level];
             m_level++;
+            _judgmentHUD.SetActive(!IsJudgmentReady());
         }
 
         private bool CanUpgrade()
         {
             return m_level < _upgradeCostPerLevel.Length
                 && FaithOrbCount >= _upgradeCostPerLevel[m_level];
+        }
+
+        public bool IsJudgmentReady()
+        {
+            return m_level >= _levelRequiredForJudgment && _faithOrbCount >= JudgmentCost;
         }
 
         #endregion
@@ -105,7 +129,15 @@ namespace ChurchFeature.Runtime
         [Space]
         [SerializeField] private int _faithOrbCount;
 
+        [SerializeField] private int[] _maxFaithPerLevel;
         [SerializeField] private int[] _upgradeCostPerLevel;
+
+        [SerializeField] private Image _faithFillerBar;
+
+        [Space]
+        [SerializeField] private int _judgmentCost;
+        [SerializeField] private GameObject _judgmentHUD;
+        [SerializeField] private int _levelRequiredForJudgment;
 
         [Space]
         [Header("Animations")]

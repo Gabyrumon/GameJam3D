@@ -53,10 +53,13 @@ namespace Villager.Runtime
 
         #region Main Methods
 
-        private void ResetPossession()
+        public void ResetPossession(bool addFromNotPossessedList = true)
         {
             _isPossessed = false;
             _levelOfPossession = 0;
+            _timeBeforeNextPossession = 0;
+            if (!addFromNotPossessedList) return;
+
             SatanManager.m_instance.m_notPossessedVillagerList.Add(this);
         }
 

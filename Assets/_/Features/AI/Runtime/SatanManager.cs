@@ -91,7 +91,7 @@ namespace Villager.Runtime
             }
         }
 
-        public void DemonIsKill(DemonAI demonAI)
+        public void DemonIsKilled(DemonAI demonAI)
         {
             m_demonList.Remove(demonAI);
 

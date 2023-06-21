@@ -4893,6 +4893,8 @@ GameObject:
   - component: {fileID: 1339483653523732534}
   - component: {fileID: 982504485}
   - component: {fileID: 982504486}
+  - component: {fileID: 7523955529602243175}
+  - component: {fileID: 6786820750382817853}
   m_Layer: 0
   m_Name: VFX_Judgement
   m_TagString: Untagged
@@ -9770,6 +9772,32 @@ ParticleSystemRenderer:
   m_MeshWeighting2: 1
   m_MeshWeighting3: 1
   m_MaskInteraction: 0
+--- !u!114 &7523955529602243175
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1339483653523732529}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 92f76b180eab4ee43b306d57f4f03b37, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _cleanseDuration: 0.1
+--- !u!135 &6786820750382817853
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1339483653523732529}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 4
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &1339483653626414461
 GameObject:
   m_ObjectHideFlags: 0

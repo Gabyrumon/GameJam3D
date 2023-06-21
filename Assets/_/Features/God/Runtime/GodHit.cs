@@ -50,7 +50,12 @@ namespace God.Runtime
             {
                 if (hit.collider.gameObject.layer != _uiLayer)
                 {
-                    Instantiate(_hitPrefab, hit.point, Quaternion.identity);
+                    Vector3 target = hit.point;
+                    if (target.y < 1f)
+                    {
+                        target.y = 1;
+                    }
+                    Instantiate(_hitPrefab, target, Quaternion.identity);
                 }
             }
         }

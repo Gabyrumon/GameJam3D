@@ -14,11 +14,6 @@ namespace Villager.Runtime
             HasNoTarget();
         }
 
-        private void OnDisable()
-        {
-            SatanManager.m_instance.DemonIsKill(this);
-        }
-
         private void Start()
         {
             _agent = GetComponent<NavMeshAgent>();
@@ -99,10 +94,13 @@ namespace Villager.Runtime
 
         public void Die()
         {
+            if (_isDead) return;
 
             _isDead = true;
             _agent.isStopped = true;
             _anim.SetTrigger("Death");
+
+            SatanManager.m_instance.DemonIsKilled(this);
         }
 
         #endregion
