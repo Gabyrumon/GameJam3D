@@ -1,59 +1,30 @@
-using Locator.Runtime;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEditor;
 using UnityEngine;
 using UnityEngine.AI;
 
 namespace Villager.Runtime
 {
+    [RequireComponent (typeof (Animator), typeof(NavMeshAgent))]
     public class DemonAI : MonoBehaviour
     {
         #region Unity API
 
         private void Start()
         {
-            _currentState = EnemyState.Patrol;
             _agent = GetComponent<NavMeshAgent>();
-            _target = GameObject.FindWithTag("Player").transform;
-            _targetRaycast = GameObject.FindWithTag("Head").transform;
-            //_agent.updateRotation = false;
+            _anim = GetComponent<Animator>();
+            _agent.speed = _speed;
 
-            _radiusWarningSquared = _radiusWarning * _radiusWarning;
-            _radiusCombatSquared = _radiusCombat * _radiusCombat;
-
-            _currentLocator = LocatorSystem.GetNearestLocation(_currentRoom, transform.position);
+            HasNoTarget();
         }
 
         private void Update()
         {
-            //Quaternion.LookRotation(transform.forward);
-            //transform.LookAt(Vector3.Scale(_currentLocator.transform.position, new Vector3(1, 0, 1)));
-            switch (_currentState)
-            {
-                case EnemyState.Patrol:
-                    Patrolling();
-                    break;
-
-                case EnemyState.Warning:
-                    Warning();
-                    break;
-
-                case EnemyState.Combat:
-                    Combat();
-                    break;
-
-                default:
-                    break;
-            }
+            Combat();
         }
-        private void OnDrawGizmosSelected()
-        {
-            Handles.color = Color.red;
-            Handles.DrawWireDisc(transform.position, Vector3.up, _radiusCombat);
 
-            Handles.color = Color.yellow;
-            Handles.DrawWireDisc(transform.position, Vector3.up, _radiusWarning);
+        private void OnGUI()
+        {
+            if (GUILayout.Button("Kill Demon")) BecomeDead();
         }
 
         #endregion
@@ -61,164 +32,66 @@ namespace Villager.Runtime
 
         #region Main Methods
 
-        private void Patrolling()
-        {
-            _agent.speed = _speed.y;
-
-            if (VisionCheck())
-            {
-                if (SquaredDistanceToTarget() < _radiusWarningSquared)
-                {
-                    if (SquaredDistanceToTarget() < _radiusCombatSquared)
-                    {
-                        _currentState = EnemyState.Combat;
-                        return;
-                    }
-
-                    _warningSign.SetActive(true);
-                    _currentState = EnemyState.Warning;
-                    return;
-                }
-
-            }
-
-            if (_agent.remainingDistance < 0.5f)
-            {
-                if (!_loop)
-                {
-                    if (_currentLocator == LocatorSystem.m_locatorDict[_currentRoom][LocatorSystem.m_locatorDict[_currentRoom].Count - 1])
-                    {
-                        _rePath = true;
-                    }
-                    else if (_currentLocator == LocatorSystem.m_locatorDict[_currentRoom][0])
-                    {
-                        _rePath = false;
-                    }
-
-                    if (!_rePath)
-                    {
-                        _currentLocator = LocatorSystem.GetNextLocation(_currentRoom, _currentLocator);
-                    }
-                    else
-                    {
-                        _currentLocator = LocatorSystem.GetPreviousLocation(_currentRoom, _currentLocator);
-                    }
-
-                }
-                else
-                {
-                    _currentLocator = LocatorSystem.GetNextLocation(_currentRoom, _currentLocator);
-                }
-
-                _agent.SetDestination(_currentLocator.transform.position);
-            }
-        }
-
-        private void Warning()
-        {
-            _agent.speed = _speed.x;
-
-            if (VisionCheck())
-            {
-                if (SquaredDistanceToTarget() < _radiusCombatSquared)
-                {
-                    _warningSign.SetActive(false);
-                    _currentState = EnemyState.Combat;
-                    return;
-                }
-
-                _currentWarning += Time.deltaTime * _warningIntensity;
-
-                if (_currentWarning >= 1)
-                {
-                    _warningSign.SetActive(false);
-                    _currentState = EnemyState.Combat;
-                    return;
-                }
-            }
-            else
-            {
-                _currentWarning -= Time.deltaTime * _warningIntensity;
-
-                if (_currentWarning <= 0)
-                {
-                    _warningSign.SetActive(false);
-                    _currentWarning = 0;
-                    _currentState = EnemyState.Patrol;
-                    return;
-                }
-            }
-        }
-
         private void Combat()
         {
-            _agent.speed = _speed.z;
+            if (_isDead || SatanManager.m_instance.m_villagerList.Count <= 0) return;
+            //  GameOver
 
-            _agent.SetDestination(_target.position);
-            gameObject.GetComponentInChildren<MeshRenderer>().material.color = Color.red;
-
-            if (!VisionCheck())
+            if (_agent.remainingDistance < 4f && !_attackPlayed && _hasTarget)
             {
-                _warningSign.SetActive(true);
-                _currentLostTime += Time.deltaTime;
-                if (_currentLostTime >= 2)
-                {
-                    gameObject.GetComponentInChildren<MeshRenderer>().material.color = Color.gray;
-                    _currentLostTime = 0;
-                    _currentLocator = LocatorSystem.GetNearestLocation(_currentRoom, transform.position);
-                    _agent.SetDestination(_currentLocator.transform.position);
+                _anim.SetBool("Run", false);
+                _anim.SetTrigger("Attack");
+                _attackPlayed = true;
+                _agent.isStopped = true;
+            }
 
-                    _currentState = EnemyState.Warning;
-                }
-            }
-            else
+            if (!_hasTarget)
             {
-                _warningSign.SetActive(false);
-                _currentLostTime = 0;
+                _agent.SetDestination(NearestVillager());
+                _anim.SetBool("Run", true);
+                _hasTarget = true;
             }
-            //if (DistanceToTarget() < _radiusWarning)
-            //{
-            //    if (DistanceToTarget() < _radiusCombat)
-            //    {
-            //        _currentState = EnemyState.Combat;
-            //        return;
-            //    }
-            //
-            //    _currentWarning += Time.deltaTime * _warningIntensity;
-            //
-            //    if (_currentWarning >= 1)
-            //    {
-            //        _currentState = EnemyState.Combat;
-            //        return;
-            //    }
-            //}
-            //else
-            //{
-            //    _currentWarning -= Time.deltaTime * _warningIntensity;
-            //
-            //    if (_currentWarning <= 0)
-            //    {
-            //        _currentState = EnemyState.Patrol;
-            //        return;
-            //    }
-            //}
         }
 
-        private bool VisionCheck()
+        private Vector3 NearestVillager()
         {
-            //Debug.DrawRay(transform.position, _target.position - transform.position);
-            if (Physics.Raycast(_myHead.position, _targetRaycast.position - _myHead.position, out RaycastHit hit, _radiusWarning))
+            if (SatanManager.m_instance.m_villagerList.Count <= 0) return transform.position;
+
+            nearestTarget = SatanManager.m_instance.m_villagerList[0];
+
+            for (int i = 0; i < SatanManager.m_instance.m_villagerList.Count; i++)
             {
-                if (hit.collider.gameObject.CompareTag("Player"))
+                DarkSideAI targetToCheck = SatanManager.m_instance.m_villagerList[i];
+
+                if (SquaredDistanceToTarget(targetToCheck.transform.position) < SquaredDistanceToTarget(nearestTarget.transform.position))
                 {
-                    Vector3 enemyToPlayer = hit.collider.transform.position - transform.position;
-                    if (Vector3.Angle(transform.forward, enemyToPlayer) < 30)
-                    {
-                        return true;
-                    }
+                    nearestTarget = targetToCheck;
                 }
             }
-            return false;
+            return nearestTarget.transform.position;
+        }
+
+        public void KillTarget()
+        {
+            if (nearestTarget != null && SatanManager.m_instance.m_villagerList.Count > 0)
+            {
+                nearestTarget.GetComponent<VillagerAI>().ChangeState(VillagerAI.VillagerState.Dead);
+                SatanManager.m_instance.m_villagerList.Remove(nearestTarget);
+            }
+        }
+
+        public void HasNoTarget()
+        {
+            _hasTarget = false;
+            _attackPlayed = false;
+            _agent.isStopped = false;
+        }
+
+        public void BecomeDead()
+        {
+            _isDead = true;
+            _agent.isStopped = true;
+            _anim.SetTrigger("Death");
         }
 
         #endregion
@@ -226,17 +99,10 @@ namespace Villager.Runtime
 
         #region Utils
 
-        private float SquaredDistanceToTarget()
+        private float SquaredDistanceToTarget(Vector3 target)
         {
-            Vector3 pos = _target.position - transform.position;
+            Vector3 pos = target - transform.position;
             return pos.x * pos.x + pos.y * pos.y + pos.z * pos.z;
-        }
-
-        private enum EnemyState
-        {
-            Patrol,
-            Warning,
-            Combat
         }
 
         #endregion
@@ -244,31 +110,16 @@ namespace Villager.Runtime
 
         #region Private And Protected Members
 
-        private LocatorIdentity _currentLocator;
-        bool _rePath;
-        [SerializeField] private bool _loop;
-        [SerializeField] private Room _currentRoom;
-        [SerializeField] private EnemyState _currentState;
-        [Space]
-        [SerializeField] private float _radiusWarning;
-        [SerializeField] private float _radiusCombat;
-        private float _radiusWarningSquared;
-        private float _radiusCombatSquared;
+        [SerializeField] private float _speed;
 
-        [SerializeField] private Vector3 _speed;
-        [Space]
-        [SerializeField] private float _warningIntensity;
-        [SerializeField] private float _currentWarning;
-        [Space]
-        [SerializeField] private float _currentLostTime;
-        [Space]
-        [SerializeField] GameObject _warningSign;
+        private bool _hasTarget;
+        private bool _attackPlayed;
+        private bool _isDead;
 
-        private Transform _target;
-        private Transform _targetRaycast;
-        [SerializeField] private Transform _myHead;
+        private DarkSideAI nearestTarget;
+
+        private Animator _anim;
         private NavMeshAgent _agent;
-
 
         #endregion
     }

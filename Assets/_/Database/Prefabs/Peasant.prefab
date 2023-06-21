@@ -465,6 +465,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _villagerAI: {fileID: 1361190289059485405}
   _orbGained: 5
+  _orbLost: 3
   _frontImage: {fileID: 8745532106809022015}
   _circleCooldown: {fileID: 1654657430524634873}
   _maxCooldown: 5
