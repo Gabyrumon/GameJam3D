@@ -87,8 +87,8 @@ namespace ChurchFeature.Runtime
 
         private bool CanUpgrade()
         {
-            return FaithOrbCount >= _upgradeCostPerLevel[m_level]
-                && m_level < _upgradeCostPerLevel.Length - 1;
+            return m_level < _upgradeCostPerLevel.Length
+                && FaithOrbCount >= _upgradeCostPerLevel[m_level];
         }
 
         #endregion
