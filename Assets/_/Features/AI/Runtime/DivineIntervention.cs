@@ -39,7 +39,6 @@ namespace Villager.Runtime
                 if (Vector3.Distance(transform.position, villager.transform.position) <= _range && currentVillagerAI != source)
                 {
                     currentVillagerAI.IsConverted = true;
-                    Debug.Log($"Converted {villager.gameObject.name}");
                 }
             }
             StartCoroutine(StartCooldown());

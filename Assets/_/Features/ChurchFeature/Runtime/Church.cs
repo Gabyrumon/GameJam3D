@@ -1,8 +1,10 @@
 using DG.Tweening;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using TMPro;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 namespace ChurchFeature.Runtime
@@ -51,6 +53,7 @@ namespace ChurchFeature.Runtime
         private void Start()
         {
             UpdateFillAmount();
+            UpdateUpgradeCostText();
             _judgmentHUD.SetActive(!IsJudgmentReady());
         }
 
@@ -64,6 +67,8 @@ namespace ChurchFeature.Runtime
             {
                 _upgradeButtonGameObject.SetActive(false);
             }
+
+            _levelDescriptionsParent.SetActive(IsMouseOverDescription());
         }
 
         private void OnGUI()
@@ -80,7 +85,20 @@ namespace ChurchFeature.Runtime
 
         private void UpdateFillAmount()
         {
-            _faithFillerBar.fillAmount = (float)_faithOrbCount / _upgradeCostPerLevel[m_level];
+            _faithFillerBar.fillAmount = (float)_faithOrbCount / _maxFaithPerLevel[m_level];
+            _faithOrbText.text = $"{FaithOrbCount} / {_maxFaithPerLevel[m_level]}";
+        }
+
+        private void UpdateUpgradeCostText()
+        {
+            if (m_level < _upgradeCostPerLevel.Length)
+            {
+                _upgradeText.text = $"Upgrade: {_upgradeCostPerLevel[m_level]}";
+            }
+            else
+            {
+                _upgradeText.text = "";
+            }
         }
 
         public void Upgrade()
@@ -102,8 +120,12 @@ namespace ChurchFeature.Runtime
                     .SetLoops(2, LoopType.Yoyo));
 
             FaithOrbCount -= _upgradeCostPerLevel[m_level];
+
             m_level++;
+            _levelDescriptionTexts[m_level].color = Color.white;
+            UpdateFillAmount();
             _levelText.text = $"Church Level : {IntToRomanNotation(m_level + 1)}";
+            UpdateUpgradeCostText();
             _judgmentHUD.SetActive(!IsJudgmentReady());
         }
 
@@ -137,9 +159,26 @@ namespace ChurchFeature.Runtime
             return m_level >= _levelRequiredForJudgment && _faithOrbCount >= JudgmentCost;
         }
 
+        private bool IsMouseOverDescription()
+        {
+            var results = new List<RaycastResult>();
+            EventSystem.current.RaycastAll(ScreenPosToPointerData(Input.mousePosition), results);
+            foreach (var result in results)
+            {
+                if (result.gameObject == _levelText.gameObject)
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
         #endregion
 
         #region Utils
+
+        private PointerEventData ScreenPosToPointerData(Vector2 screenPos)
+           => new(EventSystem.current) { position = screenPos };
 
         #endregion
 
@@ -150,7 +189,15 @@ namespace ChurchFeature.Runtime
         [SerializeField] private GameObject _upgradeButtonGameObject;
 
         [Space]
+        [SerializeField] private GameObject _levelDescriptionsParent;
+
+        [SerializeField] private TextMeshProUGUI[] _levelDescriptionTexts;
+        [SerializeField] private TextMeshProUGUI _upgradeText;
+
+        [Space]
         [SerializeField] private int _faithOrbCount;
+
+        [SerializeField] private TextMeshProUGUI _faithOrbText;
 
         [SerializeField] private int[] _maxFaithPerLevel;
         [SerializeField] private int[] _upgradeCostPerLevel;
