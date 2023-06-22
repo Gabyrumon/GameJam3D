@@ -70,8 +70,14 @@
 		<relationship name="modules">
 			<destination>{d616b317-140a-4edf-ad5c-cb2fd4f6822c}</destination>
 		</relationship>
+		<relationship name="markers">
+			<destination>{ea7f08b9-e6e1-4bb5-a1e2-fc00eab6379e}</destination>
+		</relationship>
 	</object>
 	<object class="EventMixerMaster" id="{7123edaf-314d-44a5-a2b5-8872ecb61b8d}">
+		<relationship name="modulators">
+			<destination>{7359830a-28ee-417d-a327-c01773b5f1f5}</destination>
+		</relationship>
 		<relationship name="effectChain">
 			<destination>{10fdd0fd-0380-4489-acc6-cd770341e6f6}</destination>
 		</relationship>
@@ -112,6 +118,31 @@
 		<relationship name="output">
 			<destination>{7123edaf-314d-44a5-a2b5-8872ecb61b8d}</destination>
 		</relationship>
+	</object>
+	<object class="LoopRegion" id="{ea7f08b9-e6e1-4bb5-a1e2-fc00eab6379e}">
+		<property name="position">
+			<value>0</value>
+		</property>
+		<property name="length">
+			<value>24.324291666666667</value>
+		</property>
+		<relationship name="timeline">
+			<destination>{e005b8ad-0567-43bc-8549-a75f46a033ef}</destination>
+		</relationship>
+		<relationship name="markerTrack">
+			<destination>{45dd6c85-540f-40e4-be8f-c300540669d7}</destination>
+		</relationship>
+	</object>
+	<object class="ADSRModulator" id="{7359830a-28ee-417d-a327-c01773b5f1f5}">
+		<property name="nameOfPropertyBeingModulated">
+			<value>volume</value>
+		</property>
+		<property name="initialValue">
+			<value>-80</value>
+		</property>
+		<property name="finalValue">
+			<value>-80</value>
+		</property>
 	</object>
 	<object class="MixerBusEffectChain" id="{10fdd0fd-0380-4489-acc6-cd770341e6f6}">
 		<relationship name="effects">

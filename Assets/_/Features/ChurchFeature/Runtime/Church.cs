@@ -1,4 +1,5 @@
 using DG.Tweening;
+using Sound.Runtime;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -106,6 +107,8 @@ namespace ChurchFeature.Runtime
             if (!CanUpgrade()) return;
 
             Sequence sequence = DOTween.Sequence();
+            sequence.AppendInterval(0.5f);
+
             sequence.Append(_levelsTransform.GetChild(m_level)
                 .DOMoveY(-30, _deconstructAnimationDuration)
                 .SetEase(_deconstructEase));
@@ -127,6 +130,8 @@ namespace ChurchFeature.Runtime
             _levelText.text = $"Church Level : {IntToRomanNotation(m_level + 1)}";
             UpdateUpgradeCostText();
             _judgmentHUD.SetActive(!IsJudgmentReady());
+
+            SoundManager.m_instance.PlayChurchUpgrade();
         }
 
         private string IntToRomanNotation(int number)

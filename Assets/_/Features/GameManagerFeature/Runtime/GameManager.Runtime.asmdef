@@ -2,7 +2,8 @@
     "name": "GameManagerFeature.Runtime",
     "rootNamespace": "GameManagerFeature.Runtime",
     "references": [
-        "GUID:4ab28d207eabddd458e6cccf0df8edb5"
+        "GUID:4ab28d207eabddd458e6cccf0df8edb5",
+        "GUID:42a8143011f86214690373abe5ba2114"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

@@ -1,5 +1,6 @@
 using ChurchFeature.Runtime;
 using DG.Tweening;
+using Sound.Runtime;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -54,6 +55,7 @@ namespace Villager.Runtime
             _church.FaithOrbCount += _orbGained;
             gameObject.SetActive(false);
             _villagerAI.StopPraying();
+            SoundManager.m_instance.PlayVillagerVoiceJoy(_villagerAI.IsMan);
         }
 
         private void FailPrayer()
@@ -67,6 +69,7 @@ namespace Villager.Runtime
             */
             gameObject.SetActive(false);
             _villagerAI.StopPraying();
+            SoundManager.m_instance.PlayVillagerVoiceSad(_villagerAI.IsMan);
         }
 
         #endregion

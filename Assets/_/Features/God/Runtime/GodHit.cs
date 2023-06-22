@@ -1,4 +1,5 @@
 using Inputs.Runtime;
+using Sound.Runtime;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -56,6 +57,7 @@ namespace God.Runtime
                         target.y = 1;
                     }
                     Instantiate(_hitPrefab, target, Quaternion.identity);
+                    SoundManager.m_instance.PlayClick();
                 }
             }
         }

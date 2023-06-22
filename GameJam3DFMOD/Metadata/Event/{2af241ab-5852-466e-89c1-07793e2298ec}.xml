@@ -2,7 +2,7 @@
 <objects serializationModel="Studio.02.02.00">
 	<object class="Event" id="{2af241ab-5852-466e-89c1-07793e2298ec}">
 		<property name="name">
-			<value>InGameMusicWithoutPeople</value>
+			<value>InGameMusic</value>
 		</property>
 		<property name="outputFormat">
 			<value>1</value>
@@ -30,6 +30,9 @@
 		</relationship>
 		<relationship name="timeline">
 			<destination>{a6844a9b-9aa8-46f4-ac20-42557f007a24}</destination>
+		</relationship>
+		<relationship name="banks">
+			<destination>{6863ff1c-afad-4dc9-bc06-b0c0babec0b5}</destination>
 		</relationship>
 	</object>
 	<object class="EventMixer" id="{9dbd49c8-abe9-4de5-9275-93bfe72351d4}">
@@ -67,8 +70,14 @@
 		<relationship name="modules">
 			<destination>{5fb10964-f17f-44b4-a538-7b4b71f8817a}</destination>
 		</relationship>
+		<relationship name="markers">
+			<destination>{a6f90109-13c8-4ae0-931c-98aa6f9b05de}</destination>
+		</relationship>
 	</object>
 	<object class="EventMixerMaster" id="{7a4401c1-8cd6-42dd-9595-23c6e200c090}">
+		<relationship name="modulators">
+			<destination>{cc6b3e37-9a87-4748-b62e-3fbd88a692f4}</destination>
+		</relationship>
 		<relationship name="effectChain">
 			<destination>{bf033dfc-e6f2-48cc-98e5-5a6ec7c7877b}</destination>
 		</relationship>
@@ -97,6 +106,9 @@
 		</relationship>
 	</object>
 	<object class="EventMixerGroup" id="{80ce4865-40f1-4518-ae56-da6c5c60645a}">
+		<property name="volume">
+			<value>-14.5</value>
+		</property>
 		<property name="name">
 			<value>Audio 1</value>
 		</property>
@@ -109,6 +121,34 @@
 		<relationship name="output">
 			<destination>{7a4401c1-8cd6-42dd-9595-23c6e200c090}</destination>
 		</relationship>
+	</object>
+	<object class="LoopRegion" id="{a6f90109-13c8-4ae0-931c-98aa6f9b05de}">
+		<property name="position">
+			<value>0</value>
+		</property>
+		<property name="length">
+			<value>248.61600000000001</value>
+		</property>
+		<relationship name="timeline">
+			<destination>{a6844a9b-9aa8-46f4-ac20-42557f007a24}</destination>
+		</relationship>
+		<relationship name="markerTrack">
+			<destination>{0185aad6-05a5-48ce-9782-bb64902463a4}</destination>
+		</relationship>
+	</object>
+	<object class="ADSRModulator" id="{cc6b3e37-9a87-4748-b62e-3fbd88a692f4}">
+		<property name="nameOfPropertyBeingModulated">
+			<value>volume</value>
+		</property>
+		<property name="initialValue">
+			<value>-80</value>
+		</property>
+		<property name="releaseTime">
+			<value>200</value>
+		</property>
+		<property name="finalValue">
+			<value>-80</value>
+		</property>
 	</object>
 	<object class="MixerBusEffectChain" id="{bf033dfc-e6f2-48cc-98e5-5a6ec7c7877b}">
 		<relationship name="effects">

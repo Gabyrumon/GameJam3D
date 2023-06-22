@@ -4,6 +4,7 @@ using System;
 using UnityEngine;
 using Villager.Runtime;
 using ExternalOutline;
+using Sound.Runtime;
 
 namespace God.Runtime
 {
@@ -14,12 +15,6 @@ namespace God.Runtime
         #endregion
 
         #region Unity API
-
-        private void Start()
-        {
-            _camera = Camera.main;
-            _church = Church.m_instance;
-        }
 
         private void OnEnable()
         {
@@ -32,6 +27,21 @@ namespace God.Runtime
             InputManager.m_instance.m_onInteraction -= OnInteractionEventHandler;
             InputManager.m_instance.m_onMouseMove -= OnMouseMoveEventHandler;
         }
+
+        private void Start()
+        {
+            _camera = Camera.main;
+            _church = Church.m_instance;
+        }
+
+        private void Update()
+        {
+            CheckIfDivineInterventionsBecomeAvailable();
+        }
+
+        #endregion
+
+        #region Main Methods
 
         private void OnMouseMoveEventHandler(object sender, OnMouseMoveEventArgs e)
         {
@@ -62,9 +72,19 @@ namespace God.Runtime
             }
         }
 
-        #endregion
+        private void CheckIfDivineInterventionsBecomeAvailable()
+        {
+            if (_currentVillager is null) return;
 
-        #region Main Methods
+            foreach (var divineIntervention in _divineInterventions)
+            {
+                Outline currentOutline = divineIntervention.GetComponent<Outline>();
+                if (currentOutline.OutlineColor.Equals(_lockedOutlineColor) && CanPlayDivineInteraction(divineIntervention))
+                {
+                    currentOutline.OutlineColor = _unlockedOutlineColor;
+                }
+            }
+        }
 
         private void SelectVillager(VillagerAI villagerAI)
         {
@@ -77,14 +97,16 @@ namespace God.Runtime
 
             _currentVillager = villagerAI;
             _currentVillager.ChangeState(VillagerAI.VillagerState.Idle);
+            SoundManager.m_instance.PlayVillagerVoiceInterrogative(_currentVillager.IsMan);
 
             _currentVillager.GetComponent<Outline>().enabled = true;
             foreach (var divineIntervention in _divineInterventions)
             {
-                if (!CanPlayDivineInteraction(divineIntervention, false)) break;
+                if (!CanPlayDivineInteraction(divineIntervention, false, false)) break;
 
                 divineIntervention.GetComponent<Outline>().OutlineColor =
-                    _church.FaithOrbCount >= divineIntervention.OrbCost ? _unlockedOutlineColor : _lockedOutlineColor;
+                    _church.FaithOrbCount >= divineIntervention.OrbCost && divineIntervention.IsInteractable
+                    ? _unlockedOutlineColor : _lockedOutlineColor;
 
                 divineIntervention.GetComponent<Outline>().enabled = true;
             }
@@ -122,14 +144,20 @@ namespace God.Runtime
             _church.FaithOrbCount -= divineIntervention.OrbCost;
             divineIntervention.IsInteractable = false;
 
+            SoundManager.m_instance.PlayVillagerVoiceYes(_currentVillager.IsMan);
+            SoundManager.m_instance.PlayGodWhisper();
+
             UnselectVillager(false);
         }
 
-        private bool CanPlayDivineInteraction(DivineIntervention divineIntervention, bool checkOrbs = true)
+        private bool CanPlayDivineInteraction(DivineIntervention divineIntervention, bool checkIsInteractable = true, bool checkOrbs = true)
         {
-            bool result = _church.m_level >= divineIntervention.RequiredChurchLevel
-                && divineIntervention.IsInteractable;
+            bool result = _church.m_level >= divineIntervention.RequiredChurchLevel;
 
+            if (checkIsInteractable)
+            {
+                result = result && divineIntervention.IsInteractable;
+            }
             if (checkOrbs)
             {
                 result = result && _church.FaithOrbCount >= divineIntervention.OrbCost;

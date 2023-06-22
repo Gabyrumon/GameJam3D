@@ -2,7 +2,7 @@
 <objects serializationModel="Studio.02.02.00">
 	<object class="Event" id="{1764ae69-214a-4e1d-8fd4-08adc6c18e74}">
 		<property name="name">
-			<value>OpenMenuInGame</value>
+			<value>Pause</value>
 		</property>
 		<property name="outputFormat">
 			<value>0</value>
@@ -90,7 +90,10 @@
 	<object class="MixerBusPanner" id="{9aecd1f4-bc4e-4718-a062-a28a6d4c580f}" />
 	<object class="SingleSound" id="{05901430-b613-4e7c-b25e-fe508667761a}">
 		<property name="length">
-			<value>1.1011041666666668</value>
+			<value>0.98110416666666667</value>
+		</property>
+		<property name="timelockedOffset">
+			<value>0.12</value>
 		</property>
 		<relationship name="audioFile">
 			<destination>{c4cb20a1-ef0c-414a-87a8-4411ec41489e}</destination>

@@ -1,4 +1,5 @@
 using Inputs.Runtime;
+using Sound.Runtime;
 using System;
 using UnityEngine;
 
@@ -45,6 +46,16 @@ namespace GameManager.Runtime
         public void TogglePause()
         {
             Time.timeScale = Time.timeScale == 1 ? 0 : 1;
+            if (Time.timeScale == 0)
+            {
+                SoundManager.m_instance.PlayPause();
+                SoundManager.m_instance.SetPausedInGameMusic(true);
+            }
+            else
+            {
+                SoundManager.m_instance.PlayUnpause();
+                SoundManager.m_instance.SetPausedInGameMusic(false);
+            }
             _pauseMenu.Toggle();
         }
 

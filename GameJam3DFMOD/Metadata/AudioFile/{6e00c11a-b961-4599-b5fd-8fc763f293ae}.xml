@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.02.00">
+	<object class="AudioFile" id="{6e00c11a-b961-4599-b5fd-8fc763f293ae}">
+		<property name="assetPath">
+			<value>SFX/ChurchImpact.mp3</value>
+		</property>
+		<property name="frequencyInKHz">
+			<value>24</value>
+		</property>
+		<property name="channelCount">
+			<value>2</value>
+		</property>
+		<property name="length">
+			<value>2.6880000000000002</value>
+		</property>
+		<relationship name="masterAssetFolder">
+			<destination>{2dfc1c02-76fa-4a08-bcc0-2ec61e48ea7b}</destination>
+		</relationship>
+	</object>
+</objects>

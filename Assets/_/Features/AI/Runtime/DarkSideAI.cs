@@ -1,3 +1,4 @@
+using Sound.Runtime;
 using UnityEngine;
 using static Villager.Runtime.VillagerAI;
 
@@ -84,11 +85,13 @@ namespace Villager.Runtime
             {
                 ResetPossession();
                 //MinusPossession();
+                SoundManager.m_instance.PlayVillagerVoiceJoy(_villagerAI.IsMan);
 
                 _villagerAI.ReturnToRoutine();
             }
             else
             {
+                SoundManager.m_instance.PlayVillagerVoiceHit(_villagerAI.IsMan);
                 _villagerAI.IsConverted = false;
             }
 

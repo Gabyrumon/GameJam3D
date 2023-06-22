@@ -344,9 +344,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 95aa8e9c4fa460640a11f0f8a971659a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _description: <wiggle>Change water to wine</wiggle>
+  _divineIntervention: {fileID: 7152584925147905287}
   _outline: {fileID: 7843346037033309415}
   _descriptionGameObject: {fileID: 4124325030871058985}
-  _description: {fileID: 2993947138870522289}
+  _descriptionTMP: {fileID: 2993947138870522289}
 --- !u!1 &7152584925147905282
 GameObject:
   m_ObjectHideFlags: 0

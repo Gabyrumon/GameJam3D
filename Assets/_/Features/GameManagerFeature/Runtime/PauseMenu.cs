@@ -1,4 +1,5 @@
 using JetBrains.Annotations;
+using Sound.Runtime;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -34,7 +35,7 @@ namespace GameManager.Runtime
             ResetMenu();
         }
 
-        public void ResetMenu()
+        public void ResetMenu(bool playSound = false)
         {
             _help.SetActive(false);
             _pauseBox.SetActive(true);

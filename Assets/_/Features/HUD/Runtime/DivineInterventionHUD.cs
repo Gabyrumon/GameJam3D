@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using Villager.Runtime;
 
 namespace HUD.Runtime
 {
@@ -14,12 +15,20 @@ namespace HUD.Runtime
 
         #region Unity API
 
+        private void Awake()
+        {
+            _descriptionTMP.text = $"{_description}\n<wiggle>Cost: {_divineIntervention.OrbCost}</wiggle>";
+        }
+
         private void LateUpdate()
         {
-            if (_outline.enabled && !_descriptionGameObject.activeSelf)
+            if (_outline.enabled)
             {
-                _descriptionGameObject.SetActive(true);
-                _description.color = _outline.OutlineColor;
+                if (!_descriptionGameObject.activeSelf)
+                {
+                    _descriptionGameObject.SetActive(true);
+                }
+                _descriptionTMP.color = _outline.OutlineColor;
             }
             else if (!_outline.enabled && _descriptionGameObject.activeSelf)
             {
@@ -39,9 +48,13 @@ namespace HUD.Runtime
 
         #region Private and Protected Members
 
+        [TextArea]
+        [SerializeField] private string _description;
+
+        [SerializeField] private DivineIntervention _divineIntervention;
         [SerializeField] private Outline _outline;
         [SerializeField] private GameObject _descriptionGameObject;
-        [SerializeField] private TextMeshProUGUI _description;
+        [SerializeField] private TextMeshProUGUI _descriptionTMP;
 
         #endregion
     }

@@ -1,3 +1,4 @@
+using Sound.Runtime;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -12,6 +13,7 @@ namespace Villager.Runtime
         {
             SatanManager.m_instance.SpawnDemon(this);
             HasNoTarget();
+            SoundManager.m_instance.PlayDemonSpawnedSound();
         }
 
         private void Start()
@@ -78,7 +80,9 @@ namespace Villager.Runtime
         {
             if (nearestTarget != null && SatanManager.m_instance.m_villagerList.Count > 0)
             {
-                nearestTarget.GetComponent<VillagerAI>().ChangeState(VillagerAI.VillagerState.Dead);
+                VillagerAI nearestVillager = nearestTarget.GetComponent<VillagerAI>();
+                nearestVillager.ChangeState(VillagerAI.VillagerState.Dead);
+                SoundManager.m_instance.PlayDemonKill(nearestVillager.IsMan);
             }
         }
 

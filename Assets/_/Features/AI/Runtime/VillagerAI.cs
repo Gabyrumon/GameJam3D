@@ -1,4 +1,5 @@
 using Locator.Runtime;
+using Sound.Runtime;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -14,7 +15,18 @@ namespace Villager.Runtime
         public VillagerState CurrentState
         { get => _currentState; set { _currentState = value; } }
 
-        public bool IsConverted { get => _isConverted; set { _isConverted = value; FaithVFX(); } }
+        public bool IsConverted
+        {
+            get => _isConverted;
+            set
+            {
+                if (!_isConverted && value) SoundManager.m_instance.PlayVillagerVoiceSurprised(IsMan);
+                _isConverted = value;
+                FaithVFX();
+            }
+        }
+
+        public bool IsMan { get => _isMan; set => _isMan = value; }
 
         #endregion
 
@@ -160,6 +172,10 @@ namespace Villager.Runtime
 
             if (_agent.remainingDistance < 1.5f && !_animPlayed)
             {
+                if (animName.Equals("Ritual"))
+                {
+                    SoundManager.m_instance.PlayDemonSpawnedHornSound();
+                }
                 _animPlayed = true;
                 StartAnim(animName);
             }
@@ -278,6 +294,7 @@ namespace Villager.Runtime
 
         public void LaunchInvocationVFX()
         {
+            Debug.Log("VFX");
             Instantiate(_invocationVFX, transform.position, Quaternion.Euler(Vector3.right * 90f));
         }
 
@@ -285,6 +302,11 @@ namespace Villager.Runtime
         {
             Instantiate(_demonPrefab, transform.position, Quaternion.identity);
             Destroy(gameObject);
+        }
+
+        public void PlayKillSound()
+        {
+            SoundManager.m_instance.PlaySheepDeath();
         }
 
         public VillagerState GetState() => _currentState;
@@ -326,6 +348,8 @@ namespace Villager.Runtime
         [SerializeField] private VillagerState _currentState;
 
         [SerializeField] private bool _isConverted;
+
+        [SerializeField] private bool _isMan;
 
         [Space]
         [Tooltip("Meters per seconds")]
