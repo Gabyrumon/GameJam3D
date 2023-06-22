@@ -1,6 +1,4 @@
 using System;
-using System.Collections;
-using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -20,6 +18,8 @@ namespace Inputs.Runtime
     {
         public static InputManager m_instance;
         public PlayerInput m_playerInput;
+
+        public bool m_cantInteract;
 
         public EventHandler<OnMouseMoveEventArgs> m_onMouseMove;
         public EventHandler<OnMoveEventArgs> m_onMove;
@@ -48,35 +48,35 @@ namespace Inputs.Runtime
 
         public void OnInteractionEventHandler(InputAction.CallbackContext context)
         {
-            if (!context.started || Time.timeScale == 0) return;
+            if (!context.started || Time.timeScale == 0 || m_cantInteract) return;
 
             m_onInteraction?.Invoke(this, new EventArgs());
         }
 
         public void OnHitEventHandler(InputAction.CallbackContext context)
         {
-            if (!context.started || Time.timeScale == 0) return;
+            if (!context.started || Time.timeScale == 0 || m_cantInteract) return;
 
             m_onHit?.Invoke(this, new EventArgs());
         }
 
         public void OnJudgmentEventHandler(InputAction.CallbackContext context)
         {
-            if (!context.started || Time.timeScale == 0) return;
+            if (!context.started || Time.timeScale == 0 || m_cantInteract) return;
 
             m_onJudgment?.Invoke(this, new EventArgs());
         }
 
         public void OnZoomEventHandler(InputAction.CallbackContext context)
         {
-            if (!context.started || Time.timeScale == 0) return;
+            if (!context.started || Time.timeScale == 0 || m_cantInteract) return;
 
             m_onZoom?.Invoke(this, new EventArgs());
         }
 
         public void OnPauseEventHandler(InputAction.CallbackContext context)
         {
-            if (!context.started) return;
+            if (!context.started || m_cantInteract) return;
 
             m_onPauseMenu?.Invoke(this, new EventArgs());
         }

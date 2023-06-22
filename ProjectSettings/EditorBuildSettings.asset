@@ -4,5 +4,11 @@
 EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
-  m_Scenes: []
+  m_Scenes:
+  - enabled: 1
+    path: Assets/_/Levels/Dev/Remi/MainMenu.unity
+    guid: ae5288ab3642da14d8beb02c352f3815
+  - enabled: 1
+    path: Assets/_/Levels/Dev/Remi/InGame.unity
+    guid: 1db0fb22bd5460943a4011e4b988803a
   m_configObjects: {}

@@ -11,7 +11,6 @@ namespace Villager.Runtime
         private void OnEnable()
         {
             SatanManager.m_instance.SpawnDemon(this);
-            HasNoTarget();
         }
 
         private void Start()
@@ -19,16 +18,17 @@ namespace Villager.Runtime
             _agent = GetComponent<NavMeshAgent>();
             _anim = GetComponent<Animator>();
             _agent.speed = _speed;
+            HasNoTarget();
         }
 
         private void Update()
         {
             Combat();
-        }
-
-        private void OnGUI()
-        {
-            if (GUILayout.Button("Kill Demon")) Die();
+            if (SatanManager.m_instance.m_villagerList.Count <= 0 && _hasTarget)
+            {
+                HasNoTarget();
+                _anim.SetBool("Run", false);
+            }
         }
 
         #endregion
@@ -38,21 +38,21 @@ namespace Villager.Runtime
         private void Combat()
         {
             if (_isDead || SatanManager.m_instance.m_villagerList.Count <= 0) { _agent.isStopped = true; return; }
-            //  GameOver
 
-            if (_agent.remainingDistance < 2.5f && !_attackPlayed && _hasTarget)
+            if (!_hasTarget)
+            {
+                _target = NearestVillager();
+                _agent.SetDestination(_target);
+                _anim.SetBool("Run", true);
+                _hasTarget = true;
+            }
+
+            if (Vector3.Distance(transform.position, _target) < 2.5f && !_attackPlayed && _hasTarget)
             {
                 _anim.SetBool("Run", false);
                 _anim.SetTrigger("Attack");
                 _attackPlayed = true;
                 _agent.isStopped = true;
-            }
-
-            if (!_hasTarget)
-            {
-                _agent.SetDestination(NearestVillager());
-                _anim.SetBool("Run", true);
-                _hasTarget = true;
             }
         }
 
@@ -127,6 +127,7 @@ namespace Villager.Runtime
 
         private VillagerAI nearestTarget;
 
+        private Vector3 _target;
         private Animator _anim;
         private NavMeshAgent _agent;
 

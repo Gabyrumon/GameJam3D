@@ -7,13 +7,16 @@ namespace Locator.Runtime
     {
         Land,
         Mine,
+        Port,
 
         Church,
         Market,
         Enclosure,
         Ritual,
 
-        Barrel
+        Barrel,
+
+        WinChuch
     }
     
     public class LocatorSystem
