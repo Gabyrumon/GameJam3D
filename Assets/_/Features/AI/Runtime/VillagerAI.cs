@@ -216,6 +216,10 @@ namespace Villager.Runtime
         public void HitAnim()
         {
             _anim.SetTrigger("Hit");
+
+            if (CurrentState == VillagerState.Routine) return;
+
+            ReturnToRoutine();
         }
 
         public void ActivateDivineIntervention()
