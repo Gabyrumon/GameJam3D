@@ -107,17 +107,6 @@
                 },
                 {
                     "name": "",
-                    "id": "abef6e39-5077-4923-9558-70317fe34c7c",
-                    "path": "<Keyboard>/escape",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Pause",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
                     "id": "e8d536a9-6655-41b5-b9cc-8fa5ab9d8e2b",
                     "path": "<Mouse>/leftButton",
                     "interactions": "",
@@ -135,6 +124,17 @@
                     "processors": "",
                     "groups": "",
                     "action": "Judgment",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "abef6e39-5077-4923-9558-70317fe34c7c",
+                    "path": "<Keyboard>/escape",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Pause",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

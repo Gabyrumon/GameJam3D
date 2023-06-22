@@ -32,7 +32,7 @@ namespace GameManager.Runtime
         public void ResetMenu()
         {
             _help.SetActive(false);
-            _pauseButtons.SetActive(true);
+            _pauseBox.SetActive(true);
             _returnFromHelp.SetActive(false);
         }
 
@@ -44,7 +44,7 @@ namespace GameManager.Runtime
         public void HelpButton()
         {
             _help.SetActive(true);
-            _pauseButtons.SetActive(false);
+            _pauseBox.SetActive(false);
             _returnFromHelp.SetActive(true);
         }
 
@@ -62,7 +62,7 @@ namespace GameManager.Runtime
         #region Private and Protected Members
 
         [SerializeField] private GameObject _help;
-        [SerializeField] private GameObject _pauseButtons;
+        [SerializeField] private GameObject _pauseBox;
         [SerializeField] private GameObject _returnFromHelp;
 
         private GameManager _gameManager;

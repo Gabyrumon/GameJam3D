@@ -1,4 +1,6 @@
 using System;
+using System.Collections;
+using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -39,35 +41,35 @@ namespace Inputs.Runtime
 
         public void OnMoveEventHandler(InputAction.CallbackContext context)
         {
-            if (!context.started) return;
+            if (!context.started || Time.timeScale == 0) return;
 
             m_onMove?.Invoke(this, new OnMoveEventArgs() { m_direction = context.ReadValue<Vector2>() });
         }
 
         public void OnInteractionEventHandler(InputAction.CallbackContext context)
         {
-            if (!context.started) return;
+            if (!context.started || Time.timeScale == 0) return;
 
             m_onInteraction?.Invoke(this, new EventArgs());
         }
 
         public void OnHitEventHandler(InputAction.CallbackContext context)
         {
-            if (!context.started) return;
+            if (!context.started || Time.timeScale == 0) return;
 
             m_onHit?.Invoke(this, new EventArgs());
         }
 
         public void OnJudgmentEventHandler(InputAction.CallbackContext context)
         {
-            if (!context.started) return;
+            if (!context.started || Time.timeScale == 0) return;
 
             m_onJudgment?.Invoke(this, new EventArgs());
         }
 
         public void OnZoomEventHandler(InputAction.CallbackContext context)
         {
-            if (!context.started) return;
+            if (!context.started || Time.timeScale == 0) return;
 
             m_onZoom?.Invoke(this, new EventArgs());
         }
