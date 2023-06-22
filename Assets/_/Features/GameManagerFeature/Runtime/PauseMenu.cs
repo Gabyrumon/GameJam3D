@@ -14,6 +14,11 @@ namespace GameManager.Runtime
 
         #region Unity API
 
+        private void Start()
+        {
+            _gameManager = GameManager.m_instance;
+        }
+
         #endregion
 
         #region Main Methods
@@ -24,15 +29,15 @@ namespace GameManager.Runtime
             ResetMenu();
         }
 
-        private void ResetMenu()
+        public void ResetMenu()
         {
             _help.SetActive(false);
             _pauseButtons.SetActive(true);
+            _returnFromHelp.SetActive(false);
         }
 
         public void ResumeButton()
         {
-            Toggle();
             _gameManager.TogglePause();
         }
 
@@ -40,6 +45,7 @@ namespace GameManager.Runtime
         {
             _help.SetActive(true);
             _pauseButtons.SetActive(false);
+            _returnFromHelp.SetActive(true);
         }
 
         public void MainMenuButton()
@@ -57,6 +63,7 @@ namespace GameManager.Runtime
 
         [SerializeField] private GameObject _help;
         [SerializeField] private GameObject _pauseButtons;
+        [SerializeField] private GameObject _returnFromHelp;
 
         private GameManager _gameManager;
 
