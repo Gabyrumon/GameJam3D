@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.02.00">
+	<object class="AudioFile" id="{3ff8b25f-b5ad-4484-bbb7-e9485ac5e810}">
+		<property name="assetPath">
+			<value>Attack/WarHorn_.wav</value>
+		</property>
+		<property name="frequencyInKHz">
+			<value>48</value>
+		</property>
+		<property name="channelCount">
+			<value>1</value>
+		</property>
+		<property name="length">
+			<value>2.6359583333333334</value>
+		</property>
+		<relationship name="masterAssetFolder">
+			<destination>{2dfc1c02-76fa-4a08-bcc0-2ec61e48ea7b}</destination>
+		</relationship>
+	</object>
+</objects>
