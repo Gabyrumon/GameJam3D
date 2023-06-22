@@ -1,5 +1,7 @@
 using DG.Tweening;
 using System;
+using System.Linq;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -101,7 +103,27 @@ namespace ChurchFeature.Runtime
 
             FaithOrbCount -= _upgradeCostPerLevel[m_level];
             m_level++;
+            _levelText.text = $"Church Level : {IntToRomanNotation(m_level + 1)}";
             _judgmentHUD.SetActive(!IsJudgmentReady());
+        }
+
+        private string IntToRomanNotation(int number)
+        {
+            switch (number)
+            {
+                case 1:
+                    return "I";
+
+                case 2:
+                    return "II";
+
+                case 3:
+                    return "III";
+
+                case 4:
+                    return "IV";
+            }
+            return "";
         }
 
         private bool CanUpgrade()
@@ -123,6 +145,7 @@ namespace ChurchFeature.Runtime
 
         #region Private and Protected Members
 
+        [SerializeField] private TextMeshProUGUI _levelText;
         [SerializeField] private Transform _levelsTransform;
         [SerializeField] private GameObject _upgradeButtonGameObject;
 
@@ -136,6 +159,7 @@ namespace ChurchFeature.Runtime
 
         [Space]
         [SerializeField] private int _judgmentCost;
+
         [SerializeField] private GameObject _judgmentHUD;
         [SerializeField] private int _levelRequiredForJudgment;
 

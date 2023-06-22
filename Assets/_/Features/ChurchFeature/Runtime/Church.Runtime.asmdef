@@ -2,7 +2,7 @@
     "name": "ChurchFeature.Runtime",
     "rootNamespace": "ChurchFeature.Runtime",
     "references": [
-        "GUID:5543cdb3806b46f499bc8912e1435d4d"
+        "GUID:6055be8ebefd69e48b49212b09b47b2f"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

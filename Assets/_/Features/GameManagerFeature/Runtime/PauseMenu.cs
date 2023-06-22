@@ -23,6 +23,11 @@ namespace GameManager.Runtime
 
         #region Main Methods
 
+        public void ToggleForButton()
+        {
+            GameManager.m_instance.TogglePause();
+        }
+
         public void Toggle()
         {
             gameObject.SetActive(!gameObject.activeSelf);
@@ -51,6 +56,7 @@ namespace GameManager.Runtime
         public void MainMenuButton()
         {
             SceneManager.LoadScene(0);
+            Time.timeScale = 1.0f;
         }
 
         #endregion
