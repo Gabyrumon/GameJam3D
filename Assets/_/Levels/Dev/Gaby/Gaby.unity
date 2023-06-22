@@ -1547,6 +1547,24 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_currentRoom: 2
   m_priority: 2
+--- !u!1 &511242341 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6014084062026944761, guid: 0976bd098cf0527478ab239d51a7b27f, type: 3}
+  m_PrefabInstance: {fileID: 6014084062283564350}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &511242347
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 511242341}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 86c6556701af9e04380698b89f691b6e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  attenuationObject: {fileID: 0}
 --- !u!1 &516862146
 GameObject:
   m_ObjectHideFlags: 0
@@ -6194,7 +6212,8 @@ PrefabInstance:
       propertyPath: m_Name
       value: Main Camera
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 0}
   m_SourcePrefab: {fileID: 100100000, guid: 0976bd098cf0527478ab239d51a7b27f, type: 3}
 --- !u!1001 &6203203449070761551
 PrefabInstance:
