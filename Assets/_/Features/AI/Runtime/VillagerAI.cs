@@ -229,7 +229,7 @@ namespace Villager.Runtime
 
         public void ChangeState(VillagerState state)
         {
-            //if (_currentState == VillagerState.Pray) GetComponentInChildren<Prayer>().ValidatePrayer();
+            if (_currentState == VillagerState.Pray) _prayer.ValidatePrayer();
             if (_currentState == VillagerState.Dead || _currentState == VillagerState.GoToChurch) return;
             _actionPlayed = false;
             _animPlayed = false;
@@ -373,6 +373,7 @@ namespace Villager.Runtime
         [Space]
         [Tooltip("Meters per seconds")]
         [SerializeField] private float _speed;
+        [SerializeField] private Prayer _prayer;
 
         [Tooltip("In seconds")]
         [SerializeField] private Vector2 _randomTimeBeforePraying = new Vector2(15, 45);
