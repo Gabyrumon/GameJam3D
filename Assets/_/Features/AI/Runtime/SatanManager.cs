@@ -204,7 +204,7 @@ namespace Villager.Runtime
         [SerializeField] private GameObject _loseScreen;
         [SerializeField] private GameObject _pauseButton;
         private float _timeBeforePossession;
-        private bool _hasLaunchedGoWinTheGame;
+        public bool _hasLaunchedGoWinTheGame;
         private bool _satanFirstSpeachSaid;
         private bool _canVerifyIfWinTheGame;
 

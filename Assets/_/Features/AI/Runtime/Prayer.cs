@@ -51,6 +51,7 @@ namespace Villager.Runtime
 
         public void ValidatePrayer()
         {
+            if (SatanManager.m_instance._hasLaunchedGoWinTheGame) return;
             _church.FaithOrbCount += _orbGained;
             gameObject.SetActive(false);
             _villagerAI.StopPraying();
@@ -59,6 +60,7 @@ namespace Villager.Runtime
 
         private void FailPrayer()
         {
+            if (SatanManager.m_instance._hasLaunchedGoWinTheGame) return;
             _villagerAI.IsConverted = false;
 
             _church.FaithOrbCount -= _orbLost;

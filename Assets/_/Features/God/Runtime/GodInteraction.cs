@@ -88,7 +88,7 @@ namespace God.Runtime
 
         private void SelectVillager(VillagerAI villagerAI)
         {
-            if (!villagerAI.IsConverted) return;
+            if (!villagerAI.IsConverted || villagerAI.CurrentState == VillagerAI.VillagerState.BarrelAction) return;
 
             if (_currentVillager is not null)
             {
@@ -101,6 +101,11 @@ namespace God.Runtime
             if (_currentVillager.GetState() == VillagerAI.VillagerState.Pray)
             {
                 isPraying = true;
+                Prayer prayer = _currentVillager.GetComponentInChildren<Prayer>();
+                if (prayer.transform.parent.gameObject.activeSelf)
+                {
+                    prayer.ValidatePrayer();
+                }
             }
             _currentVillager.ChangeState(VillagerAI.VillagerState.Idle);
             if (isPraying) _currentVillager.TimeBeforePray = 1;
