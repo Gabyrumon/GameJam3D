@@ -35,7 +35,7 @@ namespace GameManager.Runtime
             ResetMenu();
         }
 
-        public void ResetMenu(bool playSound = false)
+        public void ResetMenu()
         {
             _help.SetActive(false);
             _pauseBox.SetActive(true);

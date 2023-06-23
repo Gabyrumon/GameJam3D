@@ -33,10 +33,10 @@ namespace Sound.Runtime
         {
             _mainMenuInstance = RuntimeManager.CreateInstance(_mainMenu);
             _mainMenuInstance.start();
-            _mainMenuInstance.setPaused(true);
+            _mainMenuInstance.setPaused(!_playMainMenu);
             _inGameMusicInstance = RuntimeManager.CreateInstance(_inGameMusic);
             _inGameMusicInstance.start();
-            _inGameMusicInstance.setPaused(true);
+            _inGameMusicInstance.setPaused(_playMainMenu);
         }
 
         public void SetPausedMainMenu(bool isPaused)
@@ -167,6 +167,7 @@ namespace Sound.Runtime
         [SerializeField] private EventReference _click;
 
         [Header("Music")]
+        [SerializeField] private bool _playMainMenu;
         [SerializeField] private EventReference _mainMenu;
         private EventInstance _mainMenuInstance;
         [SerializeField] private EventReference _inGameMusic;

@@ -1576,7 +1576,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "I.\tAnswering prayers to gain faith"
+  m_text: "I.\tAnswer prayers to gain faith"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 85677a37cfba77b40a8c26c7caf0b70c, type: 2}
   m_sharedMaterial: {fileID: 975756394504497323, guid: 85677a37cfba77b40a8c26c7caf0b70c, type: 2}
@@ -2001,7 +2001,7 @@ GameObject:
   m_Component:
   - component: {fileID: 199025435}
   m_Layer: 5
-  m_Name: SatanStartSpeach
+  m_Name: SatanStartSpeech
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2897,7 +2897,7 @@ GameObject:
   m_Component:
   - component: {fileID: 329864239}
   m_Layer: 5
-  m_Name: NoFaithSatanSpeach
+  m_Name: NoFaithSatanSpeech
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5251,7 +5251,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "II.\tUnlocked interactions (right-click on a devotee)"
+  m_text: "II.\tUnlock interactions (right-click on a devotee)"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 85677a37cfba77b40a8c26c7caf0b70c, type: 2}
   m_sharedMaterial: {fileID: 975756394504497323, guid: 85677a37cfba77b40a8c26c7caf0b70c, type: 2}
@@ -5973,6 +5973,18 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
+      - m_Target: {fileID: 681967046}
+        m_TargetAssemblyTypeName: Sound.Runtime.SoundManager, Sound.Runtime
+        m_MethodName: SetPausedInGameMusic
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
       - m_Target: {fileID: 1624427207}
         m_TargetAssemblyTypeName: GameManager.Runtime.PauseMenu, GameManagerFeature.Runtime
         m_MethodName: MainMenuButton
@@ -7038,6 +7050,7 @@ MonoBehaviour:
       Data3: -1523964032
       Data4: -81603898
     Path: event:/Click/BubbleClick
+  _playMainMenu: 0
   _mainMenu:
     Guid:
       Data1: -2062931958
@@ -9875,7 +9888,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "III.\tInvokes the power of judgment"
+  m_text: "III.\tInvoke the power of judgment"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 85677a37cfba77b40a8c26c7caf0b70c, type: 2}
   m_sharedMaterial: {fileID: 975756394504497323, guid: 85677a37cfba77b40a8c26c7caf0b70c, type: 2}
@@ -13928,7 +13941,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1772218193}
   m_Layer: 5
-  m_Name: NearToVictorySatanSpeach
+  m_Name: NearToVictorySatanSpeech
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -15971,6 +15984,18 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
+      - m_Target: {fileID: 681967046}
+        m_TargetAssemblyTypeName: Sound.Runtime.SoundManager, Sound.Runtime
+        m_MethodName: SetPausedInGameMusic
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
       - m_Target: {fileID: 1624427207}
         m_TargetAssemblyTypeName: GameManager.Runtime.PauseMenu, GameManagerFeature.Runtime
         m_MethodName: MainMenuButton
