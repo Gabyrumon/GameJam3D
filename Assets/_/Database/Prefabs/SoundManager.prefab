@@ -243,6 +243,20 @@ MonoBehaviour:
       Data3: 1318529414
       Data4: 337119143
     Path: event:/Human/WomanSlyLaugh
+  _satanSpeech:
+    Guid:
+      Data1: 1249954639
+      Data2: 1284268406
+      Data3: -832540770
+      Data4: -1559861576
+    Path: event:/Satan/SatanSpeech
+  _satanLaugh:
+    Guid:
+      Data1: 700321084
+      Data2: 1082563925
+      Data3: 1253643433
+      Data4: 460257881
+    Path: event:/Satan/SatanLaugh
   _demonSpawned:
     Guid:
       Data1: -1626415268

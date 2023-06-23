@@ -231,6 +231,20 @@ namespace Sound.Runtime
 
         #endregion
 
+        #region Satan
+
+        public void PlaySatanSpeech()
+        {
+            RuntimeManager.PlayOneShot(_satanSpeech);
+        }
+
+        public void PlaySatanLaugh()
+        {
+            RuntimeManager.PlayOneShot(_satanLaugh);
+        }
+
+        #endregion
+
         #region Demon
 
         public void PlayDemonSpawnedSound()
@@ -335,6 +349,11 @@ namespace Sound.Runtime
         [SerializeField] private EventReference _manSlyLaugh;
 
         [SerializeField] private EventReference _womanSlyLaugh;
+
+        [Header("Satan")]
+        [SerializeField] private EventReference _satanSpeech;
+
+        [SerializeField] private EventReference _satanLaugh;
 
         [Space]
         [Header("Demon")]

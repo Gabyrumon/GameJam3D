@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.02.00">
+	<object class="AudioFile" id="{e07a2758-499a-4344-ab9e-d02d0b7b5694}">
+		<property name="assetPath">
+			<value>Satan/SatanVoice2_.wav</value>
+		</property>
+		<property name="frequencyInKHz">
+			<value>48</value>
+		</property>
+		<property name="channelCount">
+			<value>1</value>
+		</property>
+		<property name="length">
+			<value>1.5851666666666666</value>
+		</property>
+		<relationship name="masterAssetFolder">
+			<destination>{2dfc1c02-76fa-4a08-bcc0-2ec61e48ea7b}</destination>
+		</relationship>
+	</object>
+</objects>
