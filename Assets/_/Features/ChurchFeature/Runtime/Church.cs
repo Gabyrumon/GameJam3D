@@ -94,7 +94,7 @@ namespace ChurchFeature.Runtime
         {
             if (m_level < _upgradeCostPerLevel.Length)
             {
-                _upgradeText.text = $"Upgrade: {_upgradeCostPerLevel[m_level]}";
+                _upgradeText.text = $"<incr a=2>{_upgradeCostPerLevel[m_level]}</incr> <incr a=0.5>for Upgrade </incr>";
             }
             else
             {

@@ -190,7 +190,7 @@ MonoBehaviour:
   _currentState: 0
   _isConverted: 0
   _speed: 2.25
-  _randomTimeBeforePraying: {x: 1, y: 10}
+  _randomTimeBeforePraying: {x: 5, y: 15}
   _prayerInteraction: {fileID: 9145793361737575654}
   _demonPrefab: {fileID: 8994073735858812328, guid: a99c01f01d7ef9c45b6a8b11a83c4360, type: 3}
   _faithVFX: {fileID: 4540699734518181565}
@@ -207,7 +207,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0e5e07cc4bd11c94bb67270f99411d70, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _randomTimeBetweenPosssessions: {x: 30, y: 45}
+  _randomTimeBetweenPosssessions: {x: 3, y: 5}
 --- !u!114 &3854268295132758693
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -405,7 +405,7 @@ RectTransform:
   m_GameObject: {fileID: 9145793361737575654}
   m_LocalRotation: {x: -0, y: 0.03247878, z: -0, w: 0.9994725}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.5999999, y: 0.59999996, z: 0.5999999}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 3986542808723085373}
@@ -415,7 +415,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 4.3}
+  m_AnchoredPosition: {x: 0, y: 5}
   m_SizeDelta: {x: 3.5, y: 3.5}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!223 &3872151799900530310

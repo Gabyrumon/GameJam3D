@@ -1,5 +1,8 @@
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Inputs.Runtime;
+using UnityEngine.InputSystem;
 
 namespace Villager.Runtime
 {
@@ -14,6 +17,8 @@ namespace Villager.Runtime
         public List<DarkSideAI> m_notPossessedVillagerList = new List<DarkSideAI>();
 
         public List<DemonAI> m_demonList = new List<DemonAI>();
+
+        public List<VillagerAI> m_villagerHasFaithList = new List<VillagerAI>();
 
         #endregion
 
@@ -46,6 +51,30 @@ namespace Villager.Runtime
                     Possess();
                 }
             }
+
+            if (ChurchFeature.Runtime.Church.m_instance.m_level == 1 && !_satanFirstSpeachSaid)
+            {
+                SetRandomTimeBeforePossession();
+                _firstSatanSpeach.SetActive(true);
+                _satanFirstSpeachSaid = true;
+            }
+            if (ChurchFeature.Runtime.Church.m_instance.m_level == 3 && !_hasLaunchedGoWinTheGame)
+            {
+                GoWinTheGame();
+            }
+
+            if (m_villagerList.Count <= 0)
+            {
+                _loseScreen.SetActive(true);
+                InputManager.m_instance.m_cantInteract = true;
+                _pauseButton.SetActive(false);
+            }
+            if (_canVerifyIfWinTheGame && m_demonList.Count <= 0)
+            {
+                _winScreen.SetActive(true);
+                InputManager.m_instance.m_cantInteract = true;
+                _pauseButton.SetActive(false);
+            }
         }
 
         #endregion
@@ -54,7 +83,7 @@ namespace Villager.Runtime
 
         private void SetRandomTimeBeforePossession()
         {
-            _timeBeforePossession = Random.Range(_randomTimeBeforePossession.x, _randomTimeBeforePossession.y);
+            _timeBeforePossession = Random.Range(_randomTimeBeforePossession[ChurchFeature.Runtime.Church.m_instance.m_level].x, _randomTimeBeforePossession[ChurchFeature.Runtime.Church.m_instance.m_level].y);
         }
 
         private void Possess()
@@ -104,18 +133,66 @@ namespace Villager.Runtime
             }
         }
 
+        public void GoWinTheGame()
+        {
+            _nearToVictorySatanSpeach.SetActive(true);
+            ChurchFeature.Runtime.Church.m_instance.JudgmentCost = 0;
+
+            for (int i = 0; i < m_villagerList.Count; i++)
+            {
+                m_villagerList[i].GetComponent<DarkSideAI>().IsPossessed = false;
+                m_villagerList[i].ChangeState(VillagerAI.VillagerState.GoToChurch);
+            }
+
+            _hasLaunchedGoWinTheGame = true;
+            StartCoroutine(InvokeDemons(25));
+        }
+
+        public void StartInvokingAllDemons()
+        {
+            ChurchFeature.Runtime.Church.m_instance.FaithOrbCount = 0;
+            _noFaithSatanSpeach.SetActive(true);
+            StartCoroutine(InvokeDemons(10));
+        }
+
+        IEnumerator InvokeDemons(int quantity)
+        {
+            for (int i = 0; i < quantity; i++)
+            {
+                int index = Random.Range(0, _demonAnchors.Length);
+                Instantiate(_demonPrefab, _demonAnchors[index].position, Quaternion.identity);
+                yield return new WaitForSeconds(1);
+            }
+            if (_hasLaunchedGoWinTheGame)
+            {
+                _canVerifyIfWinTheGame = true;
+            }
+        }
+
         #endregion
 
         #region Utils
 
         #endregion
 
-
         #region Private And Protected Members
 
         [Tooltip("In seconds")]
-        [SerializeField] private Vector2 _randomTimeBeforePossession = new Vector2(30, 60);
+        [SerializeField] private Vector2[] _randomTimeBeforePossession;
+        [Space]
+        [SerializeField] private GameObject _demonPrefab;
+        [SerializeField] private GameObject _firstSatanSpeach;
+        [SerializeField] private GameObject _noFaithSatanSpeach;
+        [SerializeField] private GameObject _nearToVictorySatanSpeach;
+        [SerializeField] private Transform[] _demonAnchors;
+        [Space]
+        [SerializeField] private GameObject _winScreen;
+        [SerializeField] private GameObject _loseScreen;
+        [SerializeField] private GameObject _pauseButton;
         private float _timeBeforePossession;
+        private bool _hasLaunchedGoWinTheGame;
+        private bool _satanFirstSpeachSaid;
+        private bool _canVerifyIfWinTheGame;
 
         #endregion
     }

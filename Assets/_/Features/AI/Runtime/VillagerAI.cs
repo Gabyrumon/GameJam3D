@@ -88,7 +88,7 @@ namespace Villager.Runtime
                     break;
 
                 case VillagerState.BarrelAction:
-                    GoTo(m_divineIntervention, "Barrel");
+                    GoTo(m_divineIntervention, "BarrelAction");
                     break;
 
                 case VillagerState.Steal:
@@ -101,6 +101,12 @@ namespace Villager.Runtime
 
                 case VillagerState.Ritual:
                     GoTo(Room.Ritual, "Ritual");
+                    break;
+
+                case VillagerState.GoToChurch:
+                    GoTo(Room.WinChuch, "Surprise");
+                    _agent.speed = 10f;
+                    _anim.speed = 5f;
                     break;
 
                 case VillagerState.Dead:
@@ -165,12 +171,13 @@ namespace Villager.Runtime
         {
             if (!_actionPlayed)
             {
-                _agent.SetDestination(LocatorSystem.GetNearestLocation(roomToGo, transform.position).transform.position);
+                _target = LocatorSystem.GetNearestLocation(roomToGo, transform.position).transform.position;
+                _agent.SetDestination(_target);
                 _anim.SetBool("Walk", true);
                 _actionPlayed = true;
             }
 
-            if (_agent.remainingDistance < 1.5f && !_animPlayed)
+            if (Vector3.Distance(transform.position, _target) < 1.5f && !_animPlayed)
             {
                 if (animName.Equals("Ritual"))
                 {
@@ -185,15 +192,17 @@ namespace Villager.Runtime
         {
             if (!_actionPlayed)
             {
+                _target = interventionToGo.transform.position;
                 _agent.SetDestination(interventionToGo.transform.position);
                 _anim.SetBool("Walk", true);
                 _actionPlayed = true;
             }
 
-            if (_agent.remainingDistance < 2f && !_animPlayed)
+            if (Vector3.Distance(transform.position, _target) < 2f && !_animPlayed)
             {
+                _anim.speed = 1f;
                 _animPlayed = true;
-                StartAnim("BarrelAction");
+                StartAnim(animName);
             }
         }
 
@@ -220,7 +229,7 @@ namespace Villager.Runtime
 
         public void ChangeState(VillagerState state)
         {
-            if (_currentState == VillagerState.Dead) return;
+            if (_currentState == VillagerState.Dead || _currentState == VillagerState.GoToChurch) return;
             _agent.isStopped = true;
             _actionPlayed = false;
             _animPlayed = false;
@@ -271,6 +280,7 @@ namespace Villager.Runtime
                 GetComponent<DarkSideAI>().ResetPossession(false);
                 ChangeState(VillagerState.Dead);
                 SatanManager.m_instance.m_villagerList.Remove(this);
+
                 SatanManager.m_instance.m_notPossessedVillagerList.Remove(GetComponent<DarkSideAI>());
                 IsConverted = false;
                 _anim.SetTrigger("Death");
@@ -285,10 +295,18 @@ namespace Villager.Runtime
             if (_isConverted)
             {
                 _faithVFX.SetActive(true);
+                SatanManager.m_instance.m_villagerHasFaithList.Add(this);
             }
             else
             {
+                if (!_faithVFX.activeSelf) return;
+
                 _faithVFX.SetActive(false);
+                SatanManager.m_instance.m_villagerHasFaithList.Remove(this);
+                if (SatanManager.m_instance.m_villagerHasFaithList.Count <= 0)
+                {
+                    SatanManager.m_instance.StartInvokingAllDemons();
+                }
             }
         }
 
@@ -341,6 +359,7 @@ namespace Villager.Runtime
             Kill,
             Ritual,
 
+            GoToChurch,
             Dead
         }
 
@@ -368,6 +387,7 @@ namespace Villager.Runtime
         [SerializeField] private GameObject _invocationVFX;
 
         private LocatorIdentity _currentLocator;
+        private Vector3 _target;
         private NavMeshAgent _agent;
         private Animator _anim;
         private float _timeBeforePray;
