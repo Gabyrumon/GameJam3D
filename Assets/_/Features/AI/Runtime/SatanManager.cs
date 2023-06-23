@@ -1,8 +1,7 @@
+using Inputs.Runtime;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using Inputs.Runtime;
-using UnityEngine.InputSystem;
 
 namespace Villager.Runtime
 {

@@ -118,11 +118,6 @@ namespace Villager.Runtime
             }
         }
 
-        private void OnGUI()
-        {
-            if (GUILayout.Button("Faith")) IsConverted = true;
-        }
-
         #endregion
 
         #region Main Methods

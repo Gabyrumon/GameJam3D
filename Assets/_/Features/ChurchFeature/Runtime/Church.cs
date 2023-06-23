@@ -72,14 +72,6 @@ namespace ChurchFeature.Runtime
             _levelDescriptionsParent.SetActive(IsMouseOverDescription());
         }
 
-        private void OnGUI()
-        {
-            if (GUILayout.Button("UpgradeChurch"))
-            {
-                Upgrade();
-            }
-        }
-
         #endregion
 
         #region Main Methods

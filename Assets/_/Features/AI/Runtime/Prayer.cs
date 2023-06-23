@@ -1,5 +1,4 @@
 using ChurchFeature.Runtime;
-using DG.Tweening;
 using Sound.Runtime;
 using UnityEngine;
 using UnityEngine.UI;
