@@ -56,6 +56,7 @@ namespace Villager.Runtime
 
         public void ResetPossession(bool addFromNotPossessedList = true)
         {
+            Instantiate(_unPossessedVFX, Vector3.up + transform.position, Quaternion.identity);
             _isPossessed = false;
             _levelOfPossession = 0;
             _timeBeforeNextPossession = 0;
@@ -133,6 +134,7 @@ namespace Villager.Runtime
         #region Private And Protected Members
 
         [SerializeField] private Vector2 _randomTimeBetweenPosssessions;
+        [SerializeField] private GameObject _unPossessedVFX;
 
         private VillagerAI _villagerAI;
         private float _timeBeforeNextPossession;

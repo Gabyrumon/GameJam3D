@@ -27,6 +27,7 @@ namespace Villager.Runtime
         }
 
         public bool IsMan { get => _isMan; set => _isMan = value; }
+        public float TimeBeforePray { get => _timeBeforePray; set => _timeBeforePray = value; }
 
         #endregion
 
@@ -202,6 +203,7 @@ namespace Villager.Runtime
                 _anim.speed = 1f;
                 _animPlayed = true;
                 StartAnim(animName);
+
             }
         }
 
@@ -228,8 +230,8 @@ namespace Villager.Runtime
 
         public void ChangeState(VillagerState state)
         {
+            if(_currentState == VillagerState.Pray) GetComponentInChildren<Prayer>().ValidatePrayer();
             if (_currentState == VillagerState.Dead || _currentState == VillagerState.GoToChurch) return;
-            _agent.isStopped = true;
             _actionPlayed = false;
             _animPlayed = false;
 
@@ -339,6 +341,8 @@ namespace Villager.Runtime
             _anim.SetBool(animName, true);
             _agent.isStopped = true;
         }
+
+
 
         #endregion
 
