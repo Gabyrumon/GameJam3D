@@ -99,10 +99,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d08e1dbaa87428243ab99a6ec2f39a70, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _orbCost: 15
+  _orbCost: 10
   _range: 15
   _requiredChurchLevel: 1
   _cooldDown: 15
+  _VFX: {fileID: 6488655995650342449, guid: d4fc3a102a1f0954e9fd8aef3774e436, type: 3}
+  _water: {fileID: 2063667599725864871, guid: 2c6520c89956f084e9c5d57646a51be8, type: 3}
+  _wine: {fileID: 3495422113380589, guid: fd57849db52e10844b752786e0c3002a, type: 3}
 --- !u!114 &5765687793556304113
 MonoBehaviour:
   m_ObjectHideFlags: 0

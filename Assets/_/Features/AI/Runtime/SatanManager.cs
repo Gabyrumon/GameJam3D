@@ -68,11 +68,18 @@ namespace Villager.Runtime
                 InputManager.m_instance.m_cantInteract = true;
                 _pauseButton.SetActive(false);
             }
-            if (_canVerifyIfWinTheGame && m_demonList.Count <= 0)
+
+            if (_canVerifyIfWinTheGame  && m_demonList.Count <= 0)
             {
                 _winScreen.SetActive(true);
+                _winVFX.SetActive(true);
                 InputManager.m_instance.m_cantInteract = true;
                 _pauseButton.SetActive(false);
+            }
+
+            if (_hasLaunchedGoWinTheGame)
+            {
+                ChurchFeature.Runtime.Church.m_instance.FaithOrbCount = 0;
             }
         }
 
@@ -149,7 +156,6 @@ namespace Villager.Runtime
 
         public void StartInvokingAllDemons()
         {
-            ChurchFeature.Runtime.Church.m_instance.FaithOrbCount = 0;
             _noFaithSatanSpeach.SetActive(true);
             StartCoroutine(InvokeDemons(10));
         }
@@ -186,6 +192,7 @@ namespace Villager.Runtime
         [SerializeField] private Transform[] _demonAnchors;
         [Space]
         [SerializeField] private GameObject _winScreen;
+        [SerializeField] private GameObject _winVFX;
         [SerializeField] private GameObject _loseScreen;
         [SerializeField] private GameObject _pauseButton;
         private float _timeBeforePossession;

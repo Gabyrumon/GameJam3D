@@ -18,12 +18,12 @@ namespace Villager.Runtime
         private void Start()
         {
             _satanManager = SatanManager.m_instance;
+            _filter = GetComponent<MeshFilter>();
         }
 
-        private void OnDrawGizmosSelected()
+        private void OnGUI()
         {
-            Gizmos.color = Color.blue;
-            Gizmos.DrawWireSphere(transform.position, _range);
+            if (GUILayout.Button("ChangeMesh")) StartCoroutine(StartCooldown());
         }
 
         #endregion
@@ -46,7 +46,12 @@ namespace Villager.Runtime
         private IEnumerator StartCooldown()
         {
             _isInteractable = false;
+            _filter.mesh = _wine;
+            _filter.mesh.RecalculateBounds();
+            Instantiate(_VFX, Vector3.up + transform.position, Quaternion.identity);
             yield return new WaitForSeconds(_cooldDown);
+            _filter.mesh = _water;
+            _filter.mesh.RecalculateBounds();
             _isInteractable = true;
         }
 
@@ -62,6 +67,12 @@ namespace Villager.Runtime
         [SerializeField] private float _range;
         [SerializeField] private int _requiredChurchLevel;
         [SerializeField] private int _cooldDown;
+        [Header("VFX")]
+        [SerializeField] private GameObject _VFX;
+        [Header("Meshes")]
+        [SerializeField] private Mesh _water;
+        [SerializeField] private Mesh _wine;
+        private MeshFilter _filter;
 
         private SatanManager _satanManager;
 

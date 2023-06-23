@@ -226,8 +226,8 @@ namespace Villager.Runtime
 
         public void ChangeState(VillagerState state)
         {
+            if(_currentState == VillagerState.Pray) GetComponentInChildren<Prayer>().ValidatePrayer();
             if (_currentState == VillagerState.Dead || _currentState == VillagerState.GoToChurch) return;
-            _agent.isStopped = true;
             _actionPlayed = false;
             _animPlayed = false;
 
