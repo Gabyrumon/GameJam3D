@@ -1,3 +1,5 @@
+using Inputs.Runtime;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -14,12 +16,22 @@ namespace GameManagerFeature.Runtime
 
         private void Awake()
         {
-            GameManager.m_instance.TogglePause();
+            GameManager.m_instance.TogglePause(false);
+
+            InputManager.m_instance.m_onPauseMenu += OnPauseEventHandler;
         }
 
         #endregion
 
         #region Main Methods
+
+        private void OnPauseEventHandler(object sender, EventArgs e)
+        {
+            if (gameObject.activeSelf)
+            {
+                ResumeGame();
+            }
+        }
 
         public void ResumeGame()
         {

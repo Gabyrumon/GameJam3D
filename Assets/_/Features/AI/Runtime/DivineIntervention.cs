@@ -21,11 +21,6 @@ namespace Villager.Runtime
             _filter = GetComponent<MeshFilter>();
         }
 
-        private void OnGUI()
-        {
-            if (GUILayout.Button("ChangeMesh")) StartCoroutine(StartCooldown());
-        }
-
         #endregion
 
         #region Main Methods
@@ -67,10 +62,13 @@ namespace Villager.Runtime
         [SerializeField] private float _range;
         [SerializeField] private int _requiredChurchLevel;
         [SerializeField] private int _cooldDown;
+
         [Header("VFX")]
         [SerializeField] private GameObject _VFX;
+
         [Header("Meshes")]
         [SerializeField] private Mesh _water;
+
         [SerializeField] private Mesh _wine;
         private MeshFilter _filter;
 

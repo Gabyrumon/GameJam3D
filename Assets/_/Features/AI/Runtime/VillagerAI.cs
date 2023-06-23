@@ -203,7 +203,6 @@ namespace Villager.Runtime
                 _anim.speed = 1f;
                 _animPlayed = true;
                 StartAnim(animName);
-
             }
         }
 
@@ -230,8 +229,8 @@ namespace Villager.Runtime
 
         public void ChangeState(VillagerState state)
         {
-            if(_currentState == VillagerState.Pray) GetComponentInChildren<Prayer>().ValidatePrayer();
             if (_currentState == VillagerState.Dead || _currentState == VillagerState.GoToChurch) return;
+            if (_currentState == VillagerState.Pray) GetComponentInChildren<Prayer>().ValidatePrayer();
             _actionPlayed = false;
             _animPlayed = false;
 
@@ -341,8 +340,6 @@ namespace Villager.Runtime
             _anim.SetBool(animName, true);
             _agent.isStopped = true;
         }
-
-
 
         #endregion
 
