@@ -88,7 +88,7 @@ namespace God.Runtime
 
         private void SelectVillager(VillagerAI villagerAI)
         {
-            if (villagerAI.CurrentState != VillagerAI.VillagerState.Routine || !villagerAI.IsConverted) return;
+            if (!villagerAI.IsConverted) return;
 
             if (_currentVillager is not null)
             {
@@ -96,7 +96,15 @@ namespace God.Runtime
             }
 
             _currentVillager = villagerAI;
+
+            bool isPraying = false;
+            if (_currentVillager.GetState() == VillagerAI.VillagerState.Pray)
+            {
+                isPraying = true;
+            }
             _currentVillager.ChangeState(VillagerAI.VillagerState.Idle);
+            if (isPraying) _currentVillager.TimeBeforePray = 1;
+
             SoundManager.m_instance.PlayVillagerVoiceInterrogative(_currentVillager.IsMan);
 
             _currentVillager.GetComponent<Outline>().enabled = true;

@@ -189,6 +189,7 @@ MonoBehaviour:
   _currentRoom: 0
   _currentState: 0
   _isConverted: 0
+  _isMan: 0
   _speed: 2.25
   _randomTimeBeforePraying: {x: 5, y: 15}
   _prayerInteraction: {fileID: 9145793361737575654}
@@ -208,6 +209,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _randomTimeBetweenPosssessions: {x: 3, y: 5}
+  _unPossessedVFX: {fileID: 6488655995650342449, guid: e9e4087913e437b4f8f1bb5ba6267692, type: 3}
 --- !u!114 &3854268295132758693
 MonoBehaviour:
   m_ObjectHideFlags: 0
