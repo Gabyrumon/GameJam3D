@@ -1,4 +1,5 @@
 using Inputs.Runtime;
+using Sound.Runtime;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -111,6 +112,8 @@ namespace Villager.Runtime
 
         public void SpawnDemon(DemonAI demonAI)
         {
+            SoundManager.m_instance.SetPausedBattleMusic(false);
+            SoundManager.m_instance.SetPausedInGameMusic(true);
             m_demonList.Add(demonAI);
 
             for (int i = 0; i < m_villagerList.Count; i++)
@@ -125,6 +128,8 @@ namespace Villager.Runtime
 
             if (m_demonList.Count == 0)
             {
+                SoundManager.m_instance.SetPausedBattleMusic(true);
+                SoundManager.m_instance.SetPausedInGameMusic(false);
                 for (int i = 0; i < m_villagerList.Count; i++)
                 {
                     m_villagerList[i].GetComponent<VillagerAI>().ReturnToRoutine();
@@ -154,7 +159,7 @@ namespace Villager.Runtime
             StartCoroutine(InvokeDemons(10));
         }
 
-        IEnumerator InvokeDemons(int quantity)
+        private IEnumerator InvokeDemons(int quantity)
         {
             for (int i = 0; i < quantity; i++)
             {
@@ -178,14 +183,18 @@ namespace Villager.Runtime
 
         [Tooltip("In seconds")]
         [SerializeField] private Vector2[] _randomTimeBeforePossession;
+
         [Space]
         [SerializeField] private GameObject _demonPrefab;
+
         [SerializeField] private GameObject _firstSatanSpeach;
         [SerializeField] private GameObject _noFaithSatanSpeach;
         [SerializeField] private GameObject _nearToVictorySatanSpeach;
         [SerializeField] private Transform[] _demonAnchors;
+
         [Space]
         [SerializeField] private GameObject _winScreen;
+
         [SerializeField] private GameObject _loseScreen;
         [SerializeField] private GameObject _pauseButton;
         private float _timeBeforePossession;

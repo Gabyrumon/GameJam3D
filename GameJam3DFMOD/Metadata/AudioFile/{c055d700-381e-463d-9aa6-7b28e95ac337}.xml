@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.02.00">
+	<object class="AudioFile" id="{c055d700-381e-463d-9aa6-7b28e95ac337}">
+		<property name="assetPath">
+			<value>Musics/DefeatMusicLoop.wav</value>
+		</property>
+		<property name="frequencyInKHz">
+			<value>48</value>
+		</property>
+		<property name="channelCount">
+			<value>2</value>
+		</property>
+		<property name="length">
+			<value>7.7744375000000003</value>
+		</property>
+		<relationship name="masterAssetFolder">
+			<destination>{2dfc1c02-76fa-4a08-bcc0-2ec61e48ea7b}</destination>
+		</relationship>
+	</object>
+</objects>

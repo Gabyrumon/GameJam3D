@@ -106,6 +106,7 @@ namespace Villager.Runtime
                 return;
             }
 
+            SoundManager.m_instance.PlayVillagerVoiceGrowl(_villagerAI.IsMan);
             if (_levelOfPossession == 0)
             {
                 _villagerAI.ChangeState(VillagerState.Steal);

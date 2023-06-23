@@ -1,5 +1,6 @@
 using ChurchFeature.Runtime;
 using Inputs.Runtime;
+using Sound.Runtime;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -56,6 +57,7 @@ namespace God.Runtime
             {
                 if (hit.collider.gameObject.layer != _uiLayer)
                 {
+                    SoundManager.m_instance.PlayJudgment();
                     Instantiate(_judgmentPrefab, new Vector3(hit.point.x, 0, hit.point.z), Quaternion.identity);
                 }
             }

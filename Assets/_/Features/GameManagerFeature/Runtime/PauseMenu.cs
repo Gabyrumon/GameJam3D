@@ -1,11 +1,7 @@
-using JetBrains.Annotations;
-using Sound.Runtime;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-namespace GameManager.Runtime
+namespace GameManagerFeature.Runtime
 {
     public class PauseMenu : MonoBehaviour
     {
@@ -38,6 +34,7 @@ namespace GameManager.Runtime
         public void ResetMenu()
         {
             _help.SetActive(false);
+            _options.SetActive(false);
             _pauseBox.SetActive(true);
             _returnFromHelp.SetActive(false);
         }
@@ -50,6 +47,15 @@ namespace GameManager.Runtime
         public void HelpButton()
         {
             _help.SetActive(true);
+            _options.SetActive(false);
+            _pauseBox.SetActive(false);
+            _returnFromHelp.SetActive(true);
+        }
+
+        public void OptionsButton()
+        {
+            _options.SetActive(true);
+            _help.SetActive(false);
             _pauseBox.SetActive(false);
             _returnFromHelp.SetActive(true);
         }
@@ -69,6 +75,7 @@ namespace GameManager.Runtime
         #region Private and Protected Members
 
         [SerializeField] private GameObject _help;
+        [SerializeField] private GameObject _options;
         [SerializeField] private GameObject _pauseBox;
         [SerializeField] private GameObject _returnFromHelp;
 

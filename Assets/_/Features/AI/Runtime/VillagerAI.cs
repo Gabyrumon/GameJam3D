@@ -82,7 +82,7 @@ namespace Villager.Runtime
                 case VillagerState.Idle:
                     DoIdle(false);
                     break;
-                
+
                 case VillagerState.Afraid:
                     DoIdle(true);
                     break;
@@ -177,6 +177,10 @@ namespace Villager.Runtime
                 if (animName.Equals("Ritual"))
                 {
                     SoundManager.m_instance.PlayDemonSpawnedHornSound();
+                }
+                if (animName.Equals("Steal"))
+                {
+                    SoundManager.m_instance.PlayVillagerVoiceSlyLaugh(IsMan);
                 }
                 _animPlayed = true;
                 StartAnim(animName);
@@ -374,11 +378,12 @@ namespace Villager.Runtime
 
         [Space]
         [SerializeField] private GameObject _prayerInteraction;
-        [SerializeField] private GameObject _demonPrefab;
 
+        [SerializeField] private GameObject _demonPrefab;
 
         [Header("VFX")]
         [SerializeField] private GameObject _faithVFX;
+
         [SerializeField] private GameObject _invocationVFX;
 
         private LocatorIdentity _currentLocator;

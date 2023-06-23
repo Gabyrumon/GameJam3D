@@ -3,7 +3,7 @@ using Sound.Runtime;
 using System;
 using UnityEngine;
 
-namespace GameManager.Runtime
+namespace GameManagerFeature.Runtime
 {
     public class GameManager : MonoBehaviour
     {
@@ -43,7 +43,7 @@ namespace GameManager.Runtime
             TogglePause();
         }
 
-        public void TogglePause()
+        public void TogglePause(bool usePauseMenu = true)
         {
             Time.timeScale = Time.timeScale == 1 ? 0 : 1;
             if (Time.timeScale == 0)
@@ -56,7 +56,7 @@ namespace GameManager.Runtime
                 SoundManager.m_instance.PlayUnpause();
                 SoundManager.m_instance.SetPausedInGameMusic(false);
             }
-            _pauseMenu.Toggle();
+            if (usePauseMenu) _pauseMenu.Toggle();
         }
 
         #endregion
