@@ -1,6 +1,5 @@
 using System;
 using Sound.Runtime;
-using TMPro;
 using UnityEngine;
 
 namespace ChurchFeature.Runtime
