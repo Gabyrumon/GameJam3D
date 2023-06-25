@@ -227,8 +227,13 @@ namespace Villager.Runtime
         public void ChangeState(VillagerState state)
         {
             if (_currentState is VillagerState.Pray) _prayer.ValidatePrayer();
-            
-            if (_currentState is VillagerState.Dead or VillagerState.GoToChurch) return;
+
+            if (_currentState is VillagerState.Dead) return;
+
+            if (state is not VillagerState.Dead)
+            {
+                if (_currentState is VillagerState.GoToChurch) return;
+            }
             _actionPlayed = false;
             _animPlayed = false;
 

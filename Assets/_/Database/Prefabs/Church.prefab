@@ -331,7 +331,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1713229886
 Transform:
   m_ObjectHideFlags: 0
@@ -360,8 +360,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a6078ed356206ac42928f80c411eb2b0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_sizeSpeed: 15
-  m_maxScale: 100
+  m_sizeSpeed: 5
+  m_maxScale: 25
 --- !u!1 &7337990637880512
 GameObject:
   m_ObjectHideFlags: 0
@@ -8350,20 +8350,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 703a076ba3507384bbbae8403dc324f6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _levelText: {fileID: 0}
-  _upgradeButtonGameObject: {fileID: 819978114192849943}
-  _levelDescriptionsParent: {fileID: 0}
-  _levelDescriptionTexts:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  _upgradeText: {fileID: 1636273193}
-  _faithOrbCount: 0
-  _faithOrbText: {fileID: 0}
+  _faithCount: 0
   _maxFaithPerLevel: 1e0000004b00000096000000c8000000
   _upgradeCostPerLevel: 0f0000002800000032000000
-  _faithFillerBar: {fileID: 0}
   _judgmentCost: 25
   _judgmentHUD: {fileID: 0}
   _levelRequiredForJudgment: 2
@@ -8379,13 +8368,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7c9cbab1ce06453e8d07666e4d01e6a4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _levelsTransformParent: {fileID: 0}
-  _deconstructAnimationDuration: 0
-  _deconstructEase: 0
-  _buildAnimationDuration: 0
-  _buildEase: 0
-  _buildCompressionAnimationDuration: 0
-  _buildCompressionScale: 0
+  _levelsTransformParent: {fileID: 1993713657505607822}
+  _deconstructAnimationDuration: 0.5
+  _deconstructEase: 26
+  _buildAnimationDuration: 0.3
+  _buildEase: 1
+  _buildCompressionAnimationDuration: 0.2
+  _buildCompressionScale: 0.7
 --- !u!1 &7649376090079540122
 GameObject:
   m_ObjectHideFlags: 0
@@ -9395,6 +9384,7 @@ GameObject:
   - component: {fileID: 2557737057607425610}
   - component: {fileID: 1408216010116042533}
   - component: {fileID: 6707182385548402289}
+  - component: {fileID: 461064153}
   m_Layer: 0
   m_Name: ChurchHUD
   m_TagString: Untagged
@@ -9497,6 +9487,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6240e55a8c11e104b9098d45ac08d018, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &461064153
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8338671525514343905}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a826d4949a02485a982b322e478ffbba, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _upgradeButtonGameObject: {fileID: 819978114192849943}
+  _upgradeText: {fileID: 1636273193}
 --- !u!1 &8411979886606625926
 GameObject:
   m_ObjectHideFlags: 0

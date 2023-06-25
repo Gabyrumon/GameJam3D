@@ -17,7 +17,7 @@ namespace Villager.Runtime
 
         private void Start()
         {
-            _church = Church.Instance;
+            _churchManager = ChurchManager.Instance;
         }
 
         private void OnEnable()
@@ -55,7 +55,7 @@ namespace Villager.Runtime
         {
             if (!_isPraying || SatanManager.m_instance._hasLaunchedGoWinTheGame) return;
             
-            _church.FaithOrbCount += _orbGained;
+            _churchManager.FaithCount += _orbGained;
             gameObject.SetActive(false);
             _villagerAI.StopPraying();
             SoundManager.m_instance.PlayVillagerVoiceJoy(_villagerAI.IsMan);
@@ -68,7 +68,7 @@ namespace Villager.Runtime
             if (!_isPraying || SatanManager.m_instance._hasLaunchedGoWinTheGame) return;
             _villagerAI.IsConverted = false;
 
-            _church.FaithOrbCount -= _orbLost;
+            _churchManager.FaithCount -= _orbLost;
             /*
             _frontImage.material.DOColor(Color.red, 0.5f)
                 .OnComplete(() => gameObject.SetActive(false));
@@ -93,7 +93,7 @@ namespace Villager.Runtime
         [SerializeField] private float _maxCooldown = 5;
 
         private float _currentCooldown;
-        private Church _church;
+        private ChurchManager _churchManager;
         private bool _isPraying;
 
         #endregion

@@ -53,13 +53,13 @@ namespace Villager.Runtime
                 }
             }
 
-            if (ChurchFeature.Runtime.Church.Instance.Level == 1 && !_satanFirstSpeachSaid)
+            if (ChurchFeature.Runtime.ChurchManager.Instance.Level == 1 && !_satanFirstSpeachSaid)
             {
                 SetRandomTimeBeforePossession();
                 _firstSatanSpeach.SetActive(true);
                 _satanFirstSpeachSaid = true;
             }
-            if (ChurchFeature.Runtime.Church.Instance.Level == 3 && !_hasLaunchedGoWinTheGame)
+            if (ChurchFeature.Runtime.ChurchManager.Instance.Level == 3 && !_hasLaunchedGoWinTheGame)
             {
                 GoWinTheGame();
             }
@@ -81,7 +81,7 @@ namespace Villager.Runtime
 
             if (_hasLaunchedGoWinTheGame)
             {
-                ChurchFeature.Runtime.Church.Instance.FaithOrbCount = 0;
+                ChurchFeature.Runtime.ChurchManager.Instance.FaithCount = 0;
             }
         }
 
@@ -91,7 +91,7 @@ namespace Villager.Runtime
 
         private void SetRandomTimeBeforePossession()
         {
-            _timeBeforePossession = Random.Range(_randomTimeBeforePossession[Church.Instance.Level].x, _randomTimeBeforePossession[Church.Instance.Level].y);
+            _timeBeforePossession = Random.Range(_randomTimeBeforePossession[ChurchManager.Instance.Level].x, _randomTimeBeforePossession[ChurchManager.Instance.Level].y);
         }
 
         private void Possess()
@@ -148,7 +148,7 @@ namespace Villager.Runtime
         public void GoWinTheGame()
         {
             _nearToVictorySatanSpeach.SetActive(true);
-            ChurchFeature.Runtime.Church.Instance.JudgmentCost = 0;
+            ChurchFeature.Runtime.ChurchManager.Instance.JudgmentCost = 0;
 
             for (int i = 0; i < m_villagerList.Count; i++)
             {

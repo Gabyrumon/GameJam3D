@@ -27,7 +27,7 @@ namespace God.Runtime
         private void Start()
         {
             _camera = Camera.main;
-            _church = Church.Instance;
+            _churchManager = ChurchManager.Instance;
         }
 
         private void Update()
@@ -114,7 +114,7 @@ namespace God.Runtime
                 if (!CanPlayDivineInteraction(divineIntervention, false, false)) break;
 
                 divineIntervention.GetComponent<Outline>().OutlineColor =
-                    _church.FaithOrbCount >= divineIntervention.OrbCost && divineIntervention.IsInteractable
+                    _churchManager.FaithCount >= divineIntervention.OrbCost && divineIntervention.IsInteractable
                     ? _unlockedOutlineColor : _lockedOutlineColor;
 
                 divineIntervention.GetComponent<Outline>().enabled = true;
@@ -150,7 +150,7 @@ namespace God.Runtime
             _currentVillager.DivineIntervention = divineIntervention;
             _currentVillager.ChangeState(VillagerAI.VillagerState.BarrelAction);
 
-            _church.FaithOrbCount -= divineIntervention.OrbCost;
+            _churchManager.FaithCount -= divineIntervention.OrbCost;
             divineIntervention.IsInteractable = false;
 
             SoundManager.m_instance.PlayVillagerVoiceYes(_currentVillager.IsMan);
@@ -161,7 +161,7 @@ namespace God.Runtime
 
         private bool CanPlayDivineInteraction(DivineIntervention divineIntervention, bool checkIsInteractable = true, bool checkOrbs = true)
         {
-            bool result = _church.Level >= divineIntervention.RequiredChurchLevel;
+            bool result = _churchManager.Level >= divineIntervention.RequiredChurchLevel;
 
             if (checkIsInteractable)
             {
@@ -169,7 +169,7 @@ namespace God.Runtime
             }
             if (checkOrbs)
             {
-                result = result && _church.FaithOrbCount >= divineIntervention.OrbCost;
+                result = result && _churchManager.FaithCount >= divineIntervention.OrbCost;
             }
             return result;
         }
@@ -183,7 +183,7 @@ namespace God.Runtime
         [SerializeField] private Color _unlockedOutlineColor;
         [SerializeField] private Color _lockedOutlineColor;
 
-        private Church _church;
+        private ChurchManager _churchManager;
 
         private Camera _camera;
 
