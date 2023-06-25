@@ -22,7 +22,6 @@ namespace Inputs.Runtime
         public bool m_cantInteract;
 
         public EventHandler<OnMouseMoveEventArgs> m_onMouseMove;
-        public EventHandler<OnMoveEventArgs> m_onMove;
         public EventHandler m_onInteraction;
         public EventHandler m_onHit;
         public EventHandler m_onJudgment;
@@ -37,13 +36,6 @@ namespace Inputs.Runtime
         public void OnMouseMoveEventHandler(InputAction.CallbackContext context)
         {
             m_onMouseMove?.Invoke(this, new OnMouseMoveEventArgs() { m_mousePosition = context.ReadValue<Vector2>() });
-        }
-
-        public void OnMoveEventHandler(InputAction.CallbackContext context)
-        {
-            if (!context.started || Time.timeScale == 0) return;
-
-            m_onMove?.Invoke(this, new OnMoveEventArgs() { m_direction = context.ReadValue<Vector2>() });
         }
 
         public void OnInteractionEventHandler(InputAction.CallbackContext context)

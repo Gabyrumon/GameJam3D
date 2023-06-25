@@ -8,10 +8,6 @@ namespace GameManagerFeature.Runtime
 {
     public class PauseGameAtStartAndShowHelp : MonoBehaviour
     {
-        #region Public Members
-
-        #endregion
-
         #region Unity API
 
         private void Awake()
@@ -38,14 +34,6 @@ namespace GameManagerFeature.Runtime
             GameManager.m_instance.TogglePause(false);
             gameObject.SetActive(false);
         }
-
-        #endregion
-
-        #region Utils
-
-        #endregion
-
-        #region Private and Protected Members
 
         #endregion
     }

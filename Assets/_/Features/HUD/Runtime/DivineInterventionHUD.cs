@@ -7,10 +7,6 @@ namespace HUD.Runtime
 {
     public class DivineInterventionHUD : MonoBehaviour
     {
-        #region Public Members
-
-        #endregion
-
         #region Unity API
 
         private void Awake()
@@ -33,14 +29,6 @@ namespace HUD.Runtime
                 _descriptionGameObject.SetActive(false);
             }
         }
-
-        #endregion
-
-        #region Main Methods
-
-        #endregion
-
-        #region Utils
 
         #endregion
 

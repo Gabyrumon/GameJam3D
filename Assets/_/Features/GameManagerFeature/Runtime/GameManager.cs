@@ -61,10 +61,6 @@ namespace GameManagerFeature.Runtime
 
         #endregion
 
-        #region Utils
-
-        #endregion
-
         #region Private and Protected Members
 
         [SerializeField] private PauseMenu _pauseMenu;

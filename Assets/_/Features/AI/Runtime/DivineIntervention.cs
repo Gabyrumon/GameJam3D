@@ -52,10 +52,6 @@ namespace Villager.Runtime
 
         #endregion
 
-        #region Utils
-
-        #endregion
-
         #region Private and Protected Members
 
         [SerializeField] private int _orbCost;

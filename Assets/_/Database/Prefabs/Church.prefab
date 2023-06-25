@@ -8312,6 +8312,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7543731642804810354}
   - component: {fileID: 7543731642804810353}
+  - component: {fileID: 4872667325336152185}
   m_Layer: 0
   m_Name: Church
   m_TagString: Untagged
@@ -8349,9 +8350,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 703a076ba3507384bbbae8403dc324f6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_level: 0
   _levelText: {fileID: 0}
-  _levelsTransform: {fileID: 1993713657505607822}
   _upgradeButtonGameObject: {fileID: 819978114192849943}
   _levelDescriptionsParent: {fileID: 0}
   _levelDescriptionTexts:
@@ -8368,45 +8367,25 @@ MonoBehaviour:
   _judgmentCost: 25
   _judgmentHUD: {fileID: 0}
   _levelRequiredForJudgment: 2
-  _deconstructAnimationDuration: 0.5
-  _deconstructEase: 26
-  _buildAnimationDuration: 0.3
-  _buildEase: 1
-  _buildCompressionAnimation:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 0
-      inSlope: 2
-      outSlope: 2
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0
-      outWeight: 0
-    - serializedVersion: 3
-      time: 0.19907224
-      value: 1.2501932
-      inSlope: 0.87684953
-      outSlope: 0.87684953
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    - serializedVersion: 3
-      time: 1
-      value: 1
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0
-      outWeight: 0
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  _buildCompressionAnimationDuration: 0.2
-  _buildCompressionScale: 0.7
+--- !u!114 &4872667325336152185
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7543731642804810352}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7c9cbab1ce06453e8d07666e4d01e6a4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _levelsTransformParent: {fileID: 0}
+  _deconstructAnimationDuration: 0
+  _deconstructEase: 0
+  _buildAnimationDuration: 0
+  _buildEase: 0
+  _buildCompressionAnimationDuration: 0
+  _buildCompressionScale: 0
 --- !u!1 &7649376090079540122
 GameObject:
   m_ObjectHideFlags: 0

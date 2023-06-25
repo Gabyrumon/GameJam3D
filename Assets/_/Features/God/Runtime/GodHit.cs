@@ -9,10 +9,6 @@ namespace God.Runtime
 {
     public class GodHit : MonoBehaviour
     {
-        #region Public Members
-
-        #endregion
-
         #region Unity API
 
         private void Awake()

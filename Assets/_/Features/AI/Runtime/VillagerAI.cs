@@ -1,3 +1,4 @@
+using JetBrains.Annotations;
 using Locator.Runtime;
 using Sound.Runtime;
 using UnityEngine;
@@ -10,10 +11,7 @@ namespace Villager.Runtime
     {
         #region Public Members
 
-        public DivineIntervention m_divineIntervention;
-
-        public VillagerState CurrentState
-        { get => _currentState; set { _currentState = value; } }
+        public VillagerState CurrentState { get => _currentState; set => _currentState = value; }
 
         public bool IsConverted
         {
@@ -28,6 +26,7 @@ namespace Villager.Runtime
 
         public bool IsMan { get => _isMan; set => _isMan = value; }
         public float TimeBeforePray { get => _timeBeforePray; set => _timeBeforePray = value; }
+        public DivineIntervention DivineIntervention { get => _divineIntervention; set => _divineIntervention = value; }
 
         #endregion
 
@@ -89,7 +88,7 @@ namespace Villager.Runtime
                     break;
 
                 case VillagerState.BarrelAction:
-                    GoTo(m_divineIntervention, "BarrelAction");
+                    GoTo(DivineIntervention, "BarrelAction");
                     break;
 
                 case VillagerState.Steal:
@@ -112,9 +111,6 @@ namespace Villager.Runtime
 
                 case VillagerState.Dead:
                     Die();
-                    break;
-
-                default:
                     break;
             }
         }
@@ -139,28 +135,27 @@ namespace Villager.Runtime
                 _actionPlayed = true;
             }
 
-            if (_agent.remainingDistance < 1.5f)
+            if (!(_agent.remainingDistance < 1.5f)) return;
+            
+            if (_currentLocator == LocatorSystem.m_locatorDict[_currentRoom][LocatorSystem.m_locatorDict[_currentRoom].Count - 1])
             {
-                if (_currentLocator == LocatorSystem.m_locatorDict[_currentRoom][LocatorSystem.m_locatorDict[_currentRoom].Count - 1])
-                {
-                    _rePath = true;
-                }
-                else if (_currentLocator == LocatorSystem.m_locatorDict[_currentRoom][0])
-                {
-                    _rePath = false;
-                }
-
-                if (!_rePath)
-                {
-                    _currentLocator = LocatorSystem.GetNextLocation(_currentRoom, _currentLocator);
-                }
-                else
-                {
-                    _currentLocator = LocatorSystem.GetPreviousLocation(_currentRoom, _currentLocator);
-                }
-
-                _agent.SetDestination(_currentLocator.transform.position);
+                _rePath = true;
             }
+            else if (_currentLocator == LocatorSystem.m_locatorDict[_currentRoom][0])
+            {
+                _rePath = false;
+            }
+
+            if (!_rePath)
+            {
+                _currentLocator = LocatorSystem.GetNextLocation(_currentRoom, _currentLocator);
+            }
+            else
+            {
+                _currentLocator = LocatorSystem.GetPreviousLocation(_currentRoom, _currentLocator);
+            }
+
+            _agent.SetDestination(_currentLocator.transform.position);
         }
 
         private void GoTo(Room roomToGo, string animName)
@@ -173,43 +168,45 @@ namespace Villager.Runtime
                 _actionPlayed = true;
             }
 
-            if (Vector3.Distance(transform.position, _target) < 1.5f && !_animPlayed)
+            if (!(Vector3.Distance(transform.position, _target) < 1.5f) || _animPlayed) return;
+            
+            switch (animName)
             {
-                if (animName.Equals("Ritual"))
-                {
+                case "Ritual":
                     SoundManager.m_instance.PlayDemonSpawnedHornSound();
-                }
-                if (animName.Equals("Steal"))
-                {
+                    break;
+                case "Steal":
                     SoundManager.m_instance.PlayVillagerVoiceSlyLaugh(IsMan);
-                }
-                _animPlayed = true;
-                StartAnim(animName);
+                    break;
             }
+
+            _animPlayed = true;
+            StartAnim(animName);
         }
 
         private void GoTo(DivineIntervention interventionToGo, string animName)
         {
             if (!_actionPlayed)
             {
-                _target = interventionToGo.transform.position;
-                _agent.SetDestination(interventionToGo.transform.position);
+                var interventionPosition = interventionToGo.transform.position;
+                _target = interventionPosition;
+                _agent.SetDestination(interventionPosition);
                 _anim.SetBool("Walk", true);
                 _actionPlayed = true;
             }
 
-            if (Vector3.Distance(transform.position, _target) < 2f && !_animPlayed)
-            {
-                _anim.speed = 1f;
-                _animPlayed = true;
-                StartAnim(animName);
-            }
+            if (!(Vector3.Distance(transform.position, _target) < 2f) || _animPlayed) return;
+            
+            _anim.speed = 1f;
+            _animPlayed = true;
+            StartAnim(animName);
         }
 
         #endregion
 
         #region Utils
 
+        [UsedImplicitly]
         public void SetTimeBeforeNextPray()
         {
             _timeBeforePray = Random.Range(_randomTimeBeforePraying.x, _randomTimeBeforePraying.y);
@@ -229,8 +226,9 @@ namespace Villager.Runtime
 
         public void ChangeState(VillagerState state)
         {
-            if (_currentState == VillagerState.Dead || _currentState == VillagerState.GoToChurch) return;
-            if (_currentState == VillagerState.Pray) GetComponentInChildren<Prayer>().ValidatePrayer();
+            if (_currentState is VillagerState.Pray) _prayer.ValidatePrayer();
+            
+            if (_currentState is VillagerState.Dead or VillagerState.GoToChurch) return;
             _actionPlayed = false;
             _animPlayed = false;
 
@@ -247,11 +245,13 @@ namespace Villager.Runtime
             ReturnToRoutine();
         }
 
+        [UsedImplicitly]
         public void ActivateDivineIntervention()
         {
-            m_divineIntervention.Interact(this);
+            DivineIntervention.Interact(this);
         }
 
+        [UsedImplicitly]
         public void DoIdle(bool isSurprised)
         {
             if (!_actionPlayed)
@@ -273,21 +273,21 @@ namespace Villager.Runtime
             }
         }
 
+        [UsedImplicitly]
         public void Die()
         {
-            if (!_actionPlayed)
-            {
-                GetComponent<DarkSideAI>().ResetPossession(false);
-                ChangeState(VillagerState.Dead);
-                SatanManager.m_instance.m_villagerList.Remove(this);
+            if (_actionPlayed) return;
+            
+            GetComponent<DarkSideAI>().ResetPossession(false);
+            ChangeState(VillagerState.Dead);
+            SatanManager.m_instance.m_villagerList.Remove(this);
 
-                SatanManager.m_instance.m_notPossessedVillagerList.Remove(GetComponent<DarkSideAI>());
-                IsConverted = false;
-                _anim.SetTrigger("Death");
-                _anim.SetLayerWeight(1, 0.1f);
-                _actionPlayed = true;
-                _agent.enabled = false;
-            }
+            SatanManager.m_instance.m_notPossessedVillagerList.Remove(GetComponent<DarkSideAI>());
+            IsConverted = false;
+            _anim.SetTrigger("Death");
+            _anim.SetLayerWeight(1, 0.1f);
+            _actionPlayed = true;
+            _agent.enabled = false;
         }
 
         private void FaithVFX()
@@ -322,6 +322,7 @@ namespace Villager.Runtime
             Destroy(gameObject);
         }
 
+        [UsedImplicitly]
         public void PlayKillSound()
         {
             SoundManager.m_instance.PlaySheepDeath();
@@ -373,6 +374,7 @@ namespace Villager.Runtime
         [Space]
         [Tooltip("Meters per seconds")]
         [SerializeField] private float _speed;
+        [SerializeField] private Prayer _prayer;
 
         [Tooltip("In seconds")]
         [SerializeField] private Vector2 _randomTimeBeforePraying = new Vector2(15, 45);
@@ -395,6 +397,8 @@ namespace Villager.Runtime
         private bool _actionPlayed;
         private bool _animPlayed;
         private bool _rePath;
+
+        private DivineIntervention _divineIntervention;
 
         #endregion
     }

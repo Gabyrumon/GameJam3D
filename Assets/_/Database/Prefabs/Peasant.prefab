@@ -191,6 +191,7 @@ MonoBehaviour:
   _isConverted: 0
   _isMan: 0
   _speed: 2.25
+  _prayer: {fileID: 4064717482099841454}
   _randomTimeBeforePraying: {x: 5, y: 15}
   _prayerInteraction: {fileID: 9145793361737575654}
   _demonPrefab: {fileID: 8994073735858812328, guid: a99c01f01d7ef9c45b6a8b11a83c4360, type: 3}

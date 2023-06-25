@@ -11,10 +11,6 @@ namespace God.Runtime
 {
     public class GodJudgment : MonoBehaviour
     {
-        #region Public Members
-
-        #endregion
-
         #region Unity API
 
         private void Awake()
@@ -25,7 +21,7 @@ namespace God.Runtime
 
         private void Start()
         {
-            _church = Church.m_instance;
+            _church = Church.Instance;
         }
 
         private void OnEnable()

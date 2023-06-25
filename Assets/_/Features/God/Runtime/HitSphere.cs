@@ -6,10 +6,6 @@ namespace God.Runtime
 {
     public class HitSphere : MonoBehaviour
     {
-        #region Public Members
-
-        #endregion
-
         #region Unity API
 
         private void Start()
@@ -37,14 +33,6 @@ namespace God.Runtime
             yield return new WaitForSeconds(0.1f);
             GetComponent<Collider>().enabled = false;
         }
-
-        #endregion
-
-        #region Utils
-
-        #endregion
-
-        #region Private and Protected Members
 
         #endregion
     }

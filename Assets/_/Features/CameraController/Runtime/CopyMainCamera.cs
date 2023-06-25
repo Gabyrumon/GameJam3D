@@ -23,14 +23,6 @@ namespace CameraController.Runtime
 
         #endregion
 
-        #region Main Methods
-
-        #endregion
-
-        #region Utils
-
-        #endregion
-
         #region Private and Protected Members
 
         private Camera _mainCamera;

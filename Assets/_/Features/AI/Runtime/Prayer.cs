@@ -1,3 +1,4 @@
+using JetBrains.Annotations;
 using ChurchFeature.Runtime;
 using Sound.Runtime;
 using UnityEngine;
@@ -7,10 +8,6 @@ namespace Villager.Runtime
 {
     public class Prayer : MonoBehaviour
     {
-        #region Public Members
-
-        #endregion
-
         #region Unity API
 
         private void Awake()
@@ -20,7 +17,7 @@ namespace Villager.Runtime
 
         private void Start()
         {
-            _church = Church.m_instance;
+            _church = Church.Instance;
         }
 
         private void OnEnable()
@@ -42,23 +39,33 @@ namespace Villager.Runtime
 
         #region Main Methods
 
+        [UsedImplicitly]
         public void StartPrayer()
         {
+            if (_isPraying) return;
+            
             _currentCooldown = _maxCooldown;
             _circleCooldown.fillAmount = _maxCooldown;
             gameObject.SetActive(true);
+            
+            _isPraying = true;
         }
 
         public void ValidatePrayer()
         {
+            if (!_isPraying || SatanManager.m_instance._hasLaunchedGoWinTheGame) return;
+            
             _church.FaithOrbCount += _orbGained;
             gameObject.SetActive(false);
             _villagerAI.StopPraying();
             SoundManager.m_instance.PlayVillagerVoiceJoy(_villagerAI.IsMan);
+            
+            _isPraying = false;
         }
 
         private void FailPrayer()
         {
+            if (!_isPraying || SatanManager.m_instance._hasLaunchedGoWinTheGame) return;
             _villagerAI.IsConverted = false;
 
             _church.FaithOrbCount -= _orbLost;
@@ -69,11 +76,9 @@ namespace Villager.Runtime
             gameObject.SetActive(false);
             _villagerAI.StopPraying();
             SoundManager.m_instance.PlayVillagerVoiceSad(_villagerAI.IsMan);
+            
+            _isPraying = false;
         }
-
-        #endregion
-
-        #region Utils
 
         #endregion
 
@@ -84,13 +89,12 @@ namespace Villager.Runtime
         [SerializeField] private int _orbGained = 5;
         [SerializeField] private int _orbLost = 3;
 
-        [SerializeField] private Image _frontImage;
         [SerializeField] private Image _circleCooldown;
         [SerializeField] private float _maxCooldown = 5;
 
         private float _currentCooldown;
-
         private Church _church;
+        private bool _isPraying;
 
         #endregion
     }

@@ -9,10 +9,6 @@ namespace HUD.Runtime
 {
     public class SoundMenuHUD : MonoBehaviour
     {
-        #region Public Members
-
-        #endregion
-
         #region Unity API
 
         private void Awake()
@@ -49,10 +45,6 @@ namespace HUD.Runtime
             PlayerPrefs.SetFloat("SFXVolume", volume);
             PlayerPrefs.Save();
         }
-
-        #endregion
-
-        #region Utils
 
         #endregion
 

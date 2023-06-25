@@ -2,6 +2,7 @@ using Inputs.Runtime;
 using Sound.Runtime;
 using System.Collections;
 using System.Collections.Generic;
+using ChurchFeature.Runtime;
 using UnityEngine;
 
 namespace Villager.Runtime
@@ -52,13 +53,13 @@ namespace Villager.Runtime
                 }
             }
 
-            if (ChurchFeature.Runtime.Church.m_instance.m_level == 1 && !_satanFirstSpeachSaid)
+            if (ChurchFeature.Runtime.Church.Instance.Level == 1 && !_satanFirstSpeachSaid)
             {
                 SetRandomTimeBeforePossession();
                 _firstSatanSpeach.SetActive(true);
                 _satanFirstSpeachSaid = true;
             }
-            if (ChurchFeature.Runtime.Church.m_instance.m_level == 3 && !_hasLaunchedGoWinTheGame)
+            if (ChurchFeature.Runtime.Church.Instance.Level == 3 && !_hasLaunchedGoWinTheGame)
             {
                 GoWinTheGame();
             }
@@ -80,7 +81,7 @@ namespace Villager.Runtime
 
             if (_hasLaunchedGoWinTheGame)
             {
-                ChurchFeature.Runtime.Church.m_instance.FaithOrbCount = 0;
+                ChurchFeature.Runtime.Church.Instance.FaithOrbCount = 0;
             }
         }
 
@@ -90,7 +91,7 @@ namespace Villager.Runtime
 
         private void SetRandomTimeBeforePossession()
         {
-            _timeBeforePossession = Random.Range(_randomTimeBeforePossession[ChurchFeature.Runtime.Church.m_instance.m_level].x, _randomTimeBeforePossession[ChurchFeature.Runtime.Church.m_instance.m_level].y);
+            _timeBeforePossession = Random.Range(_randomTimeBeforePossession[Church.Instance.Level].x, _randomTimeBeforePossession[Church.Instance.Level].y);
         }
 
         private void Possess()
@@ -147,7 +148,7 @@ namespace Villager.Runtime
         public void GoWinTheGame()
         {
             _nearToVictorySatanSpeach.SetActive(true);
-            ChurchFeature.Runtime.Church.m_instance.JudgmentCost = 0;
+            ChurchFeature.Runtime.Church.Instance.JudgmentCost = 0;
 
             for (int i = 0; i < m_villagerList.Count; i++)
             {
@@ -181,10 +182,6 @@ namespace Villager.Runtime
 
         #endregion
 
-        #region Utils
-
-        #endregion
-
         #region Private And Protected Members
 
         [Tooltip("In seconds")]
@@ -204,7 +201,7 @@ namespace Villager.Runtime
         [SerializeField] private GameObject _loseScreen;
         [SerializeField] private GameObject _pauseButton;
         private float _timeBeforePossession;
-        private bool _hasLaunchedGoWinTheGame;
+        public bool _hasLaunchedGoWinTheGame;
         private bool _satanFirstSpeachSaid;
         private bool _canVerifyIfWinTheGame;
 

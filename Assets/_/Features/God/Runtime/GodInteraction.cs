@@ -10,10 +10,6 @@ namespace God.Runtime
 {
     public class GodInteraction : MonoBehaviour
     {
-        #region Public Members
-
-        #endregion
-
         #region Unity API
 
         private void OnEnable()
@@ -31,7 +27,7 @@ namespace God.Runtime
         private void Start()
         {
             _camera = Camera.main;
-            _church = Church.m_instance;
+            _church = Church.Instance;
         }
 
         private void Update()
@@ -88,7 +84,7 @@ namespace God.Runtime
 
         private void SelectVillager(VillagerAI villagerAI)
         {
-            if (!villagerAI.IsConverted) return;
+            if (!villagerAI.IsConverted || villagerAI.CurrentState == VillagerAI.VillagerState.BarrelAction) return;
 
             if (_currentVillager is not null)
             {
@@ -101,6 +97,11 @@ namespace God.Runtime
             if (_currentVillager.GetState() == VillagerAI.VillagerState.Pray)
             {
                 isPraying = true;
+                Prayer prayer = _currentVillager.GetComponentInChildren<Prayer>();
+                if (prayer.transform.parent.gameObject.activeSelf)
+                {
+                    prayer.ValidatePrayer();
+                }
             }
             _currentVillager.ChangeState(VillagerAI.VillagerState.Idle);
             if (isPraying) _currentVillager.TimeBeforePray = 1;
@@ -122,9 +123,9 @@ namespace God.Runtime
 
         private void UnselectVillager(bool returnToRoutine)
         {
-            if (returnToRoutine)
+            if (returnToRoutine && _currentVillager is not null)
             {
-                _currentVillager?.ReturnToRoutine();
+                _currentVillager.ReturnToRoutine();
             }
 
             if (_currentVillager is null) return;
@@ -146,7 +147,7 @@ namespace God.Runtime
                 return;
             }
 
-            _currentVillager.m_divineIntervention = divineIntervention;
+            _currentVillager.DivineIntervention = divineIntervention;
             _currentVillager.ChangeState(VillagerAI.VillagerState.BarrelAction);
 
             _church.FaithOrbCount -= divineIntervention.OrbCost;
@@ -160,7 +161,7 @@ namespace God.Runtime
 
         private bool CanPlayDivineInteraction(DivineIntervention divineIntervention, bool checkIsInteractable = true, bool checkOrbs = true)
         {
-            bool result = _church.m_level >= divineIntervention.RequiredChurchLevel;
+            bool result = _church.Level >= divineIntervention.RequiredChurchLevel;
 
             if (checkIsInteractable)
             {
@@ -172,10 +173,6 @@ namespace God.Runtime
             }
             return result;
         }
-
-        #endregion
-
-        #region Utils
 
         #endregion
 

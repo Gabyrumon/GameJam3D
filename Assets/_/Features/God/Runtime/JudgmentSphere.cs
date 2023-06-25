@@ -6,10 +6,6 @@ namespace God.Runtime
 {
     public class JudgmentSphere : MonoBehaviour
     {
-        #region Public Members
-
-        #endregion
-
         #region Unity API
 
         private void Start()
@@ -41,10 +37,6 @@ namespace God.Runtime
             yield return new WaitForSeconds(_cleanseDuration);
             GetComponent<Collider>().enabled = false;
         }
-
-        #endregion
-
-        #region Utils
 
         #endregion
 

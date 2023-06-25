@@ -3424,8 +3424,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: GameManager.Runtime.PauseMenu, GameManagerFeature.Runtime
+      - m_Target: {fileID: 2000840528}
+        m_TargetAssemblyTypeName: GameManagerFeature.Runtime.PauseMenu, GameManagerFeature.Runtime
         m_MethodName: ToggleForButton
         m_Mode: 1
         m_Arguments:

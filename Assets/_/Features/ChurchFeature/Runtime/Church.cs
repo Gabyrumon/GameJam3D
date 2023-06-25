@@ -1,8 +1,6 @@
-using DG.Tweening;
-using Sound.Runtime;
 using System;
 using System.Collections.Generic;
-using System.Linq;
+using Sound.Runtime;
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -10,18 +8,22 @@ using UnityEngine.UI;
 
 namespace ChurchFeature.Runtime
 {
+    public class OnChurchUpgradedEventArgs : EventArgs
+    {
+        public int LevelAfterUpgrade { get; set; }
+    }
+    
     public class Church : MonoBehaviour
     {
         #region Public Members
 
-        public int m_level;
+        public static Church Instance { get => _instance; private set => _instance = value; }
 
-        public static Church m_instance;
+        public EventHandler<OnChurchUpgradedEventArgs> m_onUpgrade;
 
         public int FaithOrbCount
         {
             get => _faithOrbCount;
-
             set
             {
                 _faithOrbCount = value;
@@ -29,10 +31,11 @@ namespace ChurchFeature.Runtime
                 {
                     _faithOrbCount = 0;
                 }
-                else if (_faithOrbCount > _maxFaithPerLevel[m_level])
+                else if (_faithOrbCount > _maxFaithPerLevel[Level])
                 {
-                    _faithOrbCount = _maxFaithPerLevel[m_level];
+                    _faithOrbCount = _maxFaithPerLevel[Level];
                 }
+
                 UpdateFillAmount();
                 _judgmentHUD.SetActive(!IsJudgmentReady());
             }
@@ -40,15 +43,21 @@ namespace ChurchFeature.Runtime
 
         public int JudgmentCost { get => _judgmentCost; set => _judgmentCost = value; }
 
+        public int Level { get => _level; private set => _level = value; }
+
         #endregion
 
         #region Unity API
 
         private void Awake()
         {
-            if (m_instance != null) return;
+            if (Instance != null)
+            {
+                Destroy(this);
+                return;
+            }
 
-            m_instance = this;
+            Instance = this;
         }
 
         private void Start()
@@ -60,14 +69,7 @@ namespace ChurchFeature.Runtime
 
         private void Update()
         {
-            if (CanUpgrade())
-            {
-                _upgradeButtonGameObject.SetActive(true);
-            }
-            else
-            {
-                _upgradeButtonGameObject.SetActive(false);
-            }
+            _upgradeButtonGameObject.SetActive(CanUpgrade());
 
             _levelDescriptionsParent.SetActive(IsMouseOverDescription());
         }
@@ -78,15 +80,15 @@ namespace ChurchFeature.Runtime
 
         private void UpdateFillAmount()
         {
-            _faithFillerBar.fillAmount = (float)_faithOrbCount / _maxFaithPerLevel[m_level];
-            _faithOrbText.text = $"{FaithOrbCount} / {_maxFaithPerLevel[m_level]}";
+            _faithFillerBar.fillAmount = (float)_faithOrbCount / _maxFaithPerLevel[Level];
+            _faithOrbText.text = $"{FaithOrbCount} / {_maxFaithPerLevel[Level]}";
         }
 
         private void UpdateUpgradeCostText()
         {
-            if (m_level < _upgradeCostPerLevel.Length)
+            if (Level < _upgradeCostPerLevel.Length)
             {
-                _upgradeText.text = $"<incr a=2>{_upgradeCostPerLevel[m_level]}</incr> <incr a=0.5>for Upgrade </incr>";
+                _upgradeText.text = $"<incr a=2>{_upgradeCostPerLevel[Level]}</incr> <incr a=0.5>for Upgrade </incr>";
             }
             else
             {
@@ -98,62 +100,28 @@ namespace ChurchFeature.Runtime
         {
             if (!CanUpgrade()) return;
 
-            Sequence sequence = DOTween.Sequence();
-            sequence.AppendInterval(0.5f);
+            FaithOrbCount -= _upgradeCostPerLevel[Level];
 
-            sequence.Append(_levelsTransform.GetChild(m_level)
-                .DOMoveY(-30, _deconstructAnimationDuration)
-                .SetEase(_deconstructEase));
-
-            sequence.Append(_levelsTransform.GetChild(m_level + 1)
-                .DOMoveY(0, _buildAnimationDuration)
-                .SetEase(_buildEase));
-
-            sequence.Append(_levelsTransform.GetChild(m_level + 1)
-                    .DOScaleY(_buildCompressionScale, _buildCompressionAnimationDuration)
-                    .SetEase(_deconstructEase)
-                    .SetLoops(2, LoopType.Yoyo));
-
-            FaithOrbCount -= _upgradeCostPerLevel[m_level];
-
-            m_level++;
-            _levelDescriptionTexts[m_level].color = Color.white;
+            Level++;
+            _levelDescriptionTexts[Level].color = Color.white;
             UpdateFillAmount();
-            _levelText.text = $"Church Level : {IntToRomanNotation(m_level + 1)}";
+            _levelText.text = $"Church Level : {IntToRomanNumbers(Level + 1)}";
             UpdateUpgradeCostText();
             _judgmentHUD.SetActive(!IsJudgmentReady());
 
+            m_onUpgrade?.Invoke(this, new OnChurchUpgradedEventArgs() { LevelAfterUpgrade = Level} );
             SoundManager.m_instance.PlayChurchUpgrade();
-        }
-
-        private string IntToRomanNotation(int number)
-        {
-            switch (number)
-            {
-                case 1:
-                    return "I";
-
-                case 2:
-                    return "II";
-
-                case 3:
-                    return "III";
-
-                case 4:
-                    return "IV";
-            }
-            return "";
         }
 
         private bool CanUpgrade()
         {
-            return m_level < _upgradeCostPerLevel.Length
-                && FaithOrbCount >= _upgradeCostPerLevel[m_level];
+            return Level < _upgradeCostPerLevel.Length
+                   && FaithOrbCount >= _upgradeCostPerLevel[Level];
         }
 
         public bool IsJudgmentReady()
         {
-            return m_level >= _levelRequiredForJudgment && _faithOrbCount >= JudgmentCost;
+            return Level >= _levelRequiredForJudgment && _faithOrbCount >= JudgmentCost;
         }
 
         private bool IsMouseOverDescription()
@@ -167,6 +135,7 @@ namespace ChurchFeature.Runtime
                     return true;
                 }
             }
+
             return false;
         }
 
@@ -174,15 +143,26 @@ namespace ChurchFeature.Runtime
 
         #region Utils
 
-        private PointerEventData ScreenPosToPointerData(Vector2 screenPos)
-           => new(EventSystem.current) { position = screenPos };
+        private static string IntToRomanNumbers(int number)
+        {
+            return number switch
+            {
+                1 => "I",
+                2 => "II",
+                3 => "III",
+                4 => "IV",
+                _ => ""
+            };
+        }
+
+        private static PointerEventData ScreenPosToPointerData(Vector2 screenPos)
+            => new(EventSystem.current) { position = screenPos };
 
         #endregion
 
         #region Private and Protected Members
 
         [SerializeField] private TextMeshProUGUI _levelText;
-        [SerializeField] private Transform _levelsTransform;
         [SerializeField] private GameObject _upgradeButtonGameObject;
 
         [Space]
@@ -207,22 +187,9 @@ namespace ChurchFeature.Runtime
         [SerializeField] private GameObject _judgmentHUD;
         [SerializeField] private int _levelRequiredForJudgment;
 
-        [Space]
-        [Header("Animations")]
-        [Space]
-        [SerializeField] private float _deconstructAnimationDuration;
+        private static Church _instance;
 
-        [SerializeField] private Ease _deconstructEase;
-
-        [Space]
-        [SerializeField] private float _buildAnimationDuration;
-
-        [SerializeField] private Ease _buildEase;
-        [SerializeField] private AnimationCurve _buildCompressionAnimation;
-        [SerializeField] private float _buildCompressionAnimationDuration;
-
-        [Range(0f, 1f)]
-        [SerializeField] private float _buildCompressionScale;
+        private int _level;
 
         #endregion
     }

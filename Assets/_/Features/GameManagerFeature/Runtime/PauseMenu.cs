@@ -5,10 +5,6 @@ namespace GameManagerFeature.Runtime
 {
     public class PauseMenu : MonoBehaviour
     {
-        #region Public Members
-
-        #endregion
-
         #region Unity API
 
         private void Start()
@@ -65,10 +61,6 @@ namespace GameManagerFeature.Runtime
             SceneManager.LoadScene(0);
             Time.timeScale = 1.0f;
         }
-
-        #endregion
-
-        #region Utils
 
         #endregion
 

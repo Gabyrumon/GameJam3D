@@ -7,24 +7,12 @@ namespace Sound.Runtime
 {
     public class PlaySoundOnEnable : MonoBehaviour
     {
-        #region Public Members
-
-        #endregion
-
         #region Unity API
 
         private void OnEnable()
         {
             SoundToPlay.Invoke();
         }
-
-        #endregion
-
-        #region Main Methods
-
-        #endregion
-
-        #region Utils
 
         #endregion
 
