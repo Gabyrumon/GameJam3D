@@ -198,7 +198,7 @@ namespace ExternalOutline
                 var smoothNormals = SmoothNormals(meshFilter.sharedMesh);
 
                 bakeKeys.Add(meshFilter.sharedMesh);
-                bakeValues.Add(new ListVector3() { data = smoothNormals });
+                bakeValues.Add(new ListVector3 { data = smoothNormals });
             }
         }
 

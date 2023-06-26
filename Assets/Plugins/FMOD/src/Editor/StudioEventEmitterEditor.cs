@@ -194,9 +194,10 @@ namespace FMODUnity
                             if (paramRef != null)
                             {
                                 propertyRecords.Add(
-                                    new PropertyRecord() {
+                                    new PropertyRecord
+                                    {
                                         paramRef = paramRef,
-                                        valueProperties = new List<SerializedProperty>() { valueProperty },
+                                        valueProperties = new List<SerializedProperty> { valueProperty },
                                     });
                             }
                         }

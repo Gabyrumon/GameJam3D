@@ -35,7 +35,7 @@ namespace Inputs.Runtime
 
         public void OnMouseMoveEventHandler(InputAction.CallbackContext context)
         {
-            m_onMouseMove?.Invoke(this, new OnMouseMoveEventArgs() { m_mousePosition = context.ReadValue<Vector2>() });
+            m_onMouseMove?.Invoke(this, new OnMouseMoveEventArgs { m_mousePosition = context.ReadValue<Vector2>() });
         }
 
         public void OnInteractionEventHandler(InputAction.CallbackContext context)

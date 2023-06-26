@@ -305,7 +305,7 @@ namespace FullscreenEditor {
 
             view.EnsureOfType(Types.View);
 
-            var list = new List<ScriptableObject>() { view };
+            var list = new List<ScriptableObject> { view };
             var parent = view.GetPropertyValue<ScriptableObject>("parent");
 
             while(parent) { // Get the least specific view

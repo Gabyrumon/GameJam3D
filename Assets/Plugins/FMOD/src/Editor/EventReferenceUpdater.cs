@@ -813,7 +813,7 @@ namespace FMODUnity
 #pragma warning disable 0618
             public static Task ClearEvent(StudioEventEmitter emitter)
             {
-                return new Task()
+                return new Task
                 {
                     type = Type.EmitterClearEvent,
                     Data = new string[] { emitter.Event },
@@ -823,7 +823,7 @@ namespace FMODUnity
 #if UNITY_TIMELINE_EXIST
             public static Task ClearEventName(FMODEventPlayable playable)
             {
-                return new Task()
+                return new Task
                 {
                     type = Type.PlayableClearEventName,
                     Data = new string[] { playable.eventName },
@@ -833,7 +833,7 @@ namespace FMODUnity
 
             public static Task MoveEventToEventReference(StudioEventEmitter emitter)
             {
-                return new Task()
+                return new Task
                 {
                     type = Type.EmitterMoveEventToEventReference,
                     Data = new string[] { emitter.Event },
@@ -844,7 +844,7 @@ namespace FMODUnity
 #if UNITY_TIMELINE_EXIST
             public static Task MoveEventNameToEventReference(FMODEventPlayable playable)
             {
-                return new Task()
+                return new Task
                 {
                     type = Type.PlayableMoveEventNameToEventReference,
                     Data = new string[] { playable.eventName },
@@ -854,7 +854,7 @@ namespace FMODUnity
 
             public static Task MoveEventOverrideToEventReference(StudioEventEmitter emitter)
             {
-                return new Task()
+                return new Task
                 {
                     type = Type.EmitterMoveEventOverrideToEventReference,
                     Data = new string[] { emitter.Event },
@@ -864,7 +864,7 @@ namespace FMODUnity
 
             public static Task RemoveEventRefField(string subObjectPath, string value, string fieldName, string targetType)
             {
-                return new Task()
+                return new Task
                 {
                     type = Type.GenericRemoveEventRefField,
                     Data = new string[] { subObjectPath, value, fieldName, targetType },
@@ -873,7 +873,7 @@ namespace FMODUnity
 
             public static Task RemoveEmptyEventRefField(string subObjectPath, string fieldName, string targetType)
             {
-                return new Task()
+                return new Task
                 {
                     type = Type.GenericRemoveEmptyEventRefField,
                     Data = new string[] { subObjectPath, fieldName, targetType },
@@ -883,7 +883,7 @@ namespace FMODUnity
             public static Task MoveEventRefFieldToEventReferenceField(
                 string subObjectPath, string value, string oldFieldName, string newFieldName)
             {
-                return new Task()
+                return new Task
                 {
                     type = Type.GenericMoveEventRefFieldToEventReferenceField,
                     Data = new string[] { subObjectPath, value, oldFieldName, newFieldName },
@@ -893,7 +893,7 @@ namespace FMODUnity
             public static Task AddMigrationTarget(string subObjectPath, string value, string fieldName, string targetType,
                 string targetName = null)
             {
-                return new Task()
+                return new Task
                 {
                     type = Type.GenericAddMigrationTarget,
                     Data = new string[] { subObjectPath, value, fieldName, targetType, targetName },
@@ -903,7 +903,7 @@ namespace FMODUnity
             public static Task UpdateEventReferencePath(string subObjectPath, string fieldName,
                 string oldPath, string newPath, FMOD.GUID guid)
             {
-                return new Task()
+                return new Task
                 {
                     type = Type.GenericUpdateEventReferencePath,
                     Data = new string[] { subObjectPath, fieldName, oldPath, newPath, guid.ToString() },
@@ -913,7 +913,7 @@ namespace FMODUnity
             public static Task UpdateEventReferenceGuid(string subObjectPath, string fieldName,
                 FMOD.GUID oldGuid, FMOD.GUID newGuid, string path)
             {
-                return new Task()
+                return new Task
                 {
                     type = Type.GenericUpdateEventReferenceGuid,
                     Data = new string[] { subObjectPath, fieldName, oldGuid.ToString(), newGuid.ToString(), path },
@@ -923,7 +923,7 @@ namespace FMODUnity
             public static Task FixMigrationTargetConflict(string subObjectPath, string targetType,
                 IEnumerable<string> fieldNames)
             {
-                return new Task()
+                return new Task
                 {
                     type = Type.GenericFixMigrationTargetConflict,
                     Data = (new string[] { subObjectPath, targetType }).Concat(fieldNames).ToArray(),
@@ -944,7 +944,8 @@ namespace FMODUnity
                 ExecuteDelegate Execute,
                 ManualInstructionsDelegate ManualInstructions = null)
             {
-                Implementations[(int)type] = new Delegates() {
+                Implementations[(int)type] = new Delegates
+                {
                     Description = Description,
                     IsValid = IsValid,
                     Execute = Execute,
@@ -1223,7 +1224,7 @@ namespace FMODUnity
                         FieldInfo oldField = type.GetField(oldFieldName, DefaultBindingFlags);
                         FieldInfo newField = type.GetField(newFieldName, DefaultBindingFlags);
 
-                        EventReference eventReference = new EventReference() { Path = path };
+                        EventReference eventReference = new EventReference { Path = path };
 
                         EditorEventRef eventRef = EventManager.EventFromPath(path);
 
@@ -1636,7 +1637,8 @@ namespace FMODUnity
 
         private int AddAsset(AssetType type, string path)
         {
-            Asset asset = new Asset() {
+            Asset asset = new Asset
+            {
                 Type = type,
                 Path = path,
             };
@@ -1650,7 +1652,8 @@ namespace FMODUnity
         {
             MonoScript script = MonoScript.FromMonoBehaviour(behaviour);
 
-            Component component = new Component() {
+            Component component = new Component
+            {
                 GameObjectID = GlobalObjectId.GetGlobalObjectIdSlow(behaviour.gameObject),
                 Type = behaviour.GetType().Name,
                 Path = EditorUtils.GameObjectPath(behaviour, root),
@@ -1666,7 +1669,8 @@ namespace FMODUnity
         {
             MonoScript script = MonoScript.FromScriptableObject(scriptableObject);
 
-            Component component = new Component() {
+            Component component = new Component
+            {
                 Type = scriptableObject.GetType().Name,
                 ScriptPath = AssetDatabase.GetAssetPath(script),
             };
@@ -2061,7 +2065,7 @@ namespace FMODUnity
             public static MultiColumnHeaderState CreateHeaderState()
             {
                 MultiColumnHeaderState.Column[] columns = new MultiColumnHeaderState.Column[] {
-                    new MultiColumnHeaderState.Column()
+                    new MultiColumnHeaderState.Column
                     {
                         headerContent = new GUIContent("Target"),
                         width = 225,
@@ -2069,13 +2073,14 @@ namespace FMODUnity
                         allowToggleVisibility = false,
                         canSort = false,
                     },
-                    new MultiColumnHeaderState.Column() {
+                    new MultiColumnHeaderState.Column
+                    {
                         headerContent = new GUIContent("Task"),
                         autoResize = true,
                         allowToggleVisibility = false,
                         canSort = false,
                     },
-                    new MultiColumnHeaderState.Column()
+                    new MultiColumnHeaderState.Column
                     {
                         headerContent = new GUIContent("Status"),
                         width = 175,
@@ -2128,7 +2133,8 @@ namespace FMODUnity
 
                         if (assetItem == null || assetItem.asset != asset)
                         {
-                            assetItem = new AssetItem() {
+                            assetItem = new AssetItem
+                            {
                                 id = index++,
                                 asset = asset,
                                 displayName = asset.Path,
@@ -2138,7 +2144,8 @@ namespace FMODUnity
                             root.AddChild(assetItem);
                         }
 
-                        TreeViewItem taskItem = new TaskItem() {
+                        TreeViewItem taskItem = new TaskItem
+                        {
                             id = index++,
                             task = task,
                         };

@@ -27,7 +27,7 @@ namespace Villager.Runtime
 
         public void Interact(VillagerAI source)
         {
-            foreach (var villager in _satanManager.m_villagerList)
+            foreach (var villager in _satanManager.VillagerList)
             {
                 VillagerAI currentVillagerAI = villager.GetComponent<VillagerAI>();
                 if (Vector3.Distance(transform.position, villager.transform.position) <= _range && currentVillagerAI != source)
@@ -44,7 +44,7 @@ namespace Villager.Runtime
             _filter.mesh = _wine;
             _filter.mesh.RecalculateBounds();
             Instantiate(_VFX, Vector3.up + transform.position, Quaternion.identity);
-            yield return new WaitForSeconds(_cooldDown);
+            yield return new WaitForSeconds(_cooldown);
             _filter.mesh = _water;
             _filter.mesh.RecalculateBounds();
             _isInteractable = true;
@@ -57,7 +57,7 @@ namespace Villager.Runtime
         [SerializeField] private int _orbCost;
         [SerializeField] private float _range;
         [SerializeField] private int _requiredChurchLevel;
-        [SerializeField] private int _cooldDown;
+        [SerializeField] private int _cooldown;
 
         [Header("VFX")]
         [SerializeField] private GameObject _VFX;

@@ -309,7 +309,7 @@ namespace FMODUnity
                     pathVersions = new Dictionary<FileLayout, PathInfo>();
                 }
 
-                pathVersions.Add(layout, new PathInfo() { path = path, absolute = absolute });
+                pathVersions.Add(layout, new PathInfo { path = path, absolute = absolute });
             }
 
             public void GetPath(FileLayout layout, out string path, out bool absolute)
@@ -985,7 +985,7 @@ namespace FMODUnity
 
         internal virtual List<CodecChannelCount> DefaultCodecChannels { get { return staticCodecChannels; } }
 
-        private static List<CodecChannelCount> staticCodecChannels = new List<CodecChannelCount>()
+        private static List<CodecChannelCount> staticCodecChannels = new List<CodecChannelCount>
         {
             new CodecChannelCount { format = CodecType.FADPCM, channels = 32 },
             new CodecChannelCount { format = CodecType.Vorbis, channels = 0 },

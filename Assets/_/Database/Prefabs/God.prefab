@@ -9,6 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1511012405740748414}
+  - component: {fileID: 1059064223876889102}
   - component: {fileID: 1511012405740748415}
   - component: {fileID: 1271543387}
   - component: {fileID: 1271543390}
@@ -34,6 +35,18 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1059064223876889102
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1511012405740748408}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1159bdd3ace5444882a9943fe7fb9892, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &1511012405740748415
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -47,6 +60,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _divineInterventions:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
   _unlockedOutlineColor: {r: 1, g: 1, b: 1, a: 1}
@@ -63,7 +80,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3903360412453424e935a50d795e4fa4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _hitPrefab: {fileID: 6755741244397799627, guid: 626cbf0ca5853e648989c6be61d22680, type: 3}
+  _hitPrefab: {fileID: 5566473679581197029, guid: 8bff7d6291d1ad341bbcaeea8b5f20b5, type: 3}
   _uiLayer:
     serializedVersion: 2
     m_Bits: 32
@@ -79,7 +96,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9184fb446f3d11d4289ac439b55ffa75, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _judgmentPrefab: {fileID: 1557915046171660808, guid: dccf8fda8de43bf4fb0a763b828a5ef4, type: 3}
-  _uiLayer:
-    serializedVersion: 2
-    m_Bits: 32
+  _judgmentPrefab: {fileID: 1339483653523732529, guid: 48188d4ae3d2a9a49b37cb7839788dcd, type: 3}
+  _judgmentCost: 50
+  _levelRequiredForJudgment: 2

@@ -2100,7 +2100,7 @@ namespace FMODUnity
 
             public void SelectAndFramePlatform(Platform platform)
             {
-                SetSelection(new List<int>() { platform.Identifier.GetHashCode() },
+                SetSelection(new List<int> { platform.Identifier.GetHashCode() },
                     TreeViewSelectionOptions.RevealAndFrame);
             }
 
@@ -2141,7 +2141,8 @@ namespace FMODUnity
 
                     if (canRename && Event.current.type == EventType.Repaint)
                     {
-                        Rect iconRect = new Rect() {
+                        Rect iconRect = new Rect
+                        {
                             x = labelRect.xMax - renameIcon.width,
                             y = labelRect.yMax - labelStyle.padding.bottom - renameIcon.height,
                             width = renameIcon.width,

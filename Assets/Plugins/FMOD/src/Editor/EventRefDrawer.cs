@@ -181,7 +181,8 @@ namespace FMODUnity
 
                     if (renamedEvent != null)
                     {
-                        MismatchInfo mismatch = new MismatchInfo() {
+                        MismatchInfo mismatch = new MismatchInfo
+                        {
                             Message = string.Format("Moved to {0}", renamedEvent.Path),
                             HelpText = string.Format(
                                 "This event has been moved in FMOD Studio.\n" +
@@ -285,7 +286,8 @@ namespace FMODUnity
             {
                 if (eventReference.Guid != editorEventRef.Guid)
                 {
-                    return new MismatchInfo() {
+                    return new MismatchInfo
+                    {
                         Message = "GUID doesn't match path",
                         HelpText = string.Format(
                             "The GUID on this EventReference doesn't match the path.\n" +
@@ -303,7 +305,8 @@ namespace FMODUnity
             {
                 if (eventReference.Path != editorEventRef.Path)
                 {
-                    return new MismatchInfo() {
+                    return new MismatchInfo
+                    {
                         Message = "Path doesn't match GUID",
                         HelpText = string.Format(
                             "The path on this EventReference doesn't match the GUID.\n" +

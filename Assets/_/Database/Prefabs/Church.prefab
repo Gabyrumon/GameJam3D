@@ -8313,6 +8313,7 @@ GameObject:
   - component: {fileID: 7543731642804810354}
   - component: {fileID: 7543731642804810353}
   - component: {fileID: 4872667325336152185}
+  - component: {fileID: 1539190102}
   m_Layer: 0
   m_Name: Church
   m_TagString: Untagged
@@ -8353,9 +8354,6 @@ MonoBehaviour:
   _faithCount: 0
   _maxFaithPerLevel: 1e0000004b00000096000000c8000000
   _upgradeCostPerLevel: 0f0000002800000032000000
-  _judgmentCost: 25
-  _judgmentHUD: {fileID: 0}
-  _levelRequiredForJudgment: 2
 --- !u!114 &4872667325336152185
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8375,6 +8373,25 @@ MonoBehaviour:
   _buildEase: 1
   _buildCompressionAnimationDuration: 0.2
   _buildCompressionScale: 0.7
+--- !u!114 &1539190102
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7543731642804810352}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 80ff95015062452e988c2b5a98df5909, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _churchUpgrade:
+    Guid:
+      Data1: 666172770
+      Data2: 1335598964
+      Data3: -1675894907
+      Data4: 1496824367
+    Path: event:/SFX/ChurchUpgrade
 --- !u!1 &7649376090079540122
 GameObject:
   m_ObjectHideFlags: 0

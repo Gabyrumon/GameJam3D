@@ -41,9 +41,21 @@ MonoBehaviour:
   m_GameObject: {fileID: 436496961326399374}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 66019a8a47e388940a88110733b18693, type: 3}
+  m_Script: {fileID: 11500000, guid: 47fca4dd6336f8f4c9c00795aacc5544, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_villagerList: []
   m_notPossessedVillagerList: []
-  _randomTimeBeforePossession: {x: 15, y: 30}
+  m_demonList: []
+  m_villagerHasFaithList: []
+  _randomTimeBeforePossession: []
+  _demonPrefab: {fileID: 0}
+  _firstSatanSpeach: {fileID: 0}
+  _noFaithSatanSpeach: {fileID: 0}
+  _nearToVictorySatanSpeach: {fileID: 0}
+  _demonAnchors: []
+  _winScreen: {fileID: 0}
+  _winVFX: {fileID: 0}
+  _loseScreen: {fileID: 0}
+  _pauseButton: {fileID: 0}
+  _hasLaunchedGoWinTheGame: 0

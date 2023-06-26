@@ -1,5 +1,4 @@
 using System;
-using Sound.Runtime;
 using UnityEngine;
 
 namespace ChurchFeature.Runtime
@@ -47,12 +46,9 @@ namespace ChurchFeature.Runtime
                     _faithCount = _maxFaithPerLevel[Level];
                 }
 
-                m_onFaithChanged?.Invoke(this, new OnFaithChangedEventArgs() { FaithCount = _faithCount, MaxFaithCount = _maxFaithPerLevel[Level] });
-                _judgmentHUD.SetActive(!IsJudgmentReady());
+                m_onFaithChanged?.Invoke(this, new OnFaithChangedEventArgs { FaithCount = FaithCount, MaxFaithCount = _maxFaithPerLevel[Level] });
             }
         }
-
-        public int JudgmentCost { get => _judgmentCost; set => _judgmentCost = value; }
 
         public int Level { get => _level; private set => _level = value; }
 
@@ -73,12 +69,11 @@ namespace ChurchFeature.Runtime
 
         private void Start()
         {
-            m_onChurchStart?.Invoke(this, new OnChurchStartEventArgs()
+            m_onChurchStart?.Invoke(this, new OnChurchStartEventArgs
             {
-                OnChurchUpgradedEventArgs = new OnChurchUpgradedEventArgs() { LevelAfterUpgrade = Level, UpgradeCostPerLevel = _upgradeCostPerLevel },
-                OnFaithChangedEventArgs = new OnFaithChangedEventArgs() { FaithCount = _faithCount, MaxFaithCount = _maxFaithPerLevel[Level] }
+                OnChurchUpgradedEventArgs = new OnChurchUpgradedEventArgs { LevelAfterUpgrade = Level, UpgradeCostPerLevel = _upgradeCostPerLevel },
+                OnFaithChangedEventArgs = new OnFaithChangedEventArgs { FaithCount = FaithCount, MaxFaithCount = _maxFaithPerLevel[Level] }
             });
-            _judgmentHUD.SetActive(!IsJudgmentReady());
         }
 
         #endregion
@@ -90,22 +85,15 @@ namespace ChurchFeature.Runtime
             if (!CanUpgrade()) return;
 
             Level++;
-            _judgmentHUD.SetActive(!IsJudgmentReady());
 
             FaithCount -= _upgradeCostPerLevel[Level - 1];
-            m_onUpgrade?.Invoke(this, new OnChurchUpgradedEventArgs() { LevelAfterUpgrade = Level, UpgradeCostPerLevel = _upgradeCostPerLevel } );
-            SoundManager.m_instance.PlayChurchUpgrade();
+            m_onUpgrade?.Invoke(this, new OnChurchUpgradedEventArgs { LevelAfterUpgrade = Level, UpgradeCostPerLevel = _upgradeCostPerLevel } );
         }
 
         public bool CanUpgrade()
         {
             return Level < _upgradeCostPerLevel.Length
                    && FaithCount >= _upgradeCostPerLevel[Level];
-        }
-
-        public bool IsJudgmentReady()
-        {
-            return Level >= _levelRequiredForJudgment && _faithCount >= JudgmentCost;
         }
 
         #endregion
@@ -117,13 +105,6 @@ namespace ChurchFeature.Runtime
         [Space]
         [SerializeField] private int[] _maxFaithPerLevel;
         [SerializeField] private int[] _upgradeCostPerLevel;
-        
-        [Space]
-
-        [Space]
-        [SerializeField] private int _judgmentCost;
-        [SerializeField] private GameObject _judgmentHUD;
-        [SerializeField] private int _levelRequiredForJudgment;
 
         private static ChurchManager _instance;
 

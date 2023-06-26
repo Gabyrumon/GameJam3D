@@ -40,12 +40,12 @@ namespace Villager.Runtime
 
         private void OnEnable()
         {
-            SatanManager.m_instance.m_villagerList.Add(this);
+            SatanManager.m_instance.VillagerList.Add(this);
         }
 
         private void OnDisable()
         {
-            SatanManager.m_instance.m_villagerList.Remove(this);
+            SatanManager.m_instance.VillagerList.Remove(this);
         }
 
         private void Start()
@@ -285,9 +285,9 @@ namespace Villager.Runtime
             
             GetComponent<DarkSideAI>().ResetPossession(false);
             ChangeState(VillagerState.Dead);
-            SatanManager.m_instance.m_villagerList.Remove(this);
+            SatanManager.m_instance.VillagerList.Remove(this);
 
-            SatanManager.m_instance.m_notPossessedVillagerList.Remove(GetComponent<DarkSideAI>());
+            SatanManager.m_instance.NotPossessedVillagerList.Remove(GetComponent<DarkSideAI>());
             IsConverted = false;
             _anim.SetTrigger("Death");
             _anim.SetLayerWeight(1, 0.1f);
@@ -300,15 +300,15 @@ namespace Villager.Runtime
             if (_isConverted)
             {
                 _faithVFX.SetActive(true);
-                SatanManager.m_instance.m_villagerHasFaithList.Add(this);
+                SatanManager.m_instance.VillagerHasFaithList.Add(this);
             }
             else
             {
                 if (!_faithVFX.activeSelf) return;
 
                 _faithVFX.SetActive(false);
-                SatanManager.m_instance.m_villagerHasFaithList.Remove(this);
-                if (SatanManager.m_instance.m_villagerHasFaithList.Count <= 0)
+                SatanManager.m_instance.VillagerHasFaithList.Remove(this);
+                if (SatanManager.m_instance.VillagerHasFaithList.Count <= 0)
                 {
                     SatanManager.m_instance.StartInvokingAllDemons();
                 }

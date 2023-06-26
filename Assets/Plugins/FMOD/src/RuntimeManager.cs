@@ -1090,7 +1090,7 @@ retry:
             }
 
 #if UNITY_EDITOR
-            return new EventReference() { Path = path, Guid = guid };
+            return new EventReference { Path = path, Guid = guid };
 #else
             return new EventReference() { Guid = guid };
 #endif

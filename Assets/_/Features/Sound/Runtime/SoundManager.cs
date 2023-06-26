@@ -169,15 +169,6 @@ namespace Sound.Runtime
 
         #endregion
 
-        #region Church
-
-        public void PlayChurchUpgrade()
-        {
-            RuntimeManager.PlayOneShot(_churchUpgrade);
-        }
-
-        #endregion
-
         #region Villager
 
         public void PlayVillagerVoiceYes(bool isMan)
@@ -299,9 +290,6 @@ namespace Sound.Runtime
 
         [Header("God")]
         [SerializeField] private EventReference _godWhisper;
-
-        [Header("Church")]
-        [SerializeField] private EventReference _churchUpgrade;
 
         [Header("Villager")]
         [SerializeField] private EventReference _manVoiceYes;

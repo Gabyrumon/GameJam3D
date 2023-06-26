@@ -1,9 +1,11 @@
+using System;
 using Inputs.Runtime;
 using Sound.Runtime;
 using System.Collections;
 using System.Collections.Generic;
 using ChurchFeature.Runtime;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 namespace Villager.Runtime
 {
@@ -13,13 +15,25 @@ namespace Villager.Runtime
 
         public static SatanManager m_instance;
 
-        public List<VillagerAI> m_villagerList = new List<VillagerAI>();
+        public EventHandler m_onGoWinTheGameEventHandler;
 
-        public List<DarkSideAI> m_notPossessedVillagerList = new List<DarkSideAI>();
+        public List<VillagerAI> VillagerList
+        {
+            get => _villagerList;
+            set => _villagerList = value;
+        }
 
-        public List<DemonAI> m_demonList = new List<DemonAI>();
+        public List<DarkSideAI> NotPossessedVillagerList
+        {
+            get => _notPossessedVillagerList;
+            set => _notPossessedVillagerList = value;
+        }
 
-        public List<VillagerAI> m_villagerHasFaithList = new List<VillagerAI>();
+        public List<VillagerAI> VillagerHasFaithList
+        {
+            get => _villagerHasFaithList;
+            set => _villagerHasFaithList = value;
+        }
 
         #endregion
 
@@ -53,25 +67,26 @@ namespace Villager.Runtime
                 }
             }
 
-            if (ChurchFeature.Runtime.ChurchManager.Instance.Level == 1 && !_satanFirstSpeachSaid)
+            switch (ChurchManager.Instance.Level)
             {
-                SetRandomTimeBeforePossession();
-                _firstSatanSpeach.SetActive(true);
-                _satanFirstSpeachSaid = true;
-            }
-            if (ChurchFeature.Runtime.ChurchManager.Instance.Level == 3 && !_hasLaunchedGoWinTheGame)
-            {
-                GoWinTheGame();
+                case 1 when !_satanFirstSpeechSaid:
+                    SetRandomTimeBeforePossession();
+                    _firstSatanSpeech.SetActive(true);
+                    _satanFirstSpeechSaid = true;
+                    break;
+                case 3 when !_hasLaunchedGoWinTheGame:
+                    GoWinTheGame();
+                    break;
             }
 
-            if (m_villagerList.Count <= 0)
+            if (VillagerList.Count <= 0)
             {
                 _loseScreen.SetActive(true);
                 InputManager.m_instance.m_cantInteract = true;
                 _pauseButton.SetActive(false);
             }
 
-            if (_canVerifyIfWinTheGame  && m_demonList.Count <= 0)
+            if (_canVerifyIfWinTheGame  && _demonList.Count <= 0)
             {
                 _winScreen.SetActive(true);
                 _winVFX.SetActive(true);
@@ -81,7 +96,7 @@ namespace Villager.Runtime
 
             if (_hasLaunchedGoWinTheGame)
             {
-                ChurchFeature.Runtime.ChurchManager.Instance.FaithCount = 0;
+                ChurchManager.Instance.FaithCount = 0;
             }
         }
 
@@ -96,20 +111,20 @@ namespace Villager.Runtime
 
         private void Possess()
         {
-            if (m_notPossessedVillagerList.Count > 0)
+            if (NotPossessedVillagerList.Count > 0)
             {
-                int randomIndex = Random.Range(0, m_notPossessedVillagerList.Count);
-                DarkSideAI current = m_notPossessedVillagerList[randomIndex];
+                int randomIndex = Random.Range(0, NotPossessedVillagerList.Count);
+                DarkSideAI current = NotPossessedVillagerList[randomIndex];
 
-                for (int i = 0; i < m_notPossessedVillagerList.Count; i++)
+                for (int i = 0; i < NotPossessedVillagerList.Count; i++)
                 {
-                    int index = (randomIndex + i) % m_notPossessedVillagerList.Count;
-                    VillagerAI currentVillager = m_notPossessedVillagerList[index].GetComponent<VillagerAI>();
+                    int index = (randomIndex + i) % NotPossessedVillagerList.Count;
+                    VillagerAI currentVillager = NotPossessedVillagerList[index].GetComponent<VillagerAI>();
 
                     if (currentVillager.CurrentState != VillagerAI.VillagerState.Pray)
                     {
                         current.StartPossession();
-                        m_notPossessedVillagerList.RemoveAt(randomIndex);
+                        NotPossessedVillagerList.RemoveAt(randomIndex);
                         break;
                     }
                 }
@@ -122,38 +137,37 @@ namespace Villager.Runtime
         {
             SoundManager.m_instance.SetPausedBattleMusic(false);
             SoundManager.m_instance.SetPausedInGameMusic(true);
-            m_demonList.Add(demonAI);
+            _demonList.Add(demonAI);
 
-            for (int i = 0; i < m_villagerList.Count; i++)
+            foreach (var villager in VillagerList)
             {
-                m_villagerList[i].GetComponent<VillagerAI>().ChangeState(VillagerAI.VillagerState.Afraid);
+                villager.GetComponent<VillagerAI>().ChangeState(VillagerAI.VillagerState.Afraid);
             }
         }
 
         public void DemonIsKilled(DemonAI demonAI)
         {
-            m_demonList.Remove(demonAI);
+            _demonList.Remove(demonAI);
 
-            if (m_demonList.Count == 0)
+            if (_demonList.Count != 0) return;
+            
+            SoundManager.m_instance.SetPausedBattleMusic(true);
+            SoundManager.m_instance.SetPausedInGameMusic(false);
+            foreach (var villager in VillagerList)
             {
-                SoundManager.m_instance.SetPausedBattleMusic(true);
-                SoundManager.m_instance.SetPausedInGameMusic(false);
-                for (int i = 0; i < m_villagerList.Count; i++)
-                {
-                    m_villagerList[i].GetComponent<VillagerAI>().ReturnToRoutine();
-                }
+                villager.GetComponent<VillagerAI>().ReturnToRoutine();
             }
         }
 
         public void GoWinTheGame()
         {
-            _nearToVictorySatanSpeach.SetActive(true);
-            ChurchFeature.Runtime.ChurchManager.Instance.JudgmentCost = 0;
+            _nearToVictorySatanSpeech.SetActive(true);
+            m_onGoWinTheGameEventHandler?.Invoke(this, EventArgs.Empty);
 
-            for (int i = 0; i < m_villagerList.Count; i++)
+            foreach (var villager in VillagerList)
             {
-                m_villagerList[i].GetComponent<DarkSideAI>().IsPossessed = false;
-                m_villagerList[i].ChangeState(VillagerAI.VillagerState.GoToChurch);
+                villager.GetComponent<DarkSideAI>().IsPossessed = false;
+                villager.ChangeState(VillagerAI.VillagerState.GoToChurch);
             }
 
             _hasLaunchedGoWinTheGame = true;
@@ -162,7 +176,7 @@ namespace Villager.Runtime
 
         public void StartInvokingAllDemons()
         {
-            _noFaithSatanSpeach.SetActive(true);
+            _noFaithSatanSpeech.SetActive(true);
             StartCoroutine(InvokeDemons(10));
         }
 
@@ -189,20 +203,27 @@ namespace Villager.Runtime
 
         [Space]
         [SerializeField] private GameObject _demonPrefab;
-
-        [SerializeField] private GameObject _firstSatanSpeach;
-        [SerializeField] private GameObject _noFaithSatanSpeach;
-        [SerializeField] private GameObject _nearToVictorySatanSpeach;
         [SerializeField] private Transform[] _demonAnchors;
+
+        [Space]
+        [SerializeField] private GameObject _firstSatanSpeech;
+        [SerializeField] private GameObject _noFaithSatanSpeech;
+        [SerializeField] private GameObject _nearToVictorySatanSpeech;
 
         [Space]
         [SerializeField] private GameObject _winScreen;
         [SerializeField] private GameObject _winVFX;
         [SerializeField] private GameObject _loseScreen;
         [SerializeField] private GameObject _pauseButton;
+
+        private List<VillagerAI> _villagerList = new();
+        private List<DarkSideAI> _notPossessedVillagerList = new();
+        private List<DemonAI> _demonList = new();
+        private List<VillagerAI> _villagerHasFaithList = new();
+        
         private float _timeBeforePossession;
         public bool _hasLaunchedGoWinTheGame;
-        private bool _satanFirstSpeachSaid;
+        private bool _satanFirstSpeechSaid;
         private bool _canVerifyIfWinTheGame;
 
         #endregion

@@ -178,8 +178,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 35158569}
+  - component: {fileID: 35158570}
   m_Layer: 5
-  m_Name: LightningSpellIcon
+  m_Name: JudgmentSpellIcon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -193,7 +194,7 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 35158568}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0.00007138783}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -204,9 +205,22 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 0}
-  m_AnchoredPosition: {x: 0, y: 84.99997}
+  m_AnchoredPosition: {x: 0, y: 85}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0}
+--- !u!114 &35158570
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 35158568}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cf8047314be0453e8488b9b33b58ee4b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _judgmentMask: {fileID: 150978615}
 --- !u!1 &47466632
 GameObject:
   m_ObjectHideFlags: 0
@@ -6743,6 +6757,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _faithOrbText: {fileID: 2033220083}
   _faithFillerBar: {fileID: 1071283459}
+  _fillSpeed: 0.25
 --- !u!1 &797417271
 GameObject:
   m_ObjectHideFlags: 0
@@ -10678,21 +10693,9 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1276669427}
     m_Modifications:
-    - target: {fileID: 1271543387, guid: 1b9698a3d89d1d342911cbd17beffeea, type: 3}
-      propertyPath: _hitPrefab
-      value: 
-      objectReference: {fileID: 5566473679581197029, guid: 8bff7d6291d1ad341bbcaeea8b5f20b5, type: 3}
-    - target: {fileID: 1271543390, guid: 1b9698a3d89d1d342911cbd17beffeea, type: 3}
-      propertyPath: _judgmentPrefab
-      value: 
-      objectReference: {fileID: 1339483653523732529, guid: 48188d4ae3d2a9a49b37cb7839788dcd, type: 3}
     - target: {fileID: 1511012405740748408, guid: 1b9698a3d89d1d342911cbd17beffeea, type: 3}
       propertyPath: m_Name
       value: God
-      objectReference: {fileID: 0}
-    - target: {fileID: 1511012405740748408, guid: 1b9698a3d89d1d342911cbd17beffeea, type: 3}
-      propertyPath: m_IsActive
-      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1511012405740748414, guid: 1b9698a3d89d1d342911cbd17beffeea, type: 3}
       propertyPath: m_RootOrder
@@ -10737,10 +10740,6 @@ PrefabInstance:
     - target: {fileID: 1511012405740748414, guid: 1b9698a3d89d1d342911cbd17beffeea, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1511012405740748415, guid: 1b9698a3d89d1d342911cbd17beffeea, type: 3}
-      propertyPath: _divineInterventions.Array.size
-      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 1511012405740748415, guid: 1b9698a3d89d1d342911cbd17beffeea, type: 3}
       propertyPath: _divineInterventions.Array.data[0]
@@ -15259,7 +15258,15 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 199025434}
     - target: {fileID: 436496961326399368, guid: 42a4f081ce29d0847b3ab64ff3d7236e, type: 3}
+      propertyPath: _firstSatanSpeech
+      value: 
+      objectReference: {fileID: 199025434}
+    - target: {fileID: 436496961326399368, guid: 42a4f081ce29d0847b3ab64ff3d7236e, type: 3}
       propertyPath: _noFaithSatanSpeach
+      value: 
+      objectReference: {fileID: 329864238}
+    - target: {fileID: 436496961326399368, guid: 42a4f081ce29d0847b3ab64ff3d7236e, type: 3}
+      propertyPath: _noFaithSatanSpeech
       value: 
       objectReference: {fileID: 329864238}
     - target: {fileID: 436496961326399368, guid: 42a4f081ce29d0847b3ab64ff3d7236e, type: 3}
@@ -15268,6 +15275,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 436496961326399368, guid: 42a4f081ce29d0847b3ab64ff3d7236e, type: 3}
       propertyPath: _nearToVictorySatanSpeach
+      value: 
+      objectReference: {fileID: 1772218192}
+    - target: {fileID: 436496961326399368, guid: 42a4f081ce29d0847b3ab64ff3d7236e, type: 3}
+      propertyPath: _nearToVictorySatanSpeech
       value: 
       objectReference: {fileID: 1772218192}
     - target: {fileID: 436496961326399368, guid: 42a4f081ce29d0847b3ab64ff3d7236e, type: 3}
@@ -15833,10 +15844,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: ChurchManager
       objectReference: {fileID: 0}
-    - target: {fileID: 7543731642804810353, guid: efe3b2213b40b1742bed44eed9dba93c, type: 3}
-      propertyPath: _judgmentHUD
-      value: 
-      objectReference: {fileID: 150978615}
     - target: {fileID: 7543731642804810354, guid: efe3b2213b40b1742bed44eed9dba93c, type: 3}
       propertyPath: m_RootOrder
       value: 4

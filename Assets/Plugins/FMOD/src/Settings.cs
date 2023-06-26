@@ -538,7 +538,8 @@ namespace FMODUnity
         // [InitializeOnLoad] and calling this function from a static constructor.
         internal static void AddPlatformTemplate<T>(string identifier) where T : Platform
         {
-            PlatformTemplates.Add(new PlatformTemplate() {
+            PlatformTemplates.Add(new PlatformTemplate
+            {
                     Identifier = identifier,
                     CreateInstance = () => CreatePlatformInstance<T>(identifier)
                 });
@@ -844,7 +845,7 @@ namespace FMODUnity
             {
                 if (toSetting == null)
                 {
-                    toSetting = new T() { Platform = toPlatform };
+                    toSetting = new T { Platform = toPlatform };
                     list.Add(toSetting);
                 }
 

@@ -8,6 +8,16 @@ namespace Villager.Runtime
 {
     public class Prayer : MonoBehaviour
     {
+        #region Public Members
+
+        public bool IsPraying
+        {
+            get => _isPraying;
+            set => _isPraying = value;
+        }
+
+        #endregion
+        
         #region Unity API
 
         private void Awake()
@@ -42,30 +52,30 @@ namespace Villager.Runtime
         [UsedImplicitly]
         public void StartPrayer()
         {
-            if (_isPraying) return;
+            if (IsPraying) return;
             
             _currentCooldown = _maxCooldown;
             _circleCooldown.fillAmount = _maxCooldown;
             gameObject.SetActive(true);
             
-            _isPraying = true;
+            IsPraying = true;
         }
 
         public void ValidatePrayer()
         {
-            if (!_isPraying || SatanManager.m_instance._hasLaunchedGoWinTheGame) return;
+            if (!IsPraying || SatanManager.m_instance._hasLaunchedGoWinTheGame) return;
             
             _churchManager.FaithCount += _orbGained;
             gameObject.SetActive(false);
             _villagerAI.StopPraying();
             SoundManager.m_instance.PlayVillagerVoiceJoy(_villagerAI.IsMan);
             
-            _isPraying = false;
+            IsPraying = false;
         }
 
         private void FailPrayer()
         {
-            if (!_isPraying || SatanManager.m_instance._hasLaunchedGoWinTheGame) return;
+            if (!IsPraying || SatanManager.m_instance._hasLaunchedGoWinTheGame) return;
             _villagerAI.IsConverted = false;
 
             _churchManager.FaithCount -= _orbLost;
@@ -77,7 +87,7 @@ namespace Villager.Runtime
             _villagerAI.StopPraying();
             SoundManager.m_instance.PlayVillagerVoiceSad(_villagerAI.IsMan);
             
-            _isPraying = false;
+            IsPraying = false;
         }
 
         #endregion

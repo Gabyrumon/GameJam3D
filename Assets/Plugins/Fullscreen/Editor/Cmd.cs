@@ -31,7 +31,8 @@ namespace FullscreenEditor {
             proc.EnableRaisingEvents = true;
 
             if (Application.platform == RuntimePlatform.WindowsEditor)
-                proc.StartInfo = new ProcessStartInfo() {
+                proc.StartInfo = new ProcessStartInfo
+                {
                     FileName = "cmd.exe",
                     Arguments = "/C \"" + command + "\"",
                     UseShellExecute = asAdmin,
@@ -42,7 +43,8 @@ namespace FullscreenEditor {
                     WorkingDirectory = Environment.CurrentDirectory
                 };
             else
-                proc.StartInfo = new ProcessStartInfo() {
+                proc.StartInfo = new ProcessStartInfo
+                {
                     FileName = "/bin/bash",
                     Arguments = "-c \"" + command + "\"",
                     UseShellExecute = asAdmin,

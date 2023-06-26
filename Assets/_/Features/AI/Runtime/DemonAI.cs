@@ -26,7 +26,7 @@ namespace Villager.Runtime
         private void Update()
         {
             Combat();
-            if (SatanManager.m_instance.m_villagerList.Count <= 0 && _hasTarget)
+            if (SatanManager.m_instance.VillagerList.Count <= 0 && _hasTarget)
             {
                 HasNoTarget();
                 _anim.SetBool("Run", false);
@@ -39,7 +39,7 @@ namespace Villager.Runtime
 
         private void Combat()
         {
-            if (_isDead || SatanManager.m_instance.m_villagerList.Count <= 0) { _agent.isStopped = true; return; }
+            if (_isDead || SatanManager.m_instance.VillagerList.Count <= 0) { _agent.isStopped = true; return; }
 
             if (!_hasTarget)
             {
@@ -60,13 +60,13 @@ namespace Villager.Runtime
 
         private Vector3 NearestVillager()
         {
-            if (SatanManager.m_instance.m_villagerList.Count <= 0) return transform.position;
+            if (SatanManager.m_instance.VillagerList.Count <= 0) return transform.position;
 
-            nearestTarget = SatanManager.m_instance.m_villagerList[0];
+            nearestTarget = SatanManager.m_instance.VillagerList[0];
 
-            for (int i = 0; i < SatanManager.m_instance.m_villagerList.Count; i++)
+            for (int i = 0; i < SatanManager.m_instance.VillagerList.Count; i++)
             {
-                VillagerAI targetToCheck = SatanManager.m_instance.m_villagerList[i];
+                VillagerAI targetToCheck = SatanManager.m_instance.VillagerList[i];
 
                 if (SquaredDistanceToTarget(targetToCheck.transform.position) < SquaredDistanceToTarget(nearestTarget.transform.position))
                 {
@@ -78,7 +78,7 @@ namespace Villager.Runtime
 
         public void KillTarget()
         {
-            if (nearestTarget != null && SatanManager.m_instance.m_villagerList.Count > 0)
+            if (nearestTarget != null && SatanManager.m_instance.VillagerList.Count > 0)
             {
                 VillagerAI nearestVillager = nearestTarget.GetComponent<VillagerAI>();
                 nearestVillager.ChangeState(VillagerAI.VillagerState.Dead);

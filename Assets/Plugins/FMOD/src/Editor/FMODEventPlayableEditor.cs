@@ -483,7 +483,8 @@ namespace FMODUnity
 
         private static EditorCurveBinding GetParameterCurveBinding(int index)
         {
-            EditorCurveBinding result = new EditorCurveBinding() {
+            EditorCurveBinding result = new EditorCurveBinding
+            {
                 path = string.Empty,
                 type = typeof(FMODEventPlayable),
                 propertyName = string.Format("parameterAutomation.slot{0:D2}", index),

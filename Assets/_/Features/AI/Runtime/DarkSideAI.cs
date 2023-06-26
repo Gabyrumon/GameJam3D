@@ -17,12 +17,12 @@ namespace Villager.Runtime
 
         private void OnEnable()
         {
-            SatanManager.m_instance.m_notPossessedVillagerList.Add(this);
+            SatanManager.m_instance.NotPossessedVillagerList.Add(this);
         }
 
         private void OnDisable()
         {
-            SatanManager.m_instance.m_notPossessedVillagerList.Remove(this);
+            SatanManager.m_instance.NotPossessedVillagerList.Remove(this);
         }
 
         private void Start()
@@ -62,14 +62,14 @@ namespace Villager.Runtime
             _timeBeforeNextPossession = 0;
             if (!addFromNotPossessedList) return;
 
-            SatanManager.m_instance.m_notPossessedVillagerList.Add(this);
+            SatanManager.m_instance.NotPossessedVillagerList.Add(this);
         }
 
         private void MinusPossession()
         {
             _isPossessed = false;
             _levelOfPossession--;
-            SatanManager.m_instance.m_notPossessedVillagerList.Add(this);
+            SatanManager.m_instance.NotPossessedVillagerList.Add(this);
         }
 
         public void StartPossession()

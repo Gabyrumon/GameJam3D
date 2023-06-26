@@ -66,7 +66,7 @@ namespace FullscreenEditor {
 
             Logger.Debug(this, "Created {0}, resolution {1:0}x{2:0}, pos {3:0}", name, rect.width, rect.height, rect.min);
 
-            return new ViewPyramid() { Window = childWindow, View = hv, Container = cw };
+            return new ViewPyramid { Window = childWindow, View = hv, Container = cw };
 
         }
 

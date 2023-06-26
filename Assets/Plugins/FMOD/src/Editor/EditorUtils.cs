@@ -1254,10 +1254,10 @@ namespace FMODUnity
         private const string AnyCPU = "AnyCPU";
 
         private static readonly LibInfo[] LibrariesToUpdate = {
-            new LibInfo() {cpu = "x86", os = "Windows",  lib = "fmodstudioL.dll", platform = "win", buildTarget = BuildTarget.StandaloneWindows},
-            new LibInfo() {cpu = "x86_64", os = "Windows", lib = "fmodstudioL.dll", platform = "win", buildTarget = BuildTarget.StandaloneWindows64},
-            new LibInfo() {cpu = "x86_64", os = "Linux", lib = "libfmodstudioL.so", platform = "linux", buildTarget = BuildTarget.StandaloneLinux64},
-            new LibInfo() {cpu = AnyCPU, os = "OSX", lib = "fmodstudioL.bundle", platform = "mac", buildTarget = BuildTarget.StandaloneOSX},
+            new LibInfo {cpu = "x86", os = "Windows",  lib = "fmodstudioL.dll", platform = "win", buildTarget = BuildTarget.StandaloneWindows},
+            new LibInfo {cpu = "x86_64", os = "Windows", lib = "fmodstudioL.dll", platform = "win", buildTarget = BuildTarget.StandaloneWindows64},
+            new LibInfo {cpu = "x86_64", os = "Linux", lib = "libfmodstudioL.so", platform = "linux", buildTarget = BuildTarget.StandaloneLinux64},
+            new LibInfo {cpu = AnyCPU, os = "OSX", lib = "fmodstudioL.bundle", platform = "mac", buildTarget = BuildTarget.StandaloneOSX},
         };
 
         public static bool SourceLibsExist
@@ -1348,7 +1348,8 @@ namespace FMODUnity
             internal static UpdateStep Create(Settings.SharedLibraryUpdateStages stage, string name, string description,
                 Func<string> details, Action execute)
             {
-                return new UpdateStep() {
+                return new UpdateStep
+                {
                     Stage = stage,
                     Name = name,
                     Description = description,
@@ -1799,7 +1800,8 @@ namespace FMODUnity
 
         private static FMOD.GUID GetGuid(this SerializedProperty property)
         {
-            return new FMOD.GUID() {
+            return new FMOD.GUID
+            {
                 Data1 = property.FindPropertyRelative("Data1").intValue,
                 Data2 = property.FindPropertyRelative("Data2").intValue,
                 Data3 = property.FindPropertyRelative("Data3").intValue,
@@ -1829,7 +1831,8 @@ namespace FMODUnity
             SerializedProperty pathProperty = property.FindPropertyRelative("Path");
             SerializedProperty guidProperty = property.FindPropertyRelative("Guid");
 
-            return new EventReference() {
+            return new EventReference
+            {
                 Path = pathProperty.stringValue,
                 Guid = guidProperty.GetGuid(),
             };

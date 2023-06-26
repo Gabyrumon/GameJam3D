@@ -27,7 +27,8 @@ namespace FMODUnity
 
         private static readonly List<bool> pageComplete = new List<bool>(new bool[(int)PAGES.Max]);
 
-        private static readonly List<UpdateTask> updateTasks = new List<UpdateTask>() {
+        private static readonly List<UpdateTask> updateTasks = new List<UpdateTask>
+        {
             UpdateTask.Create(
                 type: UpdateTaskType.ReorganizePluginFiles,
                 name: "Reorganize Plugin Files",
@@ -139,7 +140,8 @@ fmod_editor.log";
             public static UpdateTask Create(UpdateTaskType type, string name, string description,
                 Action execute, Func<bool> checkComplete)
             {
-                return new UpdateTask() {
+                return new UpdateTask
+                {
                     Type = type,
                     Name = name,
                     Description = description,

@@ -93,11 +93,11 @@ namespace God.Runtime
 
             _currentVillager = villagerAI;
 
+            Prayer prayer = _currentVillager.GetComponentInChildren<Prayer>(true);
             bool isPraying = false;
             if (_currentVillager.GetState() == VillagerAI.VillagerState.Pray)
             {
                 isPraying = true;
-                Prayer prayer = _currentVillager.GetComponentInChildren<Prayer>();
                 if (prayer.transform.parent.gameObject.activeSelf)
                 {
                     prayer.ValidatePrayer();
