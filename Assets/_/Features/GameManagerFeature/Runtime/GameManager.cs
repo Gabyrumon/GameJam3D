@@ -22,6 +22,7 @@ namespace GameManagerFeature.Runtime
             m_instance = this;
 
             _inputManager = InputManager.m_instance;
+            Application.targetFrameRate = 60;
         }
 
         private void OnEnable()
